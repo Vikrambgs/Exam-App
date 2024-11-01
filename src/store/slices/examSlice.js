@@ -8,7 +8,10 @@ const initialState = {
   examStartTime: null,
   examEndTime: null,
   questionTimes: {}, // Track time spent on each question
-  isExamComplete: false
+  isExamComplete: false,
+  bookmarkedQuestions: [],
+  averageTimePerQuestion: 0,
+  totalExamTime: 3600, // 1 hour in seconds
 }
 
 const examSlice = createSlice({
@@ -17,6 +20,7 @@ const examSlice = createSlice({
   reducers: {
     setQuestions: (state, action) => {
       state.questions = action.payload
+      state.averageTimePerQuestion = Math.floor(state.totalExamTime / action.payload.length)
       state.examStartTime = Date.now()
       // Initialize question status as not-attempted
       action.payload.forEach(q => {
@@ -48,7 +52,8 @@ const examSlice = createSlice({
     },
     updateQuestionTime: (state, action) => {
       const { questionId, timeSpent } = action.payload
-      state.questionTimes[questionId] = (state.questionTimes[questionId] || 0) + timeSpent
+      // Round to 1 decimal place for smoother updates
+      state.questionTimes[questionId] = Math.round(timeSpent * 10) / 10
     },
     completeExam: (state) => {
       state.isExamComplete = true
@@ -58,6 +63,15 @@ const examSlice = createSlice({
       const questionId = action.payload
       delete state.answers[questionId]
       state.questionStatus[questionId] = 'viewed'
+    },
+    toggleBookmark: (state, action) => {
+      const questionId = action.payload
+      const index = state.bookmarkedQuestions.indexOf(questionId)
+      if (index !== -1) {
+        state.bookmarkedQuestions.splice(index, 1)
+      } else {
+        state.bookmarkedQuestions.push(questionId)
+      }
     },
   }
 })
@@ -69,7 +83,8 @@ export const {
   markForReview,
   updateQuestionTime,
   completeExam,
-  clearAnswer
+  clearAnswer,
+  toggleBookmark
 } = examSlice.actions
 
 export default examSlice.reducer

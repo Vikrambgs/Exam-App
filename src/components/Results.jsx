@@ -17,17 +17,41 @@ function ResultCard({ title, value, description, className }) {
   )
 }
 
-function QuestionResult({ question, userAnswer, index }) {
+function QuestionResult({ question, userAnswer, index, timeSpent, averageTime }) {
   const isCorrect = userAnswer === question.correctAnswer
   const isNotAttempted = userAnswer === undefined || userAnswer === null
   
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60)
+    const remainingSeconds = seconds % 60
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`
+  }
+  
   return (
-    <div className={classNames(
-      "bg-white rounded-lg shadow p-4 mb-4",
-      isNotAttempted && "border-l-4 border-gray-400 bg-gray-50"
-    )}>
+    <div className="bg-white rounded-lg shadow p-4 mb-4">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-sm font-medium text-gray-500">Question {index + 1}</span>
+        <div className="flex items-center gap-4">
+          <span>Question {index + 1}</span>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm">
+                Time: {formatTime(timeSpent)}
+              </span>
+              <div className="h-1.5 w-24 bg-gray-100 rounded-full overflow-hidden">
+                <div 
+                  className={classNames(
+                    "h-full",
+                    timeSpent > averageTime ? 'bg-red-500' : 'bg-blue-500'
+                  )}
+                  style={{ width: `${Math.min((timeSpent / averageTime) * 100, 100)}%` }}
+                />
+              </div>
+              <span className="text-xs text-gray-500">
+                (Avg: {formatTime(averageTime)})
+              </span>
+            </div>
+          </div>
+        </div>
         <div className="flex items-center gap-2">
           {isNotAttempted && (
             <svg className="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -103,6 +127,7 @@ function Results() {
   const navigate = useNavigate()
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
   const { questions, answers, questionStatus, examStartTime, examEndTime } = useSelector((state) => state.exam)
+  const questionTimes = useSelector((state) => state.exam.questionTimes)
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -128,6 +153,9 @@ function Results() {
   const timeString = `${hours}h ${minutes}m ${seconds}s`
   
   const markedForReview = Object.values(questionStatus).filter(status => status === 'marked-review').length
+
+  const totalExamTime = 3600 // 1 hour in seconds
+  const averageTimePerQuestion = Math.floor(totalExamTime / questions.length)
 
   return (
     <div className="min-h-screen bg-gray-50 py-4">
@@ -196,6 +224,8 @@ function Results() {
               question={question}
               userAnswer={answers[question.id]}
               index={index}
+              timeSpent={questionTimes[question.id] || 0}
+              averageTime={averageTimePerQuestion}
             />
           ))}
         </div>
