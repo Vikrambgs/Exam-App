@@ -22,7 +22,15 @@ const examSlice = createSlice({
       state.questions = action.payload
       state.averageTimePerQuestion = Math.floor(state.totalExamTime / action.payload.length)
       state.examStartTime = Date.now()
-      // Initialize question status as not-attempted
+      state.currentQuestionIndex = 0
+      state.answers = {}
+      state.questionStatus = {}
+      state.questionTimes = {}
+      state.bookmarkedQuestions = []
+      state.isExamComplete = false
+      state.examEndTime = null
+      
+      // Initialize question status and times
       action.payload.forEach(q => {
         state.questionStatus[q.id] = 'not-attempted'
         state.questionTimes[q.id] = 0
@@ -43,11 +51,15 @@ const examSlice = createSlice({
         state.questionStatus[questionId] = 'viewed'
       } else {
         state.answers[questionId] = answer
-        state.questionStatus[questionId] = 'answered'
+        // Only set to answered if not already marked for review
+        if (state.questionStatus[questionId] !== 'marked-review') {
+          state.questionStatus[questionId] = 'answered'
+        }
       }
     },
     markForReview: (state, action) => {
       const questionId = action.payload
+      // Mark for review status takes precedence over answered status
       state.questionStatus[questionId] = 'marked-review'
     },
     updateQuestionTime: (state, action) => {
@@ -73,6 +85,26 @@ const examSlice = createSlice({
         state.bookmarkedQuestions.push(questionId)
       }
     },
+    clearExamState: (state) => {
+      // Keep the questions and reinitialize everything else
+      const questions = state.questions
+      // Use setQuestions logic to reset the state
+      state.averageTimePerQuestion = Math.floor(state.totalExamTime / questions.length)
+      state.examStartTime = Date.now()
+      state.currentQuestionIndex = 0
+      state.answers = {}
+      state.questionStatus = {}
+      state.questionTimes = {}
+      state.bookmarkedQuestions = []
+      state.isExamComplete = false
+      state.examEndTime = null
+      
+      // Initialize question status and times
+      questions.forEach(q => {
+        state.questionStatus[q.id] = 'not-attempted'
+        state.questionTimes[q.id] = 0
+      })
+    }
   }
 })
 
@@ -84,7 +116,8 @@ export const {
   updateQuestionTime,
   completeExam,
   clearAnswer,
-  toggleBookmark
+  toggleBookmark,
+  clearExamState
 } = examSlice.actions
 
 export default examSlice.reducer

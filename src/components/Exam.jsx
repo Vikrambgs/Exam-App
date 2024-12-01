@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { setQuestions, saveAnswer, markForReview, setCurrentQuestion, completeExam, clearAnswer, toggleBookmark, updateQuestionTime } from '../store/slices/examSlice'
+import { setQuestions, saveAnswer, markForReview, setCurrentQuestion, completeExam, clearAnswer, toggleBookmark, updateQuestionTime, clearExamState } from '../store/slices/examSlice'
 import { fetchQuestions } from '../services/api'
 import QuestionNavigation from './QuestionNavigation'
 import { format } from 'date-fns'
@@ -113,24 +113,55 @@ function HelpPanel({ isOpen, onClose }) {
 }
 
 function QuestionTimeProgress({ questionId, timeSpent, averageTime }) {
-  const progress = Math.min((timeSpent / averageTime) * 100, 100)
-  
+  const percentage = (timeSpent / averageTime) * 100
+  const isOverTime = timeSpent > 0 && timeSpent > averageTime
+
   return (
-    <div className="relative h-0.5 w-full bg-gray-100 rounded-full overflow-hidden">
-      <div 
+    <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+      <div
         className={classNames(
-          "h-full",
-          timeSpent > averageTime ? 'bg-red-500' : 'bg-blue-500'
+          "h-full transition-all duration-300",
+          timeSpent === 0 
+            ? "bg-gray-300" 
+            : isOverTime 
+              ? "bg-red-500" 
+              : "bg-green-500"
         )}
         style={{ 
-          width: `${progress}%`
+          width: timeSpent === 0 ? '0%' : `${Math.min(percentage, 100)}%` 
         }}
       />
-      <div className="absolute right-0 -bottom-5 text-xs text-gray-500">
-        {Math.floor(timeSpent)}s / {averageTime}s
-      </div>
     </div>
   )
+}
+
+function ClearExamDialog({ isOpen, onConfirm, onCancel }) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+        <h2 className="text-xl font-bold mb-4">Clear Exam State</h2>
+        <p className="text-gray-600 mb-6">
+          Are you sure you want to clear all your answers and start fresh? This action cannot be undone.
+        </p>
+        <div className="flex justify-end gap-4">
+          <button
+            onClick={onCancel}
+            className="px-4 py-2 text-gray-600 hover:text-gray-800"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={onConfirm}
+            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+          >
+            Clear State
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function Exam() {
@@ -154,6 +185,7 @@ function Exam() {
   const averageTimePerQuestion = useSelector((state) => state.exam.averageTimePerQuestion)
   const [currentQuestionTimer, setCurrentQuestionTimer] = useState(null)
   const [startTime, setStartTime] = useState(null)
+  const [showClearConfirmation, setShowClearConfirmation] = useState(false);
 
   const currentQuestion = questions[currentQuestionIndex] || null
 
@@ -206,23 +238,34 @@ function Exam() {
     }
   }
 
+  const handleClearExamState = () => {
+    dispatch(clearExamState());
+    setSelectedOption(null);
+    setShowClearConfirmation(false);
+    setQuestionStartTime(Date.now());
+    setCurrentQuestionTimer(null);
+    setStartTime(Date.now());
+  };
+
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate('/login')
-      return
+      navigate('/login');
+      return;
     }
     
     const loadQuestions = async () => {
-      try {
-        const data = await fetchQuestions()
-        dispatch(setQuestions(data.questions))
-      } catch (error) {
-        console.error('Error loading questions:', error)
+      if (!questions || questions.length === 0) {
+        try {
+          const data = await fetchQuestions();
+          dispatch(setQuestions(data.questions));
+        } catch (error) {
+          console.error('Error loading questions:', error);
+        }
       }
-    }
+    };
     
-    loadQuestions()
-  }, [dispatch, isAuthenticated, navigate])
+    loadQuestions();
+  }, [dispatch, isAuthenticated, navigate, questions]);
 
   useEffect(() => {
     const handleKeyPress = (e) => {
@@ -258,9 +301,11 @@ function Exam() {
   }, [currentQuestionIndex, questionStatus, selectedOption])
 
   useEffect(() => {
-    const currentAnswer = answers[currentQuestion?.id]
-    setSelectedOption(currentAnswer !== undefined ? currentAnswer : null)
-  }, [currentQuestionIndex, answers, currentQuestion])
+    if (currentQuestion) {
+      const savedAnswer = answers[currentQuestion.id];
+      setSelectedOption(savedAnswer !== undefined ? savedAnswer : null);
+    }
+  }, [currentQuestion, answers]);
 
   useEffect(() => {
     if (!currentQuestion) return
@@ -331,9 +376,15 @@ function Exam() {
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <div className="bg-gradient-to-r from-indigo-600 to-purple-600 py-2 px-3 shadow-lg">
         <div className="max-w-full mx-auto flex justify-between items-center">
-          <h1 className="text-lg font-bold text-white uppercase">React Programming Test</h1>
+          <h1 className="text-lg font-bold text-white uppercase">Ongoing Exam....</h1>
           <div className="flex items-center gap-4">
             {examStartTime && <ExamTimer startTime={examStartTime} timeLimit={3600} />}
+            <button
+              onClick={() => setShowClearConfirmation(true)}
+              className="text-white/80 hover:text-white bg-red-500/20 hover:bg-red-500/30 px-3 py-1 rounded-full text-sm"
+            >
+              Clear Exam State
+            </button>
             <button
               onClick={() => setShowHelp(true)}
               className="text-white/80 hover:text-white"
@@ -373,7 +424,7 @@ function Exam() {
                         </svg>
                       </button>
                       <div className="flex gap-2">
-                        {(questionStatus[currentQuestion.id] === 'answered' || selectedOption !== null) && (
+                        {selectedOption !== null && (
                           <button
                             onClick={handleClearAnswer}
                             className="px-3 py-1 text-sm text-red-600 font-medium hover:text-white hover:bg-red-600 border border-red-600 rounded-full transition-all"
@@ -381,12 +432,22 @@ function Exam() {
                             Clear Answer
                           </button>
                         )}
-                        <button
-                          onClick={handleMarkForReview}
-                          className="px-3 py-1 text-sm font-medium text-indigo-600 hover:text-white hover:bg-indigo-600 border border-indigo-600 rounded-full transition-all"
-                        >
-                          Mark for Review
-                        </button>
+                        {selectedOption !== null && (
+                          <button
+                            onClick={handleMarkForReview}
+                            className={classNames(
+                              "px-3 py-1 text-sm font-medium rounded-full transition-all",
+                              questionStatus[currentQuestion?.id] === 'marked-review'
+                                ? "bg-yellow-100 text-yellow-700 border border-yellow-400 hover:bg-yellow-200"
+                                : "text-indigo-600 hover:text-white hover:bg-indigo-600 border border-indigo-600"
+                            )}
+                          >
+                            {questionStatus[currentQuestion?.id] === 'marked-review' 
+                              ? "Marked for Review" 
+                              : "Mark for Review"
+                            }
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -496,6 +557,11 @@ function Exam() {
         unansweredCount={unansweredCount}
       />
       <HelpPanel isOpen={showHelp} onClose={() => setShowHelp(false)} />
+      <ClearExamDialog
+        isOpen={showClearConfirmation}
+        onConfirm={handleClearExamState}
+        onCancel={() => setShowClearConfirmation(false)}
+      />
     </div>
   )
 }

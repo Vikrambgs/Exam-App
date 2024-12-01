@@ -1,40 +1,56 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-// Mock user data - in production, this would come from a backend
-const MOCK_USERS = {
-  'student1': 'password123',
-  'student2': 'password456',
-}
+// Simulated login API call
+const loginAPI = async (credentials) => {
+  // Simulate API delay
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  
+  // Simple validation - in real app, this would be a server call
+  if (credentials.username === 'admin' && credentials.password === 'password') {
+    return { user: { username: credentials.username } };
+  }
+  throw new Error('Invalid credentials');
+};
 
-const initialState = {
-  isAuthenticated: false,
-  studentId: null,
-  error: null,
-}
+export const login = createAsyncThunk(
+  'auth/login',
+  async (credentials) => {
+    const response = await loginAPI(credentials);
+    return response.user;
+  }
+);
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState,
+  initialState: {
+    user: null,
+    isAuthenticated: false,
+    loading: false,
+    error: null,
+  },
   reducers: {
-    login: (state, action) => {
-      const { studentId, password } = action.payload
-      if (MOCK_USERS[studentId] === password) {
-        state.isAuthenticated = true
-        state.studentId = studentId
-        state.error = null
-      } else {
-        state.error = 'Invalid credentials'
-      }
-    },
     logout: (state) => {
-      state.isAuthenticated = false
-      state.studentId = null
+      state.user = null;
+      state.isAuthenticated = false;
     },
-    setError: (state, action) => {
-      state.error = action.payload
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.isAuthenticated = true;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
   },
 })
 
-export const { login, logout, setError } = authSlice.actions
+export const { logout } = authSlice.actions
 export default authSlice.reducer

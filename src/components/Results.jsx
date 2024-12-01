@@ -31,7 +31,7 @@ function QuestionResult({ question, userAnswer, index, timeSpent, averageTime })
     <div className="bg-white rounded-lg shadow p-4 mb-4">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-4">
-          <span>Question {index + 1}</span>
+          <span className='font-semibold'>Ques. {index + 1}</span>
           <div>
             <div className="flex items-center gap-2">
               <span className="text-sm">
@@ -73,11 +73,6 @@ function QuestionResult({ question, userAnswer, index, timeSpent, averageTime })
       
       <div className="mb-3">
         <p className="text-gray-800">{question.question}</p>
-        {isNotAttempted && (
-          <p className="text-sm text-gray-500 mt-1 italic">
-            You did not attempt this question. The correct answer is highlighted below.
-          </p>
-        )}
       </div>
       
       <div className="space-y-2">
@@ -239,7 +234,7 @@ function Results() {
             Print Results
           </button>
           <button
-            onClick={() => navigate('/exam')}
+            onClick={() => navigate('/upload-questions')}
             className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-colors"
           >
             Take Another Exam

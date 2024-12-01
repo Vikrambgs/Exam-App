@@ -7,6 +7,17 @@ import Exam from './components/Exam'
 import Results from './components/Results'
 import CreateQuestion from './components/CreateQuestion'
 
+// Protected Route component to handle authentication
+function ProtectedRoute({ children }) {
+  const isAuthenticated = store.getState().auth.isAuthenticated;
+  
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+  
+  return children;
+}
+
 function App() {
   return (
     <Provider store={store}>
@@ -15,9 +26,30 @@ function App() {
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/exam" element={<Exam />} />
-            <Route path="/results" element={<Results />} />
-            <Route path="/test" element={<CreateQuestion />} />
+            <Route 
+              path="/upload-questions" 
+              element={
+                <ProtectedRoute>
+                  <CreateQuestion />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/exam" 
+              element={
+                <ProtectedRoute>
+                  <Exam />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/results" 
+              element={
+                <ProtectedRoute>
+                  <Results />
+                </ProtectedRoute>
+              } 
+            />
           </Routes>
         </div>
       </Router>
