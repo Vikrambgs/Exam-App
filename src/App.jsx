@@ -5,6 +5,7 @@ import { store } from './store'
 import Login from './components/Login'
 import Exam from './components/Exam'
 import Results from './components/Results'
+import CreateQuestion from './components/CreateQuestion'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/exam" element={<Exam />} />
             <Route path="/results" element={<Results />} />
+            <Route path="/test" element={<CreateQuestion />} />
           </Routes>
         </div>
       </Router>

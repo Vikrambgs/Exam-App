@@ -24,24 +24,17 @@ function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-purple-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-purple-50 py-12 px-4 sm:px-6 lg:px-8 ">
+      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-lg border border-green-800">
         <div>
-          <div className="flex justify-center">
-            <div className="h-16 w-16 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full flex items-center justify-center">
-              <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
-            </div>
-          </div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-            Welcome Back
+          <h2 className="mb-4 text-center text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent leading-snug">
+            Welcome To Login
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="text-center text-sm text-gray-600">
             Please sign in to start your exam
           </p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
               <label htmlFor="student-id" className="block text-sm font-medium text-gray-700">
@@ -58,7 +51,7 @@ function Login() {
                   name="studentId"
                   type="text"
                   required
-                  className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-colors"
+                  className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-colors"
                   placeholder="Enter your student ID (try: student1)"
                   value={studentId}
                   onChange={(e) => setStudentId(e.target.value)}
@@ -80,7 +73,7 @@ function Login() {
                   name="password"
                   type="password"
                   required
-                  className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-colors"
+                  className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-colors"
                   placeholder="Enter your password (try: password123)"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -110,7 +103,7 @@ function Login() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                 </svg>
               </span>
-              Start Exam
+              Login
             </button>
           </div>
         </form>
