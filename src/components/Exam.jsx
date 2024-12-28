@@ -16,167 +16,16 @@ import { fetchQuestions } from "../services/api";
 import QuestionNavigation from "./QuestionNavigation";
 import { format } from "date-fns";
 import classNames from "classnames";
-
-function ExamTimer({ startTime, timeLimit }) {
-    const [timeRemaining, setTimeRemaining] = useState(timeLimit);
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            const elapsed = Math.floor((Date.now() - startTime) / 1000);
-            const remaining = timeLimit - elapsed;
-            setTimeRemaining(remaining);
-
-            if (remaining <= 0) {
-                clearInterval(timer);
-                // Handle exam completion
-            }
-        }, 1000);
-
-        return () => clearInterval(timer);
-    }, [startTime, timeLimit]);
-
-    const minutes = Math.floor(timeRemaining / 60);
-    const seconds = timeRemaining % 60;
-    const isLowTime = timeRemaining <= 300; // 5 minutes or less
-
-    return (
-        <div
-            className={classNames(
-                "flex items-center gap-2 px-4 py-1 rounded text-lg transition-colors font-medium font-mono",
-                isLowTime ? "bg-red-100 text-red-700" : "bg-white/10 text-white"
-            )}
-        >
-            <svg
-                className={classNames("w-5 h-5", isLowTime && "animate-pulse")}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-            >
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-            </svg>
-            <span className="font-medium">
-                {minutes.toString().padStart(2, "0")}:{seconds.toString().padStart(2, "0")}
-            </span>
-        </div>
-    );
-}
-
-function ConfirmationDialog({ isOpen, onConfirm, onCancel, unansweredCount }) {
-    if (!isOpen) return null;
-
-    return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
-                <h3 className="text-lg font-semibold mb-4">Confirm Submission</h3>
-                <p className="mb-4">
-                    {unansweredCount > 0
-                        ? `You have ${unansweredCount} unanswered questions. Are you sure you want to submit?`
-                        : "Are you sure you want to submit your exam?"}
-                </p>
-                <div className="flex justify-end space-x-4">
-                    <button
-                        onClick={onCancel}
-                        className="px-4 py-2 text-gray-600 hover:text-gray-800"
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        onClick={onConfirm}
-                        className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
-                    >
-                        Submit Exam
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-function HelpPanel({ isOpen, onClose }) {
-    if (!isOpen) return null;
-
-    return (
-        <div className="fixed bottom-4 right-4 bg-white rounded-lg shadow-lg p-4 w-80 border border-gray-200">
-            <div className="flex justify-between items-center mb-2">
-                <h3 className="font-semibold text-gray-700">Exam Help</h3>
-                <button onClick={onClose} className="text-gray-400 hover:text-gray-500">
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M6 18L18 6M6 6l12 12"
-                        />
-                    </svg>
-                </button>
-            </div>
-            <div className="space-y-2 text-sm text-gray-600">
-                <p>• Use arrow keys ←→ to navigate questions</p>
-                <p>• Press R to mark question for review</p>
-                <p>• Press C to clear your answer</p>
-                <p>• Use number keys 1-4 to select options</p>
-                <p>• Click the bookmark icon to save questions for later</p>
-            </div>
-        </div>
-    );
-}
-
-function QuestionTimeProgress({ questionId, timeSpent, averageTime }) {
-    const percentage = (timeSpent / averageTime) * 100;
-    const isOverTime = timeSpent > 0 && timeSpent > averageTime;
-
-    return (
-        <div className="h-0.5 bg-gray-200 rounded-full overflow-hidden">
-            <div
-                className={classNames(
-                    "h-full transition-all duration-300",
-                    timeSpent === 0 ? "bg-gray-300" : isOverTime ? "bg-red-500" : "bg-green-500"
-                )}
-                style={{
-                    width: timeSpent === 0 ? "0%" : `${Math.min(percentage, 100)}%`,
-                }}
-            />
-        </div>
-    );
-}
-
-function ClearExamDialog({ isOpen, onConfirm, onCancel }) {
-    if (!isOpen) return null;
-
-    return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-                <h2 className="text-xl font-bold mb-4">Restart/Reset Exam</h2>
-                <p className="text-gray-600 mb-6">
-                    Are you sure you want to restart/reset your exam? This action cannot be undone.
-                </p>
-                <div className="flex justify-end gap-4">
-                    <button
-                        onClick={onCancel}
-                        className="px-4 py-2 text-gray-600 hover:text-gray-800"
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        onClick={onConfirm}
-                        className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-                    >
-                        Confirm & Restart Exam
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
-}
+import HelpPanel from "./exam/HelpPanel";
+import ExamTimer from "./exam/ExamTimer";
+import ConfirmationDialog from "./exam/ConfirmSubmit";
+import QuestionTimeProgress from "./exam/QuestionTimeProgressBar";
+import ClearExamDialog from "./exam/ResetExamDialog";
 
 function Exam() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const currentQuestionIndex = useSelector((state) => state.exam.currentQuestionIndex);
     const questions = useSelector((state) => state.exam.questions);
@@ -432,10 +281,10 @@ function Exam() {
             <div className="flex-1 flex flex-col">
                 <div className="flex-1 flex gap-2 p-2">
                     <div className="flex-1 flex rounded  shadow-2xl">
-                        <div className="bg-white rounded-lg shadow-lg p-4 w-full flex flex-col border border-gray-100">
-                            <div className="mb-4">
-                                <div className="flex flex-col gap-2 border-b pb-2">
-                                    <div className="flex justify-between items-start">
+                        <div className="bg-white rounded-lg shadow-lg p-4 w-full flex flex-col border border-gray-300 ">
+                            <div className="mb-4 ">
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex justify-between items-start h-8">
                                         <h2 className="text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
                                             Question {currentQuestionIndex + 1} of{" "}
                                             {questions.length}
@@ -481,8 +330,8 @@ function Exam() {
                                 </div>
                             </div>
 
-                            <div className="mb-4 font-roboto ">
-                                <p className="text-lg text-gray-800 leading-tight">
+                            <div className="mb-4 font-roboto">
+                                <p className="text-lg text-black leading-tight">
                                     {currentQuestion.question}
                                 </p>
                             </div>
@@ -491,18 +340,18 @@ function Exam() {
                                     <div
                                         key={index}
                                         onClick={() => handleOptionSelect(index)}
-                                        onKeyPress={(e) =>
+                                        onKeyDown={(e) =>
                                             e.key === "Enter" && handleOptionSelect(index)
                                         }
                                         role="radio"
                                         aria-checked={selectedOption === index}
                                         tabIndex={0}
                                         className={classNames(
-                                            "p-2 py-3 border rounded cursor-pointer transition-all",
+                                            "p-2 py-3 border border-gray-400 rounded-md cursor-pointer transition-all",
                                             "hover:shadow focus:outline-none focus:ring-1 focus:ring-indigo-500",
                                             selectedOption === index
                                                 ? "bg-indigo-50 border-indigo-500 text-indigo-700"
-                                                : "hover:bg-gray-50 hover:border-gray-300 text-gray-700 border-gray-200"
+                                                : "hover:bg-gray-50 hover:border-gray-500 text-gray-800 border-gray-200"
                                         )}
                                     >
                                         <div className="flex items-center">
