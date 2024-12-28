@@ -31,7 +31,7 @@ function QuestionNavigation() {
             key={question.id}
             onClick={() => dispatch(setCurrentQuestion(index))}
             className={classNames(
-              'w-[10%] aspect-square rounded flex items-center justify-center text-sm font-medium transition-all duration-200',
+              'w-[10%] aspect-square rounded flex items-center justify-center text-xs font-medium transition-all duration-200',
               statusColors[questionStatus[question.id]],
               currentIndex === index ? 'ring-1 ring-indigo-500' : '',
             )}
@@ -41,34 +41,34 @@ function QuestionNavigation() {
         ))}
       </div>
       
-      <div className="space-y-1.5 text-xs mt-auto">
+      <div className="space-y-1.5 mt-auto">
         <div className="flex items-center justify-between px-1.5">
           <div className="flex items-center">
             <div className={classNames('w-2.5 h-2.5 rounded mr-2', statusColors['not-attempted'].split(' ')[0])} />
-            <span className="text-gray-600 text-base">Not Attempted</span>
+            <span className="text-gray-600 text-sm">Not Attempted</span>
           </div>
-          <span className="text-gray-600 text-base">{statusCounts['not-attempted']}</span>
+          <span className="text-gray-600 text-sm">{statusCounts['not-attempted']}</span>
         </div>
         <div className="flex items-center justify-between px-1.5">
           <div className="flex items-center">
             <div className={classNames('w-2.5 h-2.5 rounded mr-2', statusColors['viewed'].split(' ')[0])} />
-            <span className="text-gray-600 text-base">Viewed</span>
+            <span className="text-gray-600 text-sm">Viewed</span>
           </div>
-          <span className="text-gray-600 text-base">{statusCounts['viewed']}</span>
+          <span className="text-gray-600 text-sm">{statusCounts['viewed']}</span>
         </div>
         <div className="flex items-center justify-between px-1.5">
           <div className="flex items-center">
             <div className={classNames('w-2.5 h-2.5 rounded mr-2', statusColors['answered'].split(' ')[0])} />
-            <span className="text-gray-600 text-base">Answered</span>
+            <span className="text-gray-600 text-sm">Answered</span>
           </div>
-          <span className="text-gray-600 text-base">{statusCounts['answered']}</span>
+          <span className="text-gray-600 text-sm">{statusCounts['answered']}</span>
         </div>
         <div className="flex items-center justify-between px-1.5 mb-2">
           <div className="flex items-center">
             <div className={classNames('w-2.5 h-2.5 rounded mr-2', statusColors['marked-review'].split(' ')[0])} />
-            <span className="text-gray-600 text-base">Marked for Review</span>
+            <span className="text-gray-600 text-sm">Marked for Review</span>
           </div>
-          <span className="text-gray-600 text-base">{statusCounts['marked-review']}</span>
+          <span className="text-gray-600 text-sm">{statusCounts['marked-review']}</span>
         </div>
       </div>
     </div>

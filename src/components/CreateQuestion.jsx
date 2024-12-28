@@ -71,8 +71,8 @@ function CreateQuestion() {
         }
 
         data.forEach((q, index) => {
-            if (!q.id || !/^CH\d+_\d{5}$/.test(q.id)) {
-                throw new Error(`Question ${index + 1}: Invalid ID format. Expected: CH<number>_<5 digits>`);
+            if (!q.id || typeof q.id !== "string") {
+                throw new Error(`Question ${index + 1}: Invalid ID format.`);
             }
             if (!q.q || typeof q.q !== "string") {
                 throw new Error(`Question ${index + 1}: Missing or invalid question text`);

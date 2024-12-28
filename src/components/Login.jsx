@@ -9,6 +9,7 @@ function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
 
   // Redirect to upload-questions if already authenticated
@@ -20,12 +21,15 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+    setLoading(true)
 
     try {
       await dispatch(login({ username, password })).unwrap()
       navigate('/upload-questions')
     } catch (err) {
       setError(err.message || 'Invalid credentials')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -66,8 +70,9 @@ function Login() {
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            disabled={loading}
           >
-            Login
+            {loading ? 'Loading...' : 'Login'}
           </button>
         </form>
       </div>
