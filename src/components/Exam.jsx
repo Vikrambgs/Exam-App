@@ -14,18 +14,18 @@ import {
 } from "../store/slices/examSlice";
 import { fetchQuestions } from "../services/api";
 import QuestionNavigation from "./QuestionNavigation";
-import { format } from "date-fns";
 import classNames from "classnames";
 import HelpPanel from "./exam/HelpPanel";
 import ExamTimer from "./exam/ExamTimer";
 import ConfirmationDialog from "./exam/ConfirmSubmit";
 import QuestionTimeProgress from "./exam/QuestionTimeProgressBar";
 import ClearExamDialog from "./exam/ResetExamDialog";
+import QuestionComponent from "../TestComponent/QuestionUi";
 
 function Exam() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const currentQuestionIndex = useSelector((state) => state.exam.currentQuestionIndex);
     const questions = useSelector((state) => state.exam.questions);
@@ -38,9 +38,7 @@ function Exam() {
     const [showHelp, setShowHelp] = useState(false);
     const questionTimes = useSelector((state) => state.exam.questionTimes);
     const [questionStartTime, setQuestionStartTime] = useState(Date.now());
-    const [questionTimers, setQuestionTimers] = useState({});
     const [lastInteractionTime, setLastInteractionTime] = useState(Date.now());
-    const totalExamTime = 3600; // 1 hour in seconds
     const averageTimePerQuestion = useSelector((state) => state.exam.averageTimePerQuestion);
     const [currentQuestionTimer, setCurrentQuestionTimer] = useState(null);
     const [startTime, setStartTime] = useState(null);
@@ -243,7 +241,7 @@ function Exam() {
     const isBookmarked = currentQuestion ? bookmarkedQuestions.includes(currentQuestion.id) : false;
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col">
+        <div className="min-h-screen max-w-[100vw] bg-gray-50 flex flex-col border border-blue-600 ">
             <div className="bg-gradient-to-r from-indigo-600 to-purple-600 py-2 px-3 shadow-lg">
                 <div className="max-w-full mx-auto flex justify-between items-center">
                     <h1 className="text-lg font-bold text-white uppercase">Ongoing Exam....</h1>
@@ -278,11 +276,11 @@ function Exam() {
                 </div>
             </div>
 
-            <div className="flex-1 flex flex-col">
-                <div className="flex-1 flex gap-2 p-2">
-                    <div className="flex-1 flex rounded  shadow-2xl">
-                        <div className="bg-white rounded-lg shadow-lg p-4 w-full flex flex-col border border-gray-300 ">
-                            <div className="mb-4 ">
+            <div className="flex-1 flex flex-col max-w-full">
+                <div className="flex-1 flex gap-2 p-2 max-w-full">
+                    <div className="max-w-[70%] flex-1 flex rounded shadow-2xl ">
+                        <div className="bg-white rounded-lg shadow-lg p-4 w-full flex flex-col border border-gray-300">
+                            <div className="mb-4">
                                 <div className="flex flex-col gap-2">
                                     <div className="flex justify-between items-start h-8">
                                         <h2 className="text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
@@ -290,7 +288,6 @@ function Exam() {
                                             {questions.length}
                                         </h2>
                                         <div className="flex items-center gap-2">
-                                            
                                             <div className="flex gap-2">
                                                 {selectedOption !== null && (
                                                     <button
@@ -330,48 +327,7 @@ function Exam() {
                                 </div>
                             </div>
 
-                            <div className="mb-4 font-roboto">
-                                <p className="text-lg text-black leading-tight">
-                                    {currentQuestion.question}
-                                </p>
-                            </div>
-                            <div className="space-y-2 flex-1">
-                                {currentQuestion.options.map((option, index) => (
-                                    <div
-                                        key={index}
-                                        onClick={() => handleOptionSelect(index)}
-                                        onKeyDown={(e) =>
-                                            e.key === "Enter" && handleOptionSelect(index)
-                                        }
-                                        role="radio"
-                                        aria-checked={selectedOption === index}
-                                        tabIndex={0}
-                                        className={classNames(
-                                            "p-2 py-3 border border-gray-400 rounded-md cursor-pointer transition-all",
-                                            "hover:shadow focus:outline-none focus:ring-1 focus:ring-indigo-500",
-                                            selectedOption === index
-                                                ? "bg-indigo-50 border-indigo-500 text-indigo-700"
-                                                : "hover:bg-gray-50 hover:border-gray-500 text-gray-800 border-gray-200"
-                                        )}
-                                    >
-                                        <div className="flex items-center">
-                                            <div
-                                                className={classNames(
-                                                    "w-4 h-4 rounded-full border mr-2 flex items-center justify-center relative",
-                                                    selectedOption === index
-                                                        ? "border-indigo-500 bg-indigo-100"
-                                                        : "border-gray-400"
-                                                )}
-                                            >
-                                                {selectedOption === index && (
-                                                    <div className="absolute inset-0 m-auto w-2 h-2 rounded-full bg-indigo-500" />
-                                                )}
-                                            </div>
-                                            <span className="text-sm">{option}</span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+                            <QuestionComponent question={currentQuestion} handleOptionSelect={handleOptionSelect} selectedOption={selectedOption}/>
 
                             <div className="mt-4 pt-2 border-t">
                                 <div className="flex justify-between items-center">
@@ -415,7 +371,7 @@ function Exam() {
                         </div>
                     </div>
 
-                    <div className="w-[30%] min-w-[30%] flex  rounded shadow-2xl">
+                    <div className="w-[30%] min-w-[30%] flex rounded shadow-2xl">
                         <QuestionNavigation />
                     </div>
                 </div>
