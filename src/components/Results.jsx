@@ -16,7 +16,9 @@ function ResultCard({ title, value, description, className }) {
 }
 
 function QuestionResult({ question, userAnswer, index, timeSpent, averageTime }) {
-    const isCorrect = userAnswer === question.correctAnswer;
+    console.log(question);
+
+    const isCorrect = userAnswer === question.a;
     const isNotAttempted = userAnswer === undefined || userAnswer === null;
 
     const formatTime = (seconds) => {

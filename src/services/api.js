@@ -9,13 +9,13 @@ export const fetchQuestions = async () => {
   }
   
   // Transform questions to match the expected format if needed
-  const transformedQuestions = questions.map(q => ({
-    id: q.id,
-    question: q.question,
-    options: q.options,
-    correctAnswer: q.correctAnswer
-  }));
+  // const transformedQuestions = questions.map(q => ({
+  //   id: q.id,
+  //   question: q.question,
+  //   options: q.options,
+  //   correctAnswer: q.correctAnswer
+  // }));
   
   await new Promise(resolve => setTimeout(resolve, 500));
-  return { questions: transformedQuestions };
+  return { questions: questions };
 }

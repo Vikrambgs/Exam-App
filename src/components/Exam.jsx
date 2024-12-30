@@ -118,7 +118,7 @@ function Exam() {
             if (!questions || questions.length === 0) {
                 try {
                     const data = await fetchQuestions();
-                    dispatch(setQuestions(data.questions));
+                    dispatch(setQuestions(data));
                 } catch (error) {
                     console.error("Error loading questions:", error);
                 }
@@ -241,7 +241,7 @@ function Exam() {
     const isBookmarked = currentQuestion ? bookmarkedQuestions.includes(currentQuestion.id) : false;
 
     return (
-        <div className="min-h-screen max-w-[100vw] bg-gray-50 flex flex-col border border-blue-600 ">
+        <div className="min-h-screen max-w-[100vw] bg-gray-50 flex flex-col">
             <div className="bg-gradient-to-r from-indigo-600 to-purple-600 py-2 px-3 shadow-lg">
                 <div className="max-w-full mx-auto flex justify-between items-center">
                     <h1 className="text-lg font-bold text-white uppercase">Ongoing Exam....</h1>
@@ -280,7 +280,7 @@ function Exam() {
                 <div className="flex-1 flex gap-2 p-2 max-w-full">
                     <div className="max-w-[70%] flex-1 flex rounded shadow-2xl ">
                         <div className="bg-white rounded-lg shadow-lg p-4 w-full flex flex-col border border-gray-300">
-                            <div className="mb-4">
+                            <div className="mb-2">
                                 <div className="flex flex-col gap-2">
                                     <div className="flex justify-between items-start h-8">
                                         <h2 className="text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">

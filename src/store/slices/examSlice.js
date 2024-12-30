@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  questions: [],
-  currentQuestionIndex: 0,
-  answers: {},
-  questionStatus: {}, // not-attempted, viewed, answered, marked-review
-  examStartTime: null,
-  examEndTime: null,
-  questionTimes: {}, // Track time spent on each question
-  isExamComplete: false,
-  bookmarkedQuestions: [],
-  averageTimePerQuestion: 0,
-  totalExamTime: 3600, // 1 hour in seconds
+  questions: [],             // Array to hold the questions
+  currentQuestionIndex: 0,   // Index of the current question
+  answers: {},               // Object to store answers keyed by question ID
+  questionStatus: {},        // Object to track the status of each question (not-attempted, viewed, answered, marked-review)
+  examStartTime: null,       // Timestamp when the exam starts
+  examEndTime: null,         // Timestamp when the exam ends
+  questionTimes: {},         // Object to track time spent on each question
+  isExamComplete: false,     // Boolean to indicate if the exam is complete
+  bookmarkedQuestions: [],   // Array to hold bookmarked question IDs
+  averageTimePerQuestion: 0, // Average time per question in seconds
+  totalExamTime: 3600,       // Total exam time in seconds (1 hour)
 }
 
 const examSlice = createSlice({

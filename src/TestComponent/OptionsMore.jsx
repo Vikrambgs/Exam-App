@@ -1,23 +1,17 @@
 import React from "react";
 
 function OptionsMore({ options }) {
-    options = [
-        "Common Law Admission Test (CLAT)",
-        "Law School Admission Test (LSAT)",
-        "All India Law Entrance Examination (AILET)  All India Law Entrance Examination (AILET)  All India Law Entrance Examination (AILET) ",
-        "All India Bar Examination (AIVE)",
-    ];
     return (
         <div>
-            {options.map((option, index) => (
+            {options.map((elem, index) => (
                 <div
                     key={index}
-                    className="flex gap-2 my-0.5 items-center pl-2 border-b bg-gray-100"
+                    className="flex gap-2 my-0.5 items-center pl-2 border-b bg-slate-200 text-gray-900 font-normal rounded"
                 >
-                    <p className="text-gray-600">
+                    <p>
                         ({String.fromCharCode(65 + index)})
                     </p>
-                    <p className="text-gray-800">{option}</p>
+                    <p>{elem}</p>
                 </div>
             ))}
         </div>

@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setQuestions } from "../store/slices/examSlice";
+import MatchUi from "../TestComponent/MatchUi";
+import OptionsMore from "../TestComponent/OptionsMore";
 
 function QuestionPreview({ questionData }) {
     if (!questionData?.questions?.length) return null;
+
 
     return (
         <div className="bg-gray-100 w-11/12 mx-auto rounded-lg p-4 border-gray-200 border mt-4">
@@ -18,20 +21,38 @@ function QuestionPreview({ questionData }) {
                     <div key={index} className="border border-gray-400 rounded-md p-4 py-3">
                         <p className="text-lg leading-tight">
                             <span className="font-semibold pr-2">{index + 1}.</span>
-                            {question.question}
+                            {question.parts[0]}
                         </p>
-                        <div className="mt-4 flex flex-col gap-1">
-                            {question.options.map((option, optionIndex) => (
-                                <p
-                                    key={optionIndex}
-                                    className={`${
-                                        optionIndex === question.correctAnswer ? "bg-green-300" : "bg-gray-200"
-                                    } px-3 py-0.5 rounded border border-gray-300`}
-                                >
-                                    {option}
-                                </p>
-                            ))}
-                        </div>
+
+                        {question.parts.slice(1).map((part, partIndex) => {
+                            if (typeof part === "string") {
+                                return (
+                                    <p key={partIndex} className="mt-2">
+                                        {part}
+                                    </p>
+                                );
+                            } else if (typeof part === "object") {
+                                if (part.pre_o) {
+                                    return (
+                                        <div className="mt-2">
+                                            <OptionsMore options={part.pre_o} />
+                                        </div>
+                                    );
+                                } else if (part.match) {
+                                    return (
+                                        <div className="mt-2">
+                                            <MatchUi key={partIndex} match={part.match} />
+                                        </div>
+                                    );
+                                }
+                            }
+                        })}
+
+                        {question.o.map((option, optionIndex) => (
+                            <div key={optionIndex} className="ml-1 pl-3 py-1 bg-gray-300 rounded my-2" style={optionIndex === question.a ? { backgroundColor: "#81ff6b" } : {}}>
+                                <p>{option}</p>
+                            </div>
+                        ))}
                     </div>
                 ))}
             </div>
@@ -56,12 +77,7 @@ function CreateQuestion() {
         return {
             examTitle: "Exam",
             timeLimit: 3600,
-            questions: rawData.map((item, index) => ({
-                id: item.id || `Q${index + 1}`,
-                question: item.q,
-                options: item.o,
-                correctAnswer: item.a
-            }))
+            questions: rawData,
         };
     };
 
@@ -69,21 +85,6 @@ function CreateQuestion() {
         if (!Array.isArray(data)) {
             throw new Error("Questions must be provided as an array");
         }
-
-        data.forEach((q, index) => {
-            if (!q.id || typeof q.id !== "string") {
-                throw new Error(`Question ${index + 1}: Invalid ID format.`);
-            }
-            if (!q.q || typeof q.q !== "string") {
-                throw new Error(`Question ${index + 1}: Missing or invalid question text`);
-            }
-            if (!Array.isArray(q.o) || q.o.length !== 4) {
-                throw new Error(`Question ${index + 1}: Must have exactly 4 options`);
-            }
-            if (typeof q.a !== "number" || q.a < 0 || q.a >= q.o.length) {
-                throw new Error(`Question ${index + 1}: Invalid answer index`);
-            }
-        });
     };
 
     const checkInputData = () => {
