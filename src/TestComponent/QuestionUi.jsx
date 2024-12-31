@@ -14,7 +14,7 @@ const QuestionComponent = ({ question, selectedOption, handleOptionSelect }) => 
                     }
                 } else {
                     return (
-                        <div key={index} className="text-gray-800 leading-tight py-1 text-lg">
+                        <div key={index} className="text-black leading-[1.15] py-1 text-[1.1rem]">
                             {part}
                         </div>
                     );

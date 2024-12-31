@@ -3,8 +3,8 @@ const MatchUi = ({ match }) => {
     const list2Labels = ["i", "ii", "iii", "iv", "v"];
 
     return (
-        <div className="mb-2">
-            <table className="border border-gray-600">
+        <div className="mb-2 w-full">
+            <table className="border border-gray-600 w-full">
                 <thead className="bg-gray-50">
                     <tr className="bg-gray-200">
                         <th className="py-1 text-center text-xs font-medium text-black uppercase tracking-wider" colSpan={2} width="50%">List-I</th>

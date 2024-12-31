@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import classNames from "classnames";
-
+import { PiTimer } from "react-icons/pi";
 
 function ExamTimer({ startTime, timeLimit }) {
     const [timeRemaining, setTimeRemaining] = useState(timeLimit);
@@ -27,23 +27,11 @@ function ExamTimer({ startTime, timeLimit }) {
     return (
         <div
             className={classNames(
-                "flex items-center gap-2 px-4 py-1 rounded text-lg transition-colors font-medium font-mono",
+                "flex items-center rounded-full gap-2 px-4 py-1 text-lg transition-colors font-medium font-mono",
                 isLowTime ? "bg-red-100 text-red-700" : "bg-white/10 text-white"
             )}
         >
-            <svg
-                className={classNames("w-5 h-5", isLowTime && "animate-pulse")}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-            >
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-            </svg>
+            <PiTimer size={23} />
             <span className="font-medium">
                 {minutes.toString().padStart(2, "0")}:{seconds.toString().padStart(2, "0")}
             </span>

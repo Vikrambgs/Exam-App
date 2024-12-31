@@ -21,10 +21,13 @@ import ConfirmationDialog from "./exam/ConfirmSubmit";
 import QuestionTimeProgress from "./exam/QuestionTimeProgressBar";
 import ClearExamDialog from "./exam/ResetExamDialog";
 import QuestionComponent from "../TestComponent/QuestionUi";
+import ExamProgressBar from "./exam/ExamProgressBar";
+import { GoQuestion } from "react-icons/go";
 
 function Exam() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const timeLimitInSec = 3600;
 
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const currentQuestionIndex = useSelector((state) => state.exam.currentQuestionIndex);
@@ -33,15 +36,16 @@ function Exam() {
     const answers = useSelector((state) => state.exam.answers);
     const questionStatus = useSelector((state) => state.exam.questionStatus);
     const bookmarkedQuestions = useSelector((state) => state.exam.bookmarkedQuestions);
+    const questionTimes = useSelector((state) => state.exam.questionTimes);
+    const averageTimePerQuestion = useSelector((state) => state.exam.averageTimePerQuestion);
+
+    const [showHelp, setShowHelp] = useState(false);
+    const [startTime, setStartTime] = useState(null);
     const [selectedOption, setSelectedOption] = useState(null);
     const [showConfirmation, setShowConfirmation] = useState(false);
-    const [showHelp, setShowHelp] = useState(false);
-    const questionTimes = useSelector((state) => state.exam.questionTimes);
     const [questionStartTime, setQuestionStartTime] = useState(Date.now());
     const [lastInteractionTime, setLastInteractionTime] = useState(Date.now());
-    const averageTimePerQuestion = useSelector((state) => state.exam.averageTimePerQuestion);
     const [currentQuestionTimer, setCurrentQuestionTimer] = useState(null);
-    const [startTime, setStartTime] = useState(null);
     const [showClearConfirmation, setShowClearConfirmation] = useState(false);
 
     const currentQuestion = questions[currentQuestionIndex] || null;
@@ -242,14 +246,14 @@ function Exam() {
 
     return (
         <div className="min-h-screen max-w-[100vw] bg-gray-50 flex flex-col">
-            <div className="bg-gradient-to-r from-indigo-600 to-purple-600 py-2 px-3 shadow-lg">
+            <div className="bg-gradient-to-r from-indigo-700 to-purple-800 py-1.5 px-3 shadow-lg">
                 <div className="max-w-full mx-auto flex justify-between items-center">
-                    <h1 className="text-lg font-bold text-white uppercase">Ongoing Exam....</h1>
+                    <h1 className="text-lg font-bold text-white uppercase">Ongoing exam....</h1>
                     <div className="flex items-center gap-4">
-                        {examStartTime && <ExamTimer startTime={examStartTime} timeLimit={3600} />}
+                        {examStartTime && <ExamTimer startTime={examStartTime} timeLimit={timeLimitInSec} />}
                         <button
                             onClick={() => setShowClearConfirmation(true)}
-                            className="text-white/90 hover:text-white bg-red-500/40 hover:bg-red-500/70 px-3 py-1.5 rounded"
+                            className="text-white/90 hover:text-white bg-red-600/80 hover:bg-red-500/90 px-3 py-1.5 rounded"
                         >
                             Restart Exam
                         </button>
@@ -258,23 +262,13 @@ function Exam() {
                             className="text-white/80 hover:text-white"
                             aria-label="Show help"
                         >
-                            <svg
-                                className="w-5 h-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                            </svg>
+                            <GoQuestion size={24}/>
                         </button>
                     </div>
                 </div>
             </div>
+
+            <ExamProgressBar startTime={examStartTime} timeLimitSec={timeLimitInSec} />
 
             <div className="flex-1 flex flex-col max-w-full">
                 <div className="flex-1 flex gap-2 p-2 max-w-full">

@@ -2,6 +2,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import classNames from "classnames";
+import OptionsMore from "../TestComponent/OptionsMore";
+import MatchUi from "../TestComponent/MatchUi";
 
 function ResultCard({ title, value, description, className }) {
     return (
@@ -16,7 +18,6 @@ function ResultCard({ title, value, description, className }) {
 }
 
 function QuestionResult({ question, userAnswer, index, timeSpent, averageTime }) {
-    console.log(question);
 
     const isCorrect = userAnswer === question.a;
     const isNotAttempted = userAnswer === undefined || userAnswer === null;
@@ -91,33 +92,54 @@ function QuestionResult({ question, userAnswer, index, timeSpent, averageTime })
                 </div>
             </div>
 
-            <div className="mb-3">
-                <p className="text-gray-800">{question.question}</p>
-            </div>
+
+            {question.parts.map((part, partIndex) => {
+                if (typeof part === "string") {
+                    return (
+                        <p key={partIndex} className="my-1 text-slate-900">
+                            {part}
+                        </p>
+                    );
+                } else if (typeof part === "object") {
+                    if (part.pre_o) {
+                        return (
+                            <div key={partIndex}>
+                                <OptionsMore key={partIndex} options={part.pre_o} />
+                            </div>
+                        );
+                    } else if (part.match) {
+                        return (
+                            <div key={partIndex}>
+                                <MatchUi key={partIndex} match={part.match} />
+                            </div>
+                        );
+                    }
+                }
+            })}
 
             <div className="space-y-2">
-                {question.options.map((option, optionIndex) => (
+                {question.o.map((choice, optionIndex) => (
                     <div
                         key={optionIndex}
                         className={classNames(
                             "p-3 border rounded transition-colors",
-                            optionIndex === question.correctAnswer &&
+                            optionIndex === question.a &&
                                 "bg-green-50 border-green-500",
                             !isNotAttempted &&
                                 optionIndex === userAnswer &&
-                                optionIndex !== question.correctAnswer &&
+                                optionIndex !== question.a &&
                                 "bg-red-50 border-red-500",
-                            optionIndex !== question.correctAnswer &&
+                            optionIndex !== question.a &&
                                 optionIndex !== userAnswer &&
                                 "border-gray-200",
                             isNotAttempted &&
-                                optionIndex === question.correctAnswer &&
+                                optionIndex === question.a &&
                                 "border-green-500 shadow-sm"
                         )}
                     >
                         <div className="flex items-center">
                             <div className="mr-2">
-                                {optionIndex === question.correctAnswer && (
+                                {optionIndex === question.a && (
                                     <svg
                                         className="w-5 h-5 text-green-500"
                                         fill="none"
@@ -134,7 +156,7 @@ function QuestionResult({ question, userAnswer, index, timeSpent, averageTime })
                                 )}
                                 {!isNotAttempted &&
                                     optionIndex === userAnswer &&
-                                    optionIndex !== question.correctAnswer && (
+                                    optionIndex !== question.a && (
                                         <svg
                                             className="w-5 h-5 text-red-500"
                                             fill="none"
@@ -153,15 +175,15 @@ function QuestionResult({ question, userAnswer, index, timeSpent, averageTime })
                             <span
                                 className={classNames(
                                     "text-sm",
-                                    optionIndex === question.correctAnswer
+                                    optionIndex === question.a
                                         ? "text-green-700 font-medium"
                                         : !isNotAttempted && optionIndex === userAnswer
                                         ? "text-red-700"
                                         : "text-gray-700"
                                 )}
                             >
-                                {option}
-                                {isNotAttempted && optionIndex === question.correctAnswer && (
+                                {choice}
+                                {isNotAttempted && optionIndex === question.a && (
                                     <span className="ml-2 text-green-600 text-xs">
                                         (Correct Answer)
                                     </span>
@@ -197,7 +219,7 @@ function Results() {
     // Calculate statistics
     const totalQuestions = questions.length;
     const attemptedQuestions = Object.keys(answers).length;
-    const correctAnswers = questions.filter((q) => answers[q.id] === q.correctAnswer).length;
+    const correctAnswers = questions.filter((q) => answers[q.id] === q.a).length;
     const incorrectAnswers = attemptedQuestions - correctAnswers;
     const score = (correctAnswers / totalQuestions) * 100;
     const timeTaken = Math.floor((examEndTime - examStartTime) / 1000); // in seconds
