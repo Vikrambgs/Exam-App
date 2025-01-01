@@ -4,10 +4,15 @@ import { useDispatch } from "react-redux";
 import { setQuestions } from "../store/slices/examSlice";
 import MatchUi from "../TestComponent/MatchUi";
 import OptionsMore from "../TestComponent/OptionsMore";
+import { GoQuestion } from "react-icons/go";
+import HelpWindow from "./UploadPage/HelpWindow";
+
+
+
+
 
 function QuestionPreview({ questionData }) {
     if (!questionData?.questions?.length) return null;
-
 
     return (
         <div className="bg-gray-100 w-11/12 mx-auto rounded-lg p-4 border-gray-200 border mt-4">
@@ -49,7 +54,13 @@ function QuestionPreview({ questionData }) {
                         })}
 
                         {question.o.map((option, optionIndex) => (
-                            <div key={optionIndex} className="ml-1 pl-3 py-1 bg-gray-300 rounded my-2" style={optionIndex === question.a ? { backgroundColor: "#81ff6b" } : {}}>
+                            <div
+                                key={optionIndex}
+                                className="ml-1 pl-3 py-1 bg-gray-300 rounded my-2"
+                                style={
+                                    optionIndex === question.a ? { backgroundColor: "#81ff6b" } : {}
+                                }
+                            >
                                 <p>{option}</p>
                             </div>
                         ))}
@@ -60,6 +71,8 @@ function QuestionPreview({ questionData }) {
     );
 }
 
+
+
 function CreateQuestion() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -68,6 +81,7 @@ function CreateQuestion() {
     const [isShowPreview, setIsShowPreview] = useState(false);
     const [isInputDataValid, setIsInputDataValid] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
+    const [showHelp, setShowHelp] = useState(false);
 
     const transformQuestions = (rawData) => {
         if (!Array.isArray(rawData)) {
@@ -148,7 +162,16 @@ function CreateQuestion() {
             <div className="min-h-screen bg-gray-100 py-4">
                 <div className="max-w-6xl mx-auto">
                     <div className="bg-white rounded-lg shadow-lg p-8 mb-4">
-                        <h1 className="text-2xl font-bold text-center mb-6">Upload Questions</h1>
+                        <div className="flex justify-between items-center mb-6">
+                            <h1 className="text-2xl font-bold">Upload Questions</h1>
+                            <button
+                                onClick={() => setShowHelp(true)}
+                                className="text-gray-600 hover:text-gray-800"
+                                aria-label="Show help"
+                            >
+                                <GoQuestion size={24} />
+                            </button>
+                        </div>
                         <div className="mb-4">
                             <div className="flex justify-between mb-2 items-center">
                                 <p className="text-lg text-gray-800">Enter JSON Format Questions</p>
@@ -195,6 +218,7 @@ function CreateQuestion() {
                     {isShowPreview && <QuestionPreview questionData={parsedQuestions} />}
                 </div>
             </div>
+            <HelpWindow isOpen={showHelp} onClose={() => setShowHelp(false)} />
         </div>
     );
 }

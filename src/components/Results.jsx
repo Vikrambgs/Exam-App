@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import classNames from "classnames";
 import OptionsMore from "../TestComponent/OptionsMore";
 import MatchUi from "../TestComponent/MatchUi";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 function ResultCard({ title, value, description, className }) {
     return (
@@ -204,6 +205,8 @@ function Results() {
         (state) => state.exam
     );
     const questionTimes = useSelector((state) => state.exam.questionTimes);
+    const [filterStatus, setFilterStatus] = useState('all'); // 'all', 'correct', 'incorrect', 'unattempted'
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         if (!isAuthenticated) {
@@ -234,6 +237,30 @@ function Results() {
 
     const totalExamTime = 3600; // 1 hour in seconds
     const averageTimePerQuestion = Math.floor(totalExamTime / questions.length);
+
+    const filteredQuestions = questions.filter(question => {
+        const matchesSearch = question.parts.some(part => 
+            typeof part === 'string' && part.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        
+        const isUnattempted = !answers.hasOwnProperty(question.id);
+        const isCorrect = answers[question.id] === question.a;
+        const isIncorrect = !isUnattempted && !isCorrect;
+
+        const matchesFilter = 
+            filterStatus === 'all' || 
+            (filterStatus === 'correct' && isCorrect) ||
+            (filterStatus === 'incorrect' && isIncorrect) ||
+            (filterStatus === 'unattempted' && isUnattempted);
+        
+        return matchesSearch && matchesFilter;
+    });
+
+    // Create a mapping of filtered questions to their original indices
+    const questionIndices = questions.reduce((acc, question, index) => {
+        acc[question.id] = index + 1;
+        return acc;
+    }, {});
 
     return (
         <div className="min-h-screen bg-gray-50 py-4">
@@ -296,33 +323,87 @@ function Results() {
                     </div>
                 </div>
 
-                {/* Question-wise Analysis */}
-                <div className="mb-8">
-                    <h2 className="text-xl font-semibold mb-4">Question-wise Analysis</h2>
-                    {questions.map((question, index) => (
-                        <QuestionResult
-                            key={question.id}
-                            question={question}
-                            userAnswer={answers[question.id]}
-                            index={index}
-                            timeSpent={questionTimes[question.id] || 0}
-                            averageTime={averageTimePerQuestion}
-                        />
-                    ))}
+                {/* Add Filter Controls */}
+                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+                    <div className="flex flex-col md:flex-row justify-between gap-4">
+                        <div className="flex-1">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Search Questions
+                            </label>
+                            <div className="relative">
+                                <input
+                                    type="text"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    placeholder="Search question content..."
+                                    className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                />
+                                <MagnifyingGlassIcon className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                            </div>
+                        </div>
+                        <div className="md:w-64">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Filter by Status
+                            </label>
+                            <select
+                                value={filterStatus}
+                                onChange={(e) => setFilterStatus(e.target.value)}
+                                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            >
+                                <option value="all">All Questions</option>
+                                <option value="correct">Correct Answers</option>
+                                <option value="incorrect">Incorrect Answers</option>
+                                <option value="unattempted">Unattempted</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex justify-center gap-4">
+                {/* Update Question-wise Analysis section */}
+                <div className="mb-8">
+                    <div className="flex justify-between items-center mb-4">
+                        <h2 className="text-xl font-semibold">Question-wise Analysis</h2>
+                        <div className="text-sm text-gray-500">
+                            Showing {filteredQuestions.length} of {questions.length} questions
+                        </div>
+                    </div>
+
+                    {filteredQuestions.length === 0 ? (
+                        <div className="bg-white rounded-lg shadow-lg p-8 text-center">
+                            <p className="text-gray-500">No questions match your search criteria</p>
+                        </div>
+                    ) : (
+                        filteredQuestions.map((question) => (
+                            <QuestionResult
+                                key={question.id}
+                                question={question}
+                                userAnswer={answers[question.id]}
+                                index={questionIndices[question.id] - 1} // Use original question number
+                                timeSpent={questionTimes[question.id] || 0}
+                                averageTime={averageTimePerQuestion}
+                            />
+                        ))
+                    )}
+                </div>
+
+                {/* Update Action Buttons */}
+                <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
                     <button
                         onClick={() => window.print()}
-                        className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
+                        className="flex items-center justify-center px-6 py-2.5 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors gap-2"
                     >
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                        </svg>
                         Print Results
                     </button>
                     <button
                         onClick={() => navigate("/upload-questions")}
-                        className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-colors"
+                        className="flex items-center justify-center px-6 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors gap-2"
                     >
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
                         Take Another Exam
                     </button>
                 </div>

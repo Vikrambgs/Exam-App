@@ -2,7 +2,7 @@ function HelpPanel({ isOpen, onClose }) {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed bottom-4 right-4 bg-white rounded-lg shadow-lg p-4 w-80 border border-gray-200">
+        <div className="fixed bottom-4 right-4 bg-white rounded-lg shadow-lg p-4 w-80 border border-gray-400">
             <div className="flex justify-between items-center mb-2">
                 <h3 className="font-semibold text-gray-700">Exam Help</h3>
                 <button onClick={onClose} className="text-gray-400 hover:text-gray-500">

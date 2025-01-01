@@ -6,7 +6,8 @@ const statusColors = {
   'not-attempted': 'bg-gray-300 hover:bg-gray-400',
   'viewed': 'bg-yellow-300 hover:bg-yellow-400',
   'answered': 'bg-green-300 hover:bg-green-400',
-  'marked-review': 'bg-purple-400 hover:bg-purple-500'
+  'marked-review': 'bg-purple-400 hover:bg-purple-500',
+  'answered-marked-review': 'bg-emerald-400 hover:bg-emerald-500'
 }
 
 function QuestionNavigation() {
@@ -20,6 +21,7 @@ function QuestionNavigation() {
     'viewed': Object.values(questionStatus).filter(status => status === 'viewed').length,
     'answered': Object.values(questionStatus).filter(status => status === 'answered').length,
     'marked-review': Object.values(questionStatus).filter(status => status === 'marked-review').length,
+    'answered-marked-review': Object.values(questionStatus).filter(status => status === 'answered-marked-review').length,
   }
 
   return (
@@ -69,6 +71,13 @@ function QuestionNavigation() {
             <span className="text-gray-600 text-sm">Marked for Review</span>
           </div>
           <span className="text-gray-600 text-sm">{statusCounts['marked-review']}</span>
+        </div>
+        <div className="flex items-center justify-between px-1.5 mb-2">
+          <div className="flex items-center">
+            <div className={classNames('w-2.5 h-2.5 rounded mr-2', statusColors['answered-marked-review'].split(' ')[0])} />
+            <span className="text-gray-600 text-sm">Answered & Marked for Review</span>
+          </div>
+          <span className="text-gray-600 text-sm">{statusCounts['answered-marked-review']}</span>
         </div>
       </div>
     </div>

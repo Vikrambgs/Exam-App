@@ -1,15 +1,20 @@
-# Json Template
+
+
+---
 
 **Prompt to Generate JSON-Formatted MCQ Questions**
 
-Your task is to create multiple-choice questions (MCQs) in JSON format. Each question should be represented as an object, and all questions should be stored within an array. The JSON structure must follow one or more of the formats outlined below. 
+Your task is to create multiple-choice questions (MCQs) in JSON format. Each question should be represented as an object, and all questions should be stored within an array. The JSON structure must follow one or more of the formats outlined below.
 
 ### General Guidelines
 1. Each question must have a **unique ID** represented as `"id"` (e.g., "Q1").
 2. The `"parts"` field contains the main body of the question. It may include plain text, a mix of text and special structures (e.g., pre-options or matching lists), or a combination of both.
 3. The `"o"` field (options) contains an array of possible answers.
 4. The `"a"` field (answer) represents the index (zero-based) of the correct option in the `"o"` array.
-5. And one more thing is try to shuffle option not everytime same option should be correct answer like alwyas correct answer is happening A or orther option
+5. Ensure that the **option order is shuffled** for every question. The correct answer must not consistently appear in the same position (e.g., always at index 0).
+6. For **matching questions**, shuffle the pairs in `"list1"` and `"list2"` to ensure variety.
+7. Always try to cover **all concepts** relevant to the given context or book content.
+8. Include diverse question types (e.g., simple, matching, and pre-options) to comprehensively test the learner's understanding.
 
 ### Supported Formats
 Here are examples of the structures you can use:
@@ -95,16 +100,4 @@ Here are examples of the structures you can use:
 ```
 
 ### Expected Output
-- **Input:** Subject details or specific requirements.
-- **Output:** An array of JSON objects representing MCQs, adhering to one or more of the above formats.
-
----
-
-If you need assistance creating questions for a specific subject or style, please provide additional details like the topic, difficulty level, or special structures you want included.
-
-
-------
-
-
-create all the questions from given pdf or chapter 1 of book judiciary 
-but keep in mind generate 10 questions of type 2 and 10 questions of type 3 and 30 question of type 1
+An array of JSON objects representing MCQs, adhering to one or more of the above formats, with shuffled options and diverse question types covering all concepts from the given material.

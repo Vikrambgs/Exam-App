@@ -40,10 +40,8 @@ function Exam() {
     const averageTimePerQuestion = useSelector((state) => state.exam.averageTimePerQuestion);
 
     const [showHelp, setShowHelp] = useState(false);
-    const [startTime, setStartTime] = useState(null);
     const [selectedOption, setSelectedOption] = useState(null);
     const [showConfirmation, setShowConfirmation] = useState(false);
-    const [questionStartTime, setQuestionStartTime] = useState(Date.now());
     const [lastInteractionTime, setLastInteractionTime] = useState(Date.now());
     const [currentQuestionTimer, setCurrentQuestionTimer] = useState(null);
     const [showClearConfirmation, setShowClearConfirmation] = useState(false);
@@ -107,9 +105,7 @@ function Exam() {
         dispatch(clearExamState());
         setSelectedOption(null);
         setShowClearConfirmation(false);
-        setQuestionStartTime(Date.now());
         setCurrentQuestionTimer(null);
-        setStartTime(Date.now());
     };
 
     useEffect(() => {
@@ -291,23 +287,21 @@ function Exam() {
                                                         Clear Answer
                                                     </button>
                                                 )}
-                                                {selectedOption !== null && (
-                                                    <button
-                                                        onClick={handleMarkForReview}
-                                                        className={classNames(
-                                                            "px-3 py-1 text-sm font-medium rounded-full transition-all",
-                                                            questionStatus[currentQuestion?.id] ===
-                                                                "marked-review"
-                                                                ? "bg-yellow-100 text-yellow-700 border border-yellow-400 hover:bg-yellow-200"
-                                                                : "text-indigo-600 hover:text-white hover:bg-indigo-600 border border-indigo-600"
-                                                        )}
-                                                    >
-                                                        {questionStatus[currentQuestion?.id] ===
-                                                        "marked-review"
-                                                            ? "Marked for Review"
-                                                            : "Mark for Review"}
-                                                    </button>
-                                                )}
+                                                <button
+                                                    onClick={handleMarkForReview}
+                                                    className={classNames(
+                                                        "px-3 py-1 text-sm font-medium rounded-full transition-all",
+                                                        questionStatus[currentQuestion?.id] === "marked-review" || 
+                                                        questionStatus[currentQuestion?.id] === "answered-marked-review"
+                                                            ? "bg-yellow-100 text-yellow-700 border border-yellow-400 hover:bg-yellow-200"
+                                                            : "text-indigo-600 hover:text-white hover:bg-indigo-600 border border-indigo-600"
+                                                    )}
+                                                >
+                                                    {questionStatus[currentQuestion?.id] === "marked-review" || 
+                                                     questionStatus[currentQuestion?.id] === "answered-marked-review"
+                                                        ? "Marked for Review"
+                                                        : "Mark for Review"}
+                                                </button>
                                             </div>
                                         </div>
                                     </div>

@@ -51,16 +51,22 @@ const examSlice = createSlice({
         state.questionStatus[questionId] = 'viewed'
       } else {
         state.answers[questionId] = answer
-        // Only set to answered if not already marked for review
-        if (state.questionStatus[questionId] !== 'marked-review') {
+        // Check if the question was marked for review
+        if (state.questionStatus[questionId] === 'marked-review') {
+          state.questionStatus[questionId] = 'answered-marked-review'
+        } else {
           state.questionStatus[questionId] = 'answered'
         }
       }
     },
     markForReview: (state, action) => {
       const questionId = action.payload
-      // Mark for review status takes precedence over answered status
-      state.questionStatus[questionId] = 'marked-review'
+      // Check if the question is answered
+      if (state.answers.hasOwnProperty(questionId)) {
+        state.questionStatus[questionId] = 'answered-marked-review'
+      } else {
+        state.questionStatus[questionId] = 'marked-review'
+      }
     },
     updateQuestionTime: (state, action) => {
       const { questionId, timeSpent } = action.payload
@@ -74,7 +80,12 @@ const examSlice = createSlice({
     clearAnswer: (state, action) => {
       const questionId = action.payload
       delete state.answers[questionId]
-      state.questionStatus[questionId] = 'viewed'
+      // If it was marked for review, keep it marked
+      if (state.questionStatus[questionId] === 'answered-marked-review') {
+        state.questionStatus[questionId] = 'marked-review'
+      } else {
+        state.questionStatus[questionId] = 'viewed'
+      }
     },
     toggleBookmark: (state, action) => {
       const questionId = action.payload
