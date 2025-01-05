@@ -5,21 +5,21 @@ import classNames from "classnames";
 import OptionsMore from "../TestComponent/OptionsMore";
 import MatchUi from "../TestComponent/MatchUi";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import MinimalQuizResult from "./Result/ResultDashboard";
 
 function ResultCard({ title, value, description, className }) {
     return (
-        <div className={classNames("bg-white rounded-lg shadow-lg p-4", className)}>
-            <h3 className="text-sm font-medium text-gray-500 uppercase">{title}</h3>
+        <div className={classNames("bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 rounded-xl shadow-lg p-6", className)}>
+            <h3 className="text-sm font-medium text-white uppercase">{title}</h3>
             <div className="mt-2 flex items-baseline">
-                <p className="text-3xl font-semibold text-gray-900">{value}</p>
-                {description && <p className="ml-2 text-sm text-gray-500">{description}</p>}
+                <p className="text-3xl font-semibold text-white">{value}</p>
+                {description && <p className="ml-2 text-sm text-gray-200">{description}</p>}
             </div>
         </div>
     );
 }
 
 function QuestionResult({ question, userAnswer, index, timeSpent, averageTime }) {
-
     const isCorrect = userAnswer === question.a;
     const isNotAttempted = userAnswer === undefined || userAnswer === null;
 
@@ -31,20 +31,20 @@ function QuestionResult({ question, userAnswer, index, timeSpent, averageTime })
 
     return (
         <div
-            className={`bg-white rounded-lg shadow p-4 mb-4 ${
+            className={`bg-white rounded-xl shadow-lg p-4 mb-4 transition-all duration-300 ${
                 isCorrect
-                    ? "border border-green-400 shadow-[inset_0_0_8px_rgba(34,197,94,0.3)]"
+                    ? "border-l-4 border-green-500 bg-gradient-to-r from-green-50 to-green-100"
                     : isNotAttempted
-                    ? ""
-                    : "border border-red-400 shadow-[inset_0_0_8px_rgba(220,38,38,0.3)]"
+                    ? "bg-gradient-to-r from-gray-50 to-gray-100"
+                    : "border-l-4 border-red-500 bg-gradient-to-r from-red-50 to-red-100"
             }`}
         >
             <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-4">
-                    <span className="font-semibold">Ques. {index + 1}</span>
+                    <span className="font-semibold text-lg text-gray-800">Ques. {index + 1}</span>
                     <div>
                         <div className="flex items-center gap-2">
-                            <span className="text-sm">Time: {formatTime(timeSpent)}</span>
+                            <span className="text-sm text-gray-600">Time: {formatTime(timeSpent)}</span>
                             <div className="h-1.5 w-24 bg-gray-100 rounded-full overflow-hidden">
                                 <div
                                     className={classNames(
@@ -80,12 +80,12 @@ function QuestionResult({ question, userAnswer, index, timeSpent, averageTime })
                     )}
                     <span
                         className={classNames(
-                            "px-2 py-1 rounded-full text-sm font-medium",
+                            "px-4 py-2 rounded-full text-sm font-medium",
                             isNotAttempted
                                 ? "bg-gray-200 text-gray-800"
                                 : isCorrect
-                                ? "bg-green-100 text-green-800"
-                                : "bg-red-100 text-red-800"
+                                ? "bg-green-200 text-green-800"
+                                : "bg-red-200 text-red-800"
                         )}
                     >
                         {isNotAttempted ? "Not Attempted" : isCorrect ? "Correct" : "Incorrect"}
@@ -93,18 +93,15 @@ function QuestionResult({ question, userAnswer, index, timeSpent, averageTime })
                 </div>
             </div>
 
-
             {question.parts.map((part, partIndex) => {
                 if (typeof part === "string") {
                     return (
-                        <p key={partIndex} className="my-1 text-slate-900">
-                            {part}
-                        </p>
+                        <p key={partIndex} className="my-1 text-lg  leading-tight text-slate-900">{part}</p>
                     );
                 } else if (typeof part === "object") {
                     if (part.pre_o) {
                         return (
-                            <div key={partIndex}>
+                            <div key={partIndex} className="mt-3">
                                 <OptionsMore key={partIndex} options={part.pre_o} />
                             </div>
                         );
@@ -118,28 +115,41 @@ function QuestionResult({ question, userAnswer, index, timeSpent, averageTime })
                 }
             })}
 
-            <div className="space-y-2">
+            <div className="space-y-2 my-3">
                 {question.o.map((choice, optionIndex) => (
                     <div
                         key={optionIndex}
                         className={classNames(
                             "p-3 border rounded transition-colors",
-                            optionIndex === question.a &&
-                                "bg-green-50 border-green-500",
+                            optionIndex === question.a && "bg-green-100 border-green-500",
                             !isNotAttempted &&
                                 optionIndex === userAnswer &&
                                 optionIndex !== question.a &&
-                                "bg-red-50 border-red-500",
+                                "bg-red-100 border-red-500",
                             optionIndex !== question.a &&
                                 optionIndex !== userAnswer &&
-                                "border-gray-200",
-                            isNotAttempted &&
-                                optionIndex === question.a &&
-                                "border-green-500 shadow-sm"
+                                "border-gray-300",
+                            isNotAttempted && optionIndex === question.a && "border-green-500 shadow-lg"
                         )}
                     >
-                        <div className="flex items-center">
-                            <div className="mr-2">
+                        <div className="flex items-center justify-between">
+                            <div
+                                className={classNames(
+                                    "text-sm",
+                                    optionIndex === question.a
+                                        ? "text-green-700 font-medium"
+                                        : !isNotAttempted && optionIndex === userAnswer
+                                        ? "text-red-700"
+                                        : "text-gray-800"
+                                )}
+                            >
+                                {choice}
+                                
+                            </div>
+                            <div className="mr-2 flex items-center gap-2">
+                            {isNotAttempted && optionIndex === question.a && (
+                                <span className="ml-2 text-green-600 text-xs">Correct Answer</span>
+                                )}
                                 {optionIndex === question.a && (
                                     <svg
                                         className="w-5 h-5 text-green-500"
@@ -155,41 +165,23 @@ function QuestionResult({ question, userAnswer, index, timeSpent, averageTime })
                                         />
                                     </svg>
                                 )}
-                                {!isNotAttempted &&
-                                    optionIndex === userAnswer &&
-                                    optionIndex !== question.a && (
-                                        <svg
-                                            className="w-5 h-5 text-red-500"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M6 18L18 6M6 6l12 12"
-                                            />
-                                        </svg>
-                                    )}
+                                {!isNotAttempted && optionIndex === userAnswer && optionIndex !== question.a && (
+                                    <svg
+                                        className="w-5 h-5 text-red-500"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M6 18L18 6M6 6l12 12"
+                                        />
+                                    </svg>
+                                )}
                             </div>
-                            <span
-                                className={classNames(
-                                    "text-sm",
-                                    optionIndex === question.a
-                                        ? "text-green-700 font-medium"
-                                        : !isNotAttempted && optionIndex === userAnswer
-                                        ? "text-red-700"
-                                        : "text-gray-700"
-                                )}
-                            >
-                                {choice}
-                                {isNotAttempted && optionIndex === question.a && (
-                                    <span className="ml-2 text-green-600 text-xs">
-                                        (Correct Answer)
-                                    </span>
-                                )}
-                            </span>
+                            
                         </div>
                     </div>
                 ))}
@@ -219,17 +211,11 @@ function Results() {
         return null;
     }
 
-    // Calculate statistics
     const totalQuestions = questions.length;
     const attemptedQuestions = Object.keys(answers).length;
     const correctAnswers = questions.filter((q) => answers[q.id] === q.a).length;
-    const incorrectAnswers = attemptedQuestions - correctAnswers;
-    const score = (correctAnswers / totalQuestions) * 100;
     const timeTaken = Math.floor((examEndTime - examStartTime) / 1000); // in seconds
-    const hours = Math.floor(timeTaken / 3600);
-    const minutes = Math.floor((timeTaken % 3600) / 60);
-    const seconds = timeTaken % 60;
-    const timeString = `${hours}h ${minutes}m ${seconds}s`;
+
 
     const markedForReview = Object.values(questionStatus).filter(
         (status) => status === "marked-review"
@@ -256,156 +242,55 @@ function Results() {
         return matchesSearch && matchesFilter;
     });
 
-    // Create a mapping of filtered questions to their original indices
-    const questionIndices = questions.reduce((acc, question, index) => {
-        acc[question.id] = index + 1;
-        return acc;
-    }, {});
 
     return (
-        <div className="min-h-screen bg-gray-50 py-4">
+        <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-100 py-4">
             <div className="max-w-7xl mx-auto px-4">
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2 text-center">Exam Results</h1>
-                    <p className="text-gray-600 text-center">Here's how you performed in your exam</p>
-                </div>
 
-                {/* Statistics Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                    <ResultCard
-                        title="Total Score"
-                        value={`${score.toFixed(1)}%`}
-                        className={classNames(
-                            score >= 70 ? "bg-green-50" : score >= 50 ? "bg-yellow-50" : "bg-red-50"
-                        )}
-                    />
-                    <ResultCard title="Time Taken" value={timeString} />
-                    <ResultCard
-                        title="Questions"
-                        value={`${attemptedQuestions}/${totalQuestions}`}
-                        description="attempted"
-                    />
-                    <ResultCard
-                        title="Accuracy"
-                        value={`${((correctAnswers / attemptedQuestions) * 100).toFixed(1)}%`}
-                        description="of attempted questions"
-                    />
-                </div>
+                <MinimalQuizResult />
+                
 
-                {/* Detailed Statistics */}
-                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                    <h2 className="text-xl font-semibold mb-4">Detailed Statistics</h2>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div className="text-center">
-                            <div className="text-2xl font-bold text-green-600">
-                                {correctAnswers}
-                            </div>
-                            <div className="text-sm text-gray-500">Correct</div>
-                        </div>
-                        <div className="text-center">
-                            <div className="text-2xl font-bold text-red-600">
-                                {incorrectAnswers}
-                            </div>
-                            <div className="text-sm text-gray-500">Incorrect</div>
-                        </div>
-                        <div className="text-center">
-                            <div className="text-2xl font-bold text-gray-600">
-                                {totalQuestions - attemptedQuestions}
-                            </div>
-                            <div className="text-sm text-gray-500">Unattempted</div>
-                        </div>
-                        <div className="text-center">
-                            <div className="text-2xl font-bold text-purple-600">
-                                {markedForReview}
-                            </div>
-                            <div className="text-sm text-gray-500">Marked for Review</div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Add Filter Controls */}
-                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                    <div className="flex flex-col md:flex-row justify-between gap-4">
+                {/* Filter Controls */}
+                <div className="bg-white rounded-xl shadow-xl p-6 my-8">
+                    <div className="flex flex-col md:flex-row justify-between gap-6">
                         <div className="flex-1">
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Search Questions
-                            </label>
-                            <div className="relative">
-                                <input
-                                    type="text"
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    placeholder="Search question content..."
-                                    className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                                />
-                                <MagnifyingGlassIcon className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
-                            </div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Search Questions</label>
+                            <input
+                                type="text"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                placeholder="Search by keyword"
+                                className="w-full border border-gray-800 rounded p-2"
+                            />
                         </div>
-                        <div className="md:w-64">
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Filter by Status
-                            </label>
+                        <div className="w-1/4">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Filter by Status</label>
                             <select
                                 value={filterStatus}
                                 onChange={(e) => setFilterStatus(e.target.value)}
-                                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                className="w-full border border-gray-800 rounded p-2"
                             >
-                                <option value="all">All Questions</option>
-                                <option value="correct">Correct Answers</option>
-                                <option value="incorrect">Incorrect Answers</option>
+                                <option value="all">All</option>
+                                <option value="correct">Correct</option>
+                                <option value="incorrect">Incorrect</option>
                                 <option value="unattempted">Unattempted</option>
                             </select>
                         </div>
                     </div>
                 </div>
 
-                {/* Update Question-wise Analysis section */}
-                <div className="mb-8">
-                    <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-xl font-semibold">Question-wise Analysis</h2>
-                        <div className="text-sm text-gray-500">
-                            Showing {filteredQuestions.length} of {questions.length} questions
-                        </div>
-                    </div>
-
-                    {filteredQuestions.length === 0 ? (
-                        <div className="bg-white rounded-lg shadow-lg p-8 text-center">
-                            <p className="text-gray-500">No questions match your search criteria</p>
-                        </div>
-                    ) : (
-                        filteredQuestions.map((question) => (
-                            <QuestionResult
-                                key={question.id}
-                                question={question}
-                                userAnswer={answers[question.id]}
-                                index={questionIndices[question.id] - 1} // Use original question number
-                                timeSpent={questionTimes[question.id] || 0}
-                                averageTime={averageTimePerQuestion}
-                            />
-                        ))
-                    )}
-                </div>
-
-                {/* Update Action Buttons */}
-                <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-                    <button
-                        onClick={() => window.print()}
-                        className="flex items-center justify-center px-6 py-2.5 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors gap-2"
-                    >
-                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-                        </svg>
-                        Print Results
-                    </button>
-                    <button
-                        onClick={() => navigate("/upload-questions")}
-                        className="flex items-center justify-center px-6 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors gap-2"
-                    >
-                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        </svg>
-                        Take Another Exam
-                    </button>
+                {/* Filtered Results */}
+                <div className="space-y-4">
+                    {filteredQuestions.map((question, index) => (
+                        <QuestionResult
+                            key={question.id}
+                            question={question}
+                            userAnswer={answers[question.id]}
+                            index={index}
+                            timeSpent={questionTimes[question.id]}
+                            averageTime={averageTimePerQuestion}
+                        />
+                    ))}
                 </div>
             </div>
         </div>

@@ -1,101 +1,12 @@
 import React from 'react'
+import prompt from '../../data/prompt';
 
 function HelpWindow({ isOpen, onClose }) {
+    console.log(prompt)
     if (!isOpen) return null;
 
     const handleCopyPrompt = () => {
-        const copyText = `
-Your task is to create multiple-choice questions (MCQs) in JSON format. Each question should be represented as an object, and all questions should be stored within an array. The JSON structure must follow one or more of the formats outlined below.
-
-General Guidelines
-Each question must have a unique ID represented as "id" (e.g., "Q1").
-The "parts" field contains the main body of the question. It may include plain text, a mix of text and special structures (e.g., pre-options or matching lists), or a combination of both.
-The "o" field (options) contains an array of possible answers.
-The "a" field (answer) represents the index (zero-based) of the correct option in the "o" array.
-Ensure that the option order is shuffled for every question. The correct answer must not consistently appear in the same position (e.g., always at index 0).
-For matching questions, shuffle the pairs in "list1" and "list2" to ensure variety.
-Always try to cover all concepts relevant to the given context or book content.
-Include diverse question types (e.g., simple, matching, and pre-options) to comprehensively test the learner's understanding.
-Supported Formats
-Here are examples of the structures you can use:
-
-Type 1: Simple Questions
-Contains a plain text question and multiple answer choices.
-
-{
-    "id": "Q1",
-    "parts": [
-        "The Supreme Court envisaged in the Constitution of India in 1950 included:"
-    ],
-    "o": [
-        "One Chief Justice and 11 Judges",
-        "One Chief Justice and 15 Judges",
-        "One Chief Justice and 7 Judges",
-        "Only 30 Judges"
-    ],
-    "a": 3
-}
-
-
-Type 2: Pre-Options Embedded
-Includes a special "pre_o" structure inside the "parts" for intermediate or dependent sub-options.
-
-{
-    "id": "Q2",
-    "parts": [
-        "Question description with pre option is given",
-        {
-            "pre_o": [
-                "Option A",
-                "Option B",
-                "Option C",
-                "Option D"
-            ]
-        }
-    ],
-    "o": [
-        "Only B and D",
-        "Only A",
-        "All of the above",
-        "Only A and B"
-    ],
-    "a": 0
-}
-
-Type 3: Matching Lists
-Includes a "match" object with "list1" and "list2" for matching questions. and total item in list1 and list2 can go maximum of 6 items in both but not always try to create 6 item maximum time create 4 to 5 items as option
-
-{
-    "id": "Q3",
-    "parts": [
-        "Match listI to List II from the following with some description about question:"
-    ],
-    "match": {
-        "list1": [
-            "Item option 1",
-            "Item option 2",
-            "Item option 3",
-            "Item option 4"
-        ],
-        "list2": [
-            "Match option 1",
-            "Match option 2",
-            "Match option 3",
-            "Match option 4"
-        ]
-    },
-    "o": [
-        "(A)→(I)    (B)→(IV)  (C)→(III) (D)→(II)",
-        "(A)→(II)   (B)→(I)   (C)→(IV)  (D)→(III)",
-        "(A)→(III)  (B)→(II)  (C)→(I)   (D)→(IV)",
-        "(A)→(III)  (B)→(I)   (C)→(IV)  (D)→(II)"
-    ],
-    "a": 3
-}
-Expected Output
-An array of JSON objects representing MCQs, adhering to one or more of the above formats, with shuffled options and diverse question types covering all concepts from the given material.
-        `
-
+        const copyText = prompt;
         navigator.clipboard.writeText(copyText);
     }
 

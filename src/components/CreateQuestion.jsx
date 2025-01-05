@@ -8,14 +8,11 @@ import { GoQuestion } from "react-icons/go";
 import HelpWindow from "./UploadPage/HelpWindow";
 
 
-
-
-
 function QuestionPreview({ questionData }) {
     if (!questionData?.questions?.length) return null;
 
     return (
-        <div className="bg-gray-100 w-11/12 mx-auto rounded-lg p-4 border-gray-200 border mt-4">
+        <div className="bg-gray-100 max-w-6xl mx-auto rounded-lg p-4 border-gray-200 border mt-4">
             <h2 className="text-2xl text-center">Question Preview</h2>
             <div className="mt-4">
                 <p className="text-lg font-semibold">{questionData.examTitle}</p>
@@ -158,8 +155,8 @@ function CreateQuestion() {
     };
 
     return (
-        <div className="max-w-full">
-            <div className="min-h-screen bg-gray-100 py-4">
+        <div className="max-w-full ">
+            <div className="min-h-screen bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 py-4">
                 <div className="max-w-6xl mx-auto">
                     <div className="bg-white rounded-lg shadow-lg p-8 mb-4">
                         <div className="flex justify-between items-center mb-6">

@@ -8,6 +8,9 @@ export default {
     extend: {
       fontFamily : {
         'roboto': ['Roboto', 'sans-serif']
+      },
+      gridTemplateColumns : {
+        25 : 'repeat(25, minmax(0, 1fr))'
       }
     },
   },
