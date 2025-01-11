@@ -7,13 +7,12 @@ import OptionsMore from "../TestComponent/OptionsMore";
 import { GoQuestion } from "react-icons/go";
 import HelpWindow from "./UploadPage/HelpWindow";
 
-
 function QuestionPreview({ questionData }) {
     if (!questionData?.questions?.length) return null;
 
     return (
-        <div className="bg-gray-100 max-w-6xl mx-auto rounded-lg p-4 border-gray-200 border mt-4">
-            <h2 className="text-2xl text-center">Question Preview</h2>
+        <div className="bg-gray-100 w-[calc(100vw-80px)] mx-auto rounded-lg p-4 border-gray-200 border mt-4">
+            <h2 className="text-2xl font-medium text-center">Quiz Question Preview</h2>
             <div className="mt-4">
                 <p className="text-lg font-semibold">{questionData.examTitle}</p>
                 <p className="text-gray-600">Time Limit: {questionData.timeLimit / 60} minutes</p>
@@ -21,7 +20,7 @@ function QuestionPreview({ questionData }) {
             <div className="mt-10 flex flex-col gap-5">
                 {questionData.questions.map((question, index) => (
                     <div key={index} className="border border-gray-400 rounded-md p-4 py-3">
-                        <p className="text-lg leading-tight">
+                        <p className="text-lg leading-tight" key={index}>
                             <span className="font-semibold pr-2">{index + 1}.</span>
                             {question.parts[0]}
                         </p>
@@ -67,8 +66,6 @@ function QuestionPreview({ questionData }) {
         </div>
     );
 }
-
-
 
 function CreateQuestion() {
     const navigate = useNavigate();
@@ -155,12 +152,12 @@ function CreateQuestion() {
     };
 
     return (
-        <div className="max-w-full ">
-            <div className="min-h-screen bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 py-4">
-                <div className="max-w-6xl mx-auto">
-                    <div className="bg-white rounded-lg shadow-lg p-8 mb-4">
-                        <div className="flex justify-between items-center mb-6">
-                            <h1 className="text-2xl font-bold">Upload Questions</h1>
+        <div className="min-h-screen w-full bg-gradient-to-br from-purple-500 via-pink-500 to-red-500">
+            <div className="flex justify-center items-center w-full min-h-screen">
+                <div className="bg-white rounded shadow-lg px-8 py-6 w-[calc(100vw-80px)] h-[calc(100vh-80px)] flex flex-col ">
+                    <div className="flex items-center mb-2 justify-between">
+                        <div className="flex items-center gap-2">
+                            <h1 className="text-2xl font-semibold">Upload Questions</h1>
                             <button
                                 onClick={() => setShowHelp(true)}
                                 className="text-gray-600 hover:text-gray-800"
@@ -169,52 +166,53 @@ function CreateQuestion() {
                                 <GoQuestion size={24} />
                             </button>
                         </div>
-                        <div className="mb-4">
-                            <div className="flex justify-between mb-2 items-center">
-                                <p className="text-lg text-gray-800">Enter JSON Format Questions</p>
-                                <input
-                                    type="file"
-                                    accept=".json"
-                                    onChange={handleFileChange}
-                                    className="block text-sm cursor-pointer text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                                />
-                            </div>
-                            <textarea
-                                spellCheck="false"
-                                className="w-full h-64 bg-gray-50 p-3 border border-gray-300 rounded-md outline-none font-mono resize-none"
-                                value={jsonData}
-                                onChange={(e) => setJsonData(e.target.value)}
-                                placeholder="Paste your JSON here..."
+                        
+                        <div className="flex items-center gap-10 border rounded border-black px-2">
+                            <p className="text-lg text-gray-900 font-medium">Upload JSON Format Questions</p>
+                            <input
+                                type="file"
+                                accept=".json"
+                                onChange={handleFileChange}
+                                className="block text-sm cursor-pointer text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                             />
-                            {!isInputDataValid && (
-                                <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
-                            )}
-                        </div>
-                        <div className="flex justify-end gap-4">
-                            <button
-                                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
-                                onClick={checkInputData}
-                            >
-                                Validate JSON
-                            </button>
-                            <button
-                                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                                onClick={handlePreview}
-                            >
-                                Preview
-                            </button>
-                            <button
-                                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-                                onClick={handleStartExam}
-                                disabled={!isInputDataValid}
-                            >
-                                Start Exam
-                            </button>
                         </div>
                     </div>
-                    {isShowPreview && <QuestionPreview questionData={parsedQuestions} />}
+
+                    <textarea
+                        spellCheck="false"
+                        className="w-full flex-1 bg-gray-50 p-3 border border-gray-400 outline-none font-mono resize-none my-2 transition-all duration-900 focus:ring-2 focus:border-transparent focus:ring-blue-500"
+                        value={jsonData}
+                        onChange={(e) => setJsonData(e.target.value)}
+                        placeholder="Paste your JSON here..."
+                    />
+                    {!isInputDataValid && (
+                        <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+                    )}
+
+                    <div className="flex justify-end gap-3">
+                        <button
+                            className="px-4 py-1.5 bg-gray-700 text-white rounded hover:bg-gray-600"
+                            onClick={checkInputData}
+                        >
+                            Validate JSON
+                        </button>
+                        <button
+                            className="px-4 py-1.5 bg-blue-700 text-white rounded hover:bg-blue-600"
+                            onClick={handlePreview}
+                        >
+                            Preview
+                        </button>
+                        <button
+                            className="px-4 py-1.5 bg-green-700 text-white rounded hover:bg-green-600"
+                            onClick={handleStartExam}
+                            disabled={!isInputDataValid}
+                        >
+                            Start Exam
+                        </button>
+                    </div>
                 </div>
             </div>
+            {isShowPreview && <QuestionPreview questionData={parsedQuestions} />}
             <HelpWindow isOpen={showHelp} onClose={() => setShowHelp(false)} />
         </div>
     );
