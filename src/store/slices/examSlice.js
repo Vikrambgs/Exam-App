@@ -1,17 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  questions: [],             // Array to hold the questions
-  currentQuestionIndex: 0,   // Index of the current question
-  answers: {},               // Object to store answers keyed by question ID
-  questionStatus: {},        // Object to track the status of each question (not-attempted, viewed, answered, marked-review)
-  examStartTime: null,       // Timestamp when the exam starts
-  examEndTime: null,         // Timestamp when the exam ends
-  questionTimes: {},         // Object to track time spent on each question
-  isExamComplete: false,     // Boolean to indicate if the exam is complete
-  bookmarkedQuestions: [],   // Array to hold bookmarked question IDs
-  averageTimePerQuestion: 0, // Average time per question in seconds
-  totalExamTime: 3600,       // Total exam time in seconds (1 hour)
+  questions: [],                 // Array to hold the questions
+  currentQuestionIndex: 0,       // Index of the current question
+  currentSelectedOption : null,  
+  answers: {},                   // Object to store answers keyed by question ID
+  questionStatus: {},            // Object to track the status of each question (not-attempted, viewed, answered, marked-review)    
+  examStartTime: null,           // Timestamp when the exam starts
+  examEndTime: null,             // Timestamp when the exam ends
+  questionTimes: {},             // Object to track time spent on each question
+  isExamComplete: false,         // Boolean to indicate if the exam is complete
+  bookmarkedQuestions: [],       // Array to hold bookmarked question IDs
+  averageTimePerQuestion: 0,     // Average time per question in seconds
+  totalExamTime: 3600,           // Total exam time in seconds (1 hour)
 }
 
 const examSlice = createSlice({
@@ -23,6 +24,7 @@ const examSlice = createSlice({
       state.averageTimePerQuestion = Math.floor(state.totalExamTime / action.payload.length)
       state.examStartTime = Date.now()
       state.currentQuestionIndex = 0
+      state.currentSelectedOption = null
       state.answers = {}
       state.questionStatus = {}
       state.questionTimes = {}
@@ -115,6 +117,9 @@ const examSlice = createSlice({
         state.questionStatus[q.id] = 'not-attempted'
         state.questionTimes[q.id] = 0
       })
+    },
+    getUnansweredCount: (state) => {
+      return Object.values(state.questionStatus).filter(status => status === 'not-attempted').length
     }
   }
 })
@@ -128,7 +133,8 @@ export const {
   completeExam,
   clearAnswer,
   toggleBookmark,
-  clearExamState
+  clearExamState,
+  getUnansweredCount
 } = examSlice.actions
 
 export default examSlice.reducer

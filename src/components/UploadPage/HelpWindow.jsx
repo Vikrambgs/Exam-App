@@ -2,7 +2,7 @@ import React from 'react'
 import prompt from '../../data/prompt';
 
 function HelpWindow({ isOpen, onClose }) {
-    console.log(prompt)
+
     if (!isOpen) return null;
 
     const handleCopyPrompt = () => {

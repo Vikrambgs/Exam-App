@@ -15,7 +15,7 @@ const MatchUi = ({ match }) => {
                     {match.list1.map((item1, index) => (
                         <tr key={index} className="border-t border-gray-600">
                             <td className="w-6 text-center px-0.5 text-gray-600">({list1Labels[index]})</td>
-                            <td className="pl-1 py-0.5 pr-4 text-sm text-gray-800">
+                            <td className="pl-1 py-0.5 text-sm text-gray-800">
                                 {item1}
                             </td>
                             <td className="w-6 text-center px-0.5 border-l border-gray-600 text-gray-600">({list2Labels[index]})</td>

@@ -18,31 +18,37 @@ function QuestionPreview({ questionData }) {
                 <p className="text-gray-600">Time Limit: {questionData.timeLimit / 60} minutes</p>
             </div>
             <div className="mt-10 flex flex-col gap-5">
-                {questionData.questions.map((question, index) => (
-                    <div key={index} className="border border-gray-400 rounded-md p-4 py-3">
-                        <p className="text-lg leading-tight" key={index}>
-                            <span className="font-semibold pr-2">{index + 1}.</span>
+                {questionData.questions.map((question) => (
+                    <div key={question.id} className="border border-gray-400 rounded-md p-4 py-3">
+                        <p className="text-lg leading-tight">
+                            <span className="font-semibold pr-2">{question.index + 1}.</span>
                             {question.parts[0]}
                         </p>
 
                         {question.parts.slice(1).map((part, partIndex) => {
                             if (typeof part === "string") {
                                 return (
-                                    <p key={partIndex} className="mt-2">
+                                    <p key={`${question.id}-part-${partIndex}`} className="mt-2">
                                         {part}
                                     </p>
                                 );
                             } else if (typeof part === "object") {
                                 if (part.pre_o) {
                                     return (
-                                        <div className="mt-2">
+                                        <div
+                                            key={`${question.id}-pre_o-${partIndex}`}
+                                            className="mt-2"
+                                        >
                                             <OptionsMore options={part.pre_o} />
                                         </div>
                                     );
                                 } else if (part.match) {
                                     return (
-                                        <div className="mt-2">
-                                            <MatchUi key={partIndex} match={part.match} />
+                                        <div
+                                            key={`${question.id}-match-${partIndex}`}
+                                            className="mt-2"
+                                        >
+                                            <MatchUi match={part.match} />
                                         </div>
                                     );
                                 }
@@ -51,7 +57,7 @@ function QuestionPreview({ questionData }) {
 
                         {question.o.map((option, optionIndex) => (
                             <div
-                                key={optionIndex}
+                                key={`${question.id}-option-${optionIndex}`}
                                 className="ml-1 pl-3 py-1 bg-gray-300 rounded my-2"
                                 style={
                                     optionIndex === question.a ? { backgroundColor: "#81ff6b" } : {}
@@ -66,6 +72,7 @@ function QuestionPreview({ questionData }) {
         </div>
     );
 }
+
 
 function CreateQuestion() {
     const navigate = useNavigate();

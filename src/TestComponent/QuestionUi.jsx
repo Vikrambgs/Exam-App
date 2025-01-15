@@ -1,16 +1,49 @@
-import classNames from "classnames"; // Ensure you have this utility or replace with your own logic
+import classNames from "classnames";
 import MatchUi from "./MatchUi";
 import OptionsMore from "./OptionsMore";
+import { saveAnswer } from "../store/slices/examSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 
-const QuestionComponent = ({ question, selectedOption, handleOptionSelect }) => {
+
+
+const QuestionComponent = () => {
+
+    const currQuestionIndex = useSelector(state => state.exam.currentQuestionIndex);
+    const currentQuestion = useSelector(state => state.exam.questions[currQuestionIndex]);
+    const savedAnswer = useSelector(state => state.exam.answers[currentQuestion?.id]);
+    const [selectedOption, setSelectedOption] = useState(null);
+
+    const dispatch = useDispatch();
+
+    const handleOptionSelect = (index) => {
+        if (!currentQuestion) return;
+
+        setSelectedOption(index);
+        dispatch(
+            saveAnswer({
+                questionId: currentQuestion.id,
+                answer: index,
+            })
+        );
+    };
+
+    useEffect(() => {
+        // Update the selected option when the saved answer changes
+        if (savedAnswer !== selectedOption) {
+            setSelectedOption(savedAnswer || null);
+        }
+    }, [savedAnswer]);
+
+
     return (
         <div className="flex-1">
-            {question.parts.map((part, index) => {
-                if (typeof(part) == "object") {
+            {currentQuestion.parts.map((part, index) => {
+                if (typeof part == "object") {
                     if (part.pre_o) {
-                      return <OptionsMore options={part.pre_o} />;
+                        return <OptionsMore key={index} options={part.pre_o} />;
                     } else if (part.match) {
-                      return <MatchUi key={index} match={part.match} />;
+                        return <MatchUi key={index} match={part.match} />;
                     }
                 } else {
                     return (
@@ -22,11 +55,10 @@ const QuestionComponent = ({ question, selectedOption, handleOptionSelect }) => 
             })}
 
             <div className="space-y-2 mt-3">
-                {question.o.map((option, index) => (
+                {currentQuestion.o.map((option, index) => (
                     <div
                         key={index}
                         onClick={() => handleOptionSelect(index)}
-                        onKeyDown={(e) => e.key === "Enter" && handleOptionSelect(index)}
                         role="radio"
                         aria-checked={selectedOption === index}
                         tabIndex={0}

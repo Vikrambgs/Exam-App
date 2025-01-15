@@ -1,22 +1,24 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import HelpPanel from "./HelpPanel";
+import ExamTimer from "./ExamTimer";
+import { GoQuestion } from "react-icons/go";
+import { clearExamState } from "../../store/slices/examSlice";
+import ClearExamDialog from "./ResetExamDialog";
 
-function NavBar() {
+function NavBar({setSelectedOption}) {
     const dispatch = useDispatch();
     const examStartTime = useSelector((state) => state.exam.examStartTime);
     const timeLimitInSec = 3600;
     const [showHelp, setShowHelp] = useState(false); // control the visibility of the help panel
-
     const [showResetConfirmation, setShowResetConfirmation] = useState(false);
-
 
 
     const handleClearExamState = () => {
         // Clear the exam state
         dispatch(clearExamState());
         setShowResetConfirmation(false);
-    }
+    };
 
     return (
         <div className="bg-gradient-to-r from-indigo-700 to-purple-800 py-1.5 px-3 shadow-lg">
@@ -42,21 +44,13 @@ function NavBar() {
                 </div>
             </div>
 
-
             <HelpPanel isOpen={showHelp} onClose={() => setShowHelp(false)} />
-
-            <ConfirmationDialog
-                isOpen={showConfirmation}
-                onConfirm={handleSubmitExam}
-                onCancel={() => setShowConfirmation(false)}
-                unansweredCount={unansweredCount}
-            />
 
 
             <ClearExamDialog
                 isOpen={showResetConfirmation}
-                onConfirm={handleClearExamState}
                 onCancel={() => setShowResetConfirmation(false)}
+                onConfirm={handleClearExamState}
             />
         </div>
     );

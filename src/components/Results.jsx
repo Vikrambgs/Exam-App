@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import classNames from "classnames";
 import OptionsMore from "../TestComponent/OptionsMore";
 import MatchUi from "../TestComponent/MatchUi";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import MinimalQuizResult from "./Result/ResultDashboard";
 
 function ResultCard({ title, value, description, className }) {
@@ -211,15 +210,7 @@ function Results() {
         return null;
     }
 
-    const totalQuestions = questions.length;
-    const attemptedQuestions = Object.keys(answers).length;
-    const correctAnswers = questions.filter((q) => answers[q.id] === q.a).length;
-    const timeTaken = Math.floor((examEndTime - examStartTime) / 1000); // in seconds
 
-
-    const markedForReview = Object.values(questionStatus).filter(
-        (status) => status === "marked-review"
-    ).length;
 
     const totalExamTime = 3600; // 1 hour in seconds
     const averageTimePerQuestion = Math.floor(totalExamTime / questions.length);
