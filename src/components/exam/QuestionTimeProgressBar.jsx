@@ -37,7 +37,6 @@ function QuestionTimeProgress({ averageTime }) {
 
             // Persist final time to Redux
             const finalElapsed = (Date.now() - start) / 1000;
-            console.log("Time Updated : ", prevTimeSpent + finalElapsed)
             dispatch(
                 updateQuestionTime({
                     questionId: currQuestionIndex,

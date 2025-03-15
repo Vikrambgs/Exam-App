@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Target, Sparkles, Gauge, Hourglass } from "lucide-react";
 import { useSelector } from "react-redux";
 
@@ -7,6 +7,18 @@ const MinimalQuizResult = () => {
         (state) => state.exam
     );
 
+    // Create refs for scrolling to questions
+    const questionRefs = useRef({});
+
+    // Function to scroll to a specific question
+    const scrollToQuestion = (index) => {
+        if (window.questionRefs && window.questionRefs[index]) {
+            window.questionRefs[index].scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    };
 
     const totalQuestions = questions.length;
     const attemptedQuestions = Object.keys(answers).length;
@@ -68,7 +80,7 @@ const MinimalQuizResult = () => {
         <>
             <div className="md:flex gap-4 mb-6 rounded-xl">
                 {/* Main Score Card */}
-                <div className="w-4/6 bg-gradient-to-br from-slate-700 to-slate-600 p-8 rounded-xl border border-green-300 text-white">
+                <div className="w-4/6 bg-gradient-to-br from-slate-700 to-slate-600 p-8 rounded border border-green-300 text-white">
                     <div className="flex items-center justify-between mb-8">
                         <div>
                             <h2 className="text-2xl font-bold">Exam Result</h2>
@@ -128,7 +140,7 @@ const MinimalQuizResult = () => {
                 </div>
 
                 {/* Summary Stats */}
-                <div className="flex-1 bg-gradient-to-br from-slate-800 to-slate-700 p-6 rounded-xl">
+                <div className="flex-1 bg-gradient-to-br from-slate-800 to-slate-700 p-6 rounded">
                     <h3 className="text-xl font-semibold mb-5 text-white">Question Wise Stats</h3>
                     <div className="space-y-2 text-white">
                         <div className="flex justify-between items-center">
@@ -162,30 +174,37 @@ const MinimalQuizResult = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-wrap gap-2 justify-center">
+
+            {/* Question answered/unanswered/leaved Status */}
+            <div className="flex flex-wrap gap-2 justify-center mb-6">
                 {questions.map((item, indx) => {
                     let statusColor = "bg-yellow-500";
+                    let statusText = "Unattempted";
 
                     if(questions[indx].a === answers[questions[indx].id]){
                         statusColor = "bg-green-700 text-white";
+                        statusText = "Correct";
                     }
                     else if(answers[questions[indx].id]){
                         statusColor = "bg-red-700 text-white";
+                        statusText = "Incorrect";
                     }
                     else if(questionStatus[questions[indx].id] === "not-attempted"){
                         statusColor = "bg-gray-300 text-gray-800";
+                        statusText = "Unseen";
                     }
                     
-
-
                     return (
                         <div
                             key={indx}
-                            className={`flex w-11 h-11 items-center justify-center aspect-square rounded cursor-pointer border text-sm ${
+                            onClick={() => scrollToQuestion(indx)}
+                            className={`flex w-11 h-11 items-center justify-center aspect-square rounded cursor-pointer border text-sm font-medium ${
                                 statusColor
-                            }`}
+                            } hover:opacity-80 transition-opacity relative group`}
+                            title={`Question ${indx + 1}: ${statusText}`}
                         >
                             {String(indx + 1).padStart(2, "0")}
+                            
                         </div>
                     );
                 })}

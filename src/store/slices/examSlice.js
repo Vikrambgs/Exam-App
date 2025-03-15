@@ -119,7 +119,7 @@ const examSlice = createSlice({
       })
     },
     getUnansweredCount: (state) => {
-      return Object.values(state.questionStatus).filter(status => status === 'not-attempted').length
+      return state.answers
     }
   }
 })
