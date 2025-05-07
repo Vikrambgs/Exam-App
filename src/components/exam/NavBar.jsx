@@ -2,13 +2,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import HelpPanel from "./HelpPanel";
 import ExamTimer from "./ExamTimer";
-import { GoQuestion } from "react-icons/go";
 import { clearExamState } from "../../store/slices/examSlice";
 import ClearExamDialog from "./ResetExamDialog";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, Settings2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function NavBar({ showQuestionStatus, setShowQuestionStatus }) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const examStartTime = useSelector((state) => state.exam.examStartTime);
     const timeLimitInSec = 3600;
     const [showHelp, setShowHelp] = useState(false); // control the visibility of the help panel
@@ -55,6 +56,16 @@ function NavBar({ showQuestionStatus, setShowQuestionStatus }) {
                                 <span className="text-sm font-medium">Show Status</span>
                             </>
                         )}
+                    </button>
+
+                    {/* Settings Button */}
+                    <button
+                        onClick={() => navigate('/settings')}
+                        className="flex items-center gap-1.5 text-white/90 hover:text-white bg-indigo-600/80 hover:bg-indigo-500/90 px-3 py-2 rounded transition-colors"
+                        title="Settings"
+                    >
+                        <Settings2 size={18} />
+                        <span className="text-sm font-medium">Settings</span>
                     </button>
                 </div>
             </div>
