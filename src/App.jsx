@@ -1,11 +1,12 @@
-import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { Provider } from "react-redux";
+import { useSelector } from "react-redux";
 import { store } from "./store";
 import Login from "./components/Login";
 import Exam from "./components/Exam";
 import Results from "./components/Results";
 import CreateQuestion from "./components/CreateQuestion";
+import ExamSelection from "./components/ExamSelection";
 import ErrorBoundary from './components/common/ErrorBoundary';
 import LoadingSpinner from './components/common/LoadingSpinner';
 import { Suspense } from 'react';
@@ -13,7 +14,7 @@ import { Suspense } from 'react';
 
 // Protected Route component to handle authentication
 function ProtectedRoute({ children }) {
-    const isAuthenticated = store.getState().auth.isAuthenticated;
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
     if (!isAuthenticated) {
         return <Navigate to="/login" />;
@@ -34,6 +35,14 @@ function App() {
                                     <Routes>
                                         <Route path="/" element={<Navigate to="/login" />} />
                                         <Route path="/login" element={<Login />} />
+                                        <Route
+                                            path="/select-exam"
+                                            element={
+                                                <ProtectedRoute>
+                                                    <ExamSelection />
+                                                </ProtectedRoute>
+                                            }
+                                        />
                                         <Route
                                             path="/upload-questions"
                                             element={

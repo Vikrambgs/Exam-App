@@ -173,7 +173,11 @@ function CreateQuestion() {
                                 <GoQuestion size={24} />
                             </button>
                         </div>
-                        
+
+                        <div>
+                            <button className="px-4 py-1.5 bg-gray-700 text-white rounded hover:bg-gray-600" onClick={() => navigate("/select-exam")}>Select Exam</button>
+                        </div>
+
                         <div className="flex items-center gap-10 border rounded border-black px-2">
                             <p className="text-lg text-gray-900 font-medium">Upload JSON Format Questions</p>
                             <input
