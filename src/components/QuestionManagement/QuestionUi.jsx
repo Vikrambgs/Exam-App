@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import MatchUi from "./MatchUi";
 import OptionsMore from "./OptionsMore";
-import { saveAnswer, markForReview, clearAnswer } from "../store/slices/examSlice";
+import { saveAnswer, markForReview, clearAnswer } from "../../store/slices/examSlice";
 import { useDispatch, useSelector } from "react-redux";
-import QuestionTimeProgress from "../components/exam/QuestionTimeProgressBar";
+import QuestionTimeProgress from "../exam/QuestionTimeProgressBar"
 
 const QuestionComponent = () => {
     const currQuestionIndex = useSelector((state) => state.exam.currentQuestionIndex);
@@ -43,7 +43,7 @@ const QuestionComponent = () => {
             <div className="mb-2">
                 <div className="flex flex-col gap-2">
                     <div className="flex justify-between items-start h-8">
-                        <h2 className="text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                        <h2 className="text-lg font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
                             Question {currQuestionIndex + 1} of {questions.length}
                         </h2>
                         <div className="flex items-center gap-2">
@@ -67,8 +67,7 @@ const QuestionComponent = () => {
                                             : "text-indigo-600 hover:text-white hover:bg-indigo-600 border border-indigo-600"
                                     )}
                                 >
-                                    {questionStatus[currentQuestion?.id] === "marked-review" ||
-                                    questionStatus[currentQuestion?.id] === "answered-marked-review"
+                                    {questionStatus[currentQuestion?.id] === "marked-review"
                                         ? "Marked for Review"
                                         : "Mark for Review"}
                                 </button>
@@ -93,7 +92,7 @@ const QuestionComponent = () => {
                         return (
                             <div
                                 key={index}
-                                className="text-black leading-[1.15] py-1 text-[1.1rem]"
+                                className="text-gray-200 leading-[1.15] py-1 text-[1.1rem]"
                             >
                                 {part}
                             </div>
@@ -110,11 +109,11 @@ const QuestionComponent = () => {
                             aria-checked={savedAnswer === index}
                             tabIndex={0}
                             className={classNames(
-                                "p-2 py-2 border border-gray-400 rounded cursor-pointer transition-all",
-                                "hover:shadow focus:outline-none focus:ring-1 focus:ring-green-500",
+                                "p-2 py-2 border text-white border-gray-600 rounded cursor-pointer transition-all",
+                                "focus:outline-none focus:ring-1 focus:ring-green-500",
                                 savedAnswer === index
-                                    ? "bg-indigo-50 border-green-500 text-green-700"
-                                    : "hover:bg-gray-50 hover:border-gray-500 text-gray-900 border-gray-200 font-medium"
+                                    ? "bg-gray-600 text-green-700"
+                                    : "hover:bg-gray-600 hover:border-gray-500 text-gray-900 border-gray-200 font-medium"
                             )}
                         >
                             <div className="flex items-center">
@@ -122,13 +121,13 @@ const QuestionComponent = () => {
                                     className={classNames(
                                         "w-5 h-5 rounded-full border mr-2 flex items-center justify-center relative",
                                         savedAnswer === index
-                                            ? "border-green-500 bg-indigo-100 border-2"
+                                            ? "border-green-500 bg-indigo-500 border-2"
                                             : "border-gray-400"
                                     )}
                                 >
                                     {savedAnswer === index && (
                                         <svg
-                                            className="w-4 h-4 text-green-500"
+                                            className="w-4 h-4 text-green-300"
                                             fill="none"
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"

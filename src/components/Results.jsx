@@ -2,8 +2,6 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import classNames from "classnames";
-import OptionsMore from "../TestComponent/OptionsMore";
-import MatchUi from "../TestComponent/MatchUi";
 import MinimalQuizResult from "./Result/ResultDashboard";
 import QuestionResult from "./QuestionResult";
 

@@ -9,8 +9,6 @@ function NavigateWithSubmit() {
     const currentQuestionIndex = useSelector((state) => state.exam.currentQuestionIndex ?? 0);
     const allQuestionCount = useSelector((state) => state.exam.questions?.length ?? 0);
 
-    
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
 

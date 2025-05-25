@@ -4,17 +4,20 @@ import HelpPanel from "./HelpPanel";
 import ExamTimer from "./ExamTimer";
 import { clearExamState } from "../../store/slices/examSlice";
 import ClearExamDialog from "./ResetExamDialog";
-import { EyeIcon, EyeOffIcon, Settings2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Settings, Eye, EyeOff } from "lucide-react";
+import ExamSetting from "./ExamSetting";
 
 function NavBar({ showQuestionStatus, setShowQuestionStatus }) {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const examStartTime = useSelector((state) => state.exam.examStartTime);
     const timeLimitInSec = 3600;
     const [showHelp, setShowHelp] = useState(false); // control the visibility of the help panel
     const [showResetConfirmation, setShowResetConfirmation] = useState(false);
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
+    const handleSettingsToggle = () => {
+        setIsSettingsOpen((prev) => !prev);
+    };
 
     const handleClearExamState = () => {
         // Clear the exam state
@@ -23,61 +26,70 @@ function NavBar({ showQuestionStatus, setShowQuestionStatus }) {
     };
 
     return (
-        <div className="bg-gradient-to-r from-indigo-700 to-purple-800 py-1.5 px-3 shadow-lg">
+        <div className="bg-gradient-to-r from-slate-800 to-gray-900 py-1.5 px-3 shadow-lg">
             <div className="max-w-full mx-auto flex justify-between items-center">
-                <h1 className="text-lg font-bold text-white uppercase">Ongoing exam....</h1>
+                <h1 className="text-lg font-bold text-white uppercase font-roboto">
+                    Mathematics
+                </h1>
                 <div className="flex items-center gap-4">
-                    
-                    
                     {examStartTime && (
                         <ExamTimer startTime={examStartTime} timeLimit={timeLimitInSec} />
                     )}
-                    <button
-                        onClick={() => setShowResetConfirmation(true)}
-                        className="text-white/90 hover:text-white bg-red-600/80 hover:bg-red-500/90 px-3 py-1.5 rounded"
-                    >
-                        Restart Exam
-                    </button>
 
-                    {/* Question Status Toggle */}
+                    <div className="flex items-center space-x-3">
+                        {/* Restart Button */}
+                        <button
+                            onClick={() => setShowResetConfirmation(true)}
+                            className="px-4 py-2.5 bg-slate-800 hover:bg-red-700 border border-slate-600 hover:border-slate-500 text-slate-300 hover:text-white text-sm font-medium transition-all duration-200 rounded"
+                        >
+                            Restart Exam
+                        </button>
+                    </div>
+
                     <button
                         onClick={() => setShowQuestionStatus(!showQuestionStatus)}
-                        className="flex w-36 items-center gap-1.5 text-white/90 hover:text-white bg-indigo-600/80 hover:bg-indigo-500/90 px-3 py-2 rounded transition-colors"
-                        title={showQuestionStatus ? "Hide question status" : "Show question status"}
+                        className={`flex items-center justify-center w-10 h-10 border transition-all duration-200 rounded-sm ${
+                            showQuestionStatus
+                                ? "bg-violet-700 hover:bg-violet-600 border-violet-600 hover:border-violet-500 text-white"
+                                : "bg-slate-800 hover:bg-slate-700 border-slate-600 hover:border-slate-500 text-slate-300 hover:text-white"
+                        }`}
+                        title={
+                            showQuestionStatus
+                                ? "Hide Question Status"
+                                : "Show Question Status"
+                        }
                     >
                         {showQuestionStatus ? (
-                            <>
-                                <EyeOffIcon size={18} />
-                                <span className="text-sm font-medium">Hide Status</span>
-                            </>
+                            <Eye className="w-5 h-5" />
                         ) : (
-                            <>
-                                <EyeIcon size={18} />
-                                <span className="text-sm font-medium">Show Status</span>
-                            </>
+                            <EyeOff className="w-5 h-5" />
                         )}
                     </button>
 
-                    {/* Settings Button */}
                     <button
-                        onClick={() => navigate('/settings')}
-                        className="flex items-center gap-1.5 text-white/90 hover:text-white bg-indigo-600/80 hover:bg-indigo-500/90 px-3 py-2 rounded transition-colors"
+                        className="flex items-center justify-center w-10 h-10 bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-500 text-slate-300 hover:text-white transition-all duration-200 rounded-sm group"
                         title="Settings"
+                        onClick={() => handleSettingsToggle()}
                     >
-                        <Settings2 size={18} />
-                        <span className="text-sm font-medium">Settings</span>
+                        
+                        <Settings className="w-5 h-5 group-hover:rotate-90 transition-transform duration-200" />
                     </button>
                 </div>
             </div>
 
             <HelpPanel isOpen={showHelp} onClose={() => setShowHelp(false)} />
 
-
             <ClearExamDialog
                 isOpen={showResetConfirmation}
                 onCancel={() => setShowResetConfirmation(false)}
                 onConfirm={handleClearExamState}
             />
+
+            {
+                isSettingsOpen && (
+                    <ExamSetting onClose={handleSettingsToggle}/>
+                )
+            }
         </div>
     );
 }

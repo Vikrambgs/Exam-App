@@ -6,7 +6,7 @@ import {
 } from "../store/slices/examSlice";
 import { fetchQuestions } from "../services/api";
 import QuestionNavigation from "./QuestionNavigation";
-import QuestionComponent from "../TestComponent/QuestionUi";
+import QuestionComponent from "../components/QuestionManagement/QuestionUi";
 import NavBar from "./exam/NavBar";
 import ExamProgressBar from "./exam/ExamProgressBar";
 import NavigateWithSubmit from "./exam/NavigateWithSubmit";
@@ -56,7 +56,7 @@ function Exam() {
     
 
     return (
-        <div className="min-h-screen max-h-screen max-w-[100vw] bg-gray-50 flex flex-col">
+        <div className="min-h-screen max-h-screen max-w-[100vw] bg-gray-900 flex flex-col">
             <NavBar 
                 showQuestionStatus={showQuestionStatus} 
                 setShowQuestionStatus={setShowQuestionStatus} 
@@ -64,8 +64,8 @@ function Exam() {
             <ExamProgressBar startTime={examStartTime} timeLimitSec={timeLimitInSec} />
 
             <div className="flex-1 flex gap-2 p-2 max-w-full overflow-hidden relative">
-                <div className={`transition-all duration-300 ease-in-out ${showQuestionStatus ? 'max-w-[70%]' : 'max-w-full'} flex-1 flex rounded shadow-2xl`}>
-                    <div className="bg-white rounded-lg shadow-lg p-4 w-full flex flex-col border border-gray-300">
+                <div className={`transition-all duration-300 ease-in-out ${showQuestionStatus ? 'max-w-[70%]' : 'max-w-full'} flex-1 flex rounded`}>
+                    <div className="bg-slate-900 rounded-lg shadow-lg p-4 w-full flex flex-col border border-gray-600">
                         <QuestionComponent />
                         <NavigateWithSubmit />
                     </div>

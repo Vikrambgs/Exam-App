@@ -6,16 +6,10 @@ import Login from "./components/Login";
 import Exam from "./components/Exam";
 import Results from "./components/Results";
 import CreateQuestion from "./components/CreateQuestion";
-import Settings from "./components/Settings";
-import ThemeProvider from "./components/ThemeProvider";
 import ErrorBoundary from './components/common/ErrorBoundary';
 import LoadingSpinner from './components/common/LoadingSpinner';
-import { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
 
-// Lazy load components
-const QuestionBank = lazy(() => import('./components/QuestionManagement/QuestionBank'));
-const PerformanceDashboard = lazy(() => import('./components/Analytics/PerformanceDashboard'));
-const TestUIComponents = lazy(() => import('./components/TestUI/TestUIComponents'));
 
 // Protected Route component to handle authentication
 function ProtectedRoute({ children }) {
@@ -31,7 +25,7 @@ function ProtectedRoute({ children }) {
 function App() {
     return (
         <Provider store={store}>
-            <ThemeProvider>
+            
                 <ErrorBoundary>
                     <Suspense fallback={<LoadingSpinner />}>
                         <Router>
@@ -64,24 +58,12 @@ function App() {
                                                 </ProtectedRoute>
                                             }
                                         />
-                                        <Route
-                                            path="/settings"
-                                            element={
-                                                <ProtectedRoute>
-                                                    <Settings />
-                                                </ProtectedRoute>
-                                            }
-                                        />
-                                        <Route path="/question-bank" element={<QuestionBank />} />
-                                        <Route path="/performance" element={<PerformanceDashboard />} />
-                                        <Route path="/test-ui" element={<TestUIComponents />} />
                                     </Routes>
                                 </main>
                             </div>
                         </Router>
                     </Suspense>
                 </ErrorBoundary>
-            </ThemeProvider>
         </Provider>
     );
 }

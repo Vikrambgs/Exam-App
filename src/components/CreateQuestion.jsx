@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setQuestions } from "../store/slices/examSlice";
-import MatchUi from "../TestComponent/MatchUi";
-import OptionsMore from "../TestComponent/OptionsMore";
+import MatchUi from "./QuestionManagement/MatchUi"
+import OptionsMore from "./QuestionManagement/OptionsMore";
 import { GoQuestion } from "react-icons/go";
 import HelpWindow from "./UploadPage/HelpWindow";
 
