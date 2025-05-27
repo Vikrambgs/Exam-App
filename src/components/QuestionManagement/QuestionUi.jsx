@@ -30,12 +30,18 @@ const QuestionComponent = () => {
     const handleOptionSelect = (index) => {
         if (!currentQuestion || !Number.isInteger(index)) return;
 
-        dispatch(
-            saveAnswer({
-                questionId: currentQuestion.id,
-                answer: index,
-            })
-        );
+        if (savedAnswer == index) {
+            // If the answer is already selected, clear it
+            dispatch(clearAnswer(currentQuestion.id));
+        }else{
+            // If a different answer is selected, save it
+            dispatch(
+                saveAnswer({
+                    questionId: currentQuestion.id,
+                    answer: index,
+                })
+            );
+        }
     };
 
     return (
@@ -68,8 +74,8 @@ const QuestionComponent = () => {
                                             : "text-indigo-600 hover:text-white hover:bg-indigo-600 border border-indigo-600"
                                     )}
                                 >
-                                    {questionStatus[currentQuestion?.id] ===
-                                    "marked-review"
+                                    {(questionStatus[currentQuestion?.id] ===
+                                    "marked-review" || questionStatus[currentQuestion?.id] === "answered-marked-review")
                                         ? "Marked for Review"
                                         : "Mark for Review"}
                                 </button>
@@ -82,7 +88,7 @@ const QuestionComponent = () => {
                 </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto pb-5">
+            <div className="flex-1 overflow-y-auto pb-5 bg-slate-900">
                 {currentQuestion.parts.map((part, index) => {
                     if (typeof part == "object") {
                         if (part.pre_o) {

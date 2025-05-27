@@ -8,7 +8,7 @@ const initialState = {
     questionStatus: {}, // Object to track the status of each question (not-attempted, viewed, answered, marked-review)
     examStartTime: null, // Timestamp when the exam starts
     examEndTime: null, // Timestamp when the exam ends
-    questionTimes: {}, // Object to track time spent on each question
+    questionTimes: {},     // Object to track time spent on each question
     isExamComplete: false, // Boolean to indicate if the exam is complete
     bookmarkedQuestions: [], // Array to hold bookmarked question IDs
     averageTimePerQuestion: 0, // Average time per question in seconds
@@ -59,8 +59,8 @@ const examSlice = createSlice({
             } else {
                 state.answers[questionId] = answer;
                 // Check if the question was marked for review
-                if (state.questionStatus[questionId] === "marked-review") {
-                    state.questionStatus[questionId] = "marked-review";
+                if (state.questionStatus[questionId] === "marked-review" || state.questionStatus[questionId] === "answered-marked-review") {
+                    state.questionStatus[questionId] = "answered-marked-review";
                 } else {
                     state.questionStatus[questionId] = "answered";
                 }
@@ -69,10 +69,20 @@ const examSlice = createSlice({
         markForReview: (state, action) => {
             const questionId = action.payload;
             // If the question is already marked for review, unmark it
-            if (state.questionStatus[questionId] === "marked-review") {
-                state.questionStatus[questionId] = "not-attempted";
+            if (state.questionStatus[questionId] === "marked-review" || state.questionStatus[questionId] === "answered-marked-review") {
+                if(questionId in state.answers) {
+                    state.questionStatus[questionId] = "answered";
+                }
+                else{
+                    state.questionStatus[questionId] = "viewed";
+                }
             } else {
-            state.questionStatus[questionId] = "marked-review";
+                if(questionId in state.answers) {
+                    state.questionStatus[questionId] = "answered-marked-review";
+                }
+                else{
+                    state.questionStatus[questionId] = "marked-review";
+                }
             }
         },
         updateQuestionTime: (state, action) => {

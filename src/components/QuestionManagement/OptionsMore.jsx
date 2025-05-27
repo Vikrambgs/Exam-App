@@ -6,7 +6,7 @@ function OptionsMore({ options }) {
             {options.map((elem, index) => (
                 <div
                     key={index}
-                    className="flex gap-2 my-0.5 items-center pl-1 border-b bg-slate-200 text-gray-900 font-medium"
+                    className="flex gap-2 my-1 items-center pl-1 bg-slate-800 text-gray-200 font-medium"
                 >
                     <p>
                         ({String.fromCharCode(65 + index)})

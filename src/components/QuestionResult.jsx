@@ -15,7 +15,7 @@ function QuestionResult({ question, userAnswer, index, timeSpent, averageTime })
 
     return (
         <div
-            className={`bg-white rounded-xl shadow-lg p-5 mb-4 transition-all duration-300 ${
+            className={`bg-gray-white rounded shadow-lg p-5 mb-4 transition-all duration-300 ${
                 isCorrect
                     ? "border-l-4 border-green-500 bg-gradient-to-r from-green-50 to-white"
                     : isNotAttempted
@@ -111,7 +111,7 @@ function QuestionResult({ question, userAnswer, index, timeSpent, averageTime })
                     <div
                         key={optionIndex}
                         className={classNames(
-                            "p-3 border rounded-lg transition-colors",
+                            "p-3 border rounded-md transition-colors",
                             optionIndex === question.a && "bg-green-50 border-green-500",
                             !isNotAttempted &&
                                 optionIndex === userAnswer &&
@@ -172,7 +172,6 @@ function QuestionResult({ question, userAnswer, index, timeSpent, averageTime })
                                     </svg>
                                 )}
                             </div>
-                            
                         </div>
                     </div>
                 ))}

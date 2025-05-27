@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { login } from "../store/slices/authSlice";
 import { Lock, User } from "lucide-react";
 
@@ -14,10 +14,11 @@ function Login() {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
     // Redirect to upload-questions if already authenticated
-    if (isAuthenticated) {
-        navigate("/upload-questions");
-        return null;
-    }
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/upload-questions");
+        }
+    }, [isAuthenticated, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
