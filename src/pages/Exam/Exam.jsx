@@ -3,13 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
     setQuestions,
-} from "../store/slices/examSlice";
-import { fetchQuestions } from "../services/api";
+} from "../../store/slices/examSlice";
+import { fetchQuestions } from "../../services/api";
+import NavBar from "./NavBar";
+import QuestionComponent from "./QuestionUi";
+import ExamProgressBar from "./ExamProgressBar";
 import QuestionNavigation from "./QuestionNavigation";
-import QuestionComponent from "../components/QuestionManagement/QuestionUi";
-import NavBar from "./exam/NavBar";
-import ExamProgressBar from "./exam/ExamProgressBar";
-import NavigateWithSubmit from "./exam/NavigateWithSubmit";
+import NavigateWithSubmit from "./NavigateWithSubmit";
 
 function Exam() {
     const dispatch = useDispatch();

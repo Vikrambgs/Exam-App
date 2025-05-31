@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
-import OptionsMore from "./QuestionManagement/OptionsMore";
-import MatchUi from "./QuestionManagement/MatchUi";
+import OptionsMore from "../../components/QuestionRenderingUI/OptionsMore";
+import MatchUi from "../../components/QuestionRenderingUI/MatchUi";
 
 function QuestionResult({ question, userAnswer, index, timeSpent, averageTime }) {
     const isCorrect = userAnswer === question.a;

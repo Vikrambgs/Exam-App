@@ -1,0 +1,632 @@
+[
+    {
+        "id": "Q1",
+        "parts": ["Choose the correct synonym for the word 'Voracious'."],
+        "o": ["Eager", "Slow", "Lazy", "Hungry"],
+        "a": 0
+    },
+    {
+        "id": "Q2",
+        "parts": [
+            "Which of the following statements are correct?",
+            {
+                "pre_o": [
+                    "Option A: An adverb modifies a verb.",
+                    "Option B: An adjective modifies a noun.",
+                    "Option C: A preposition comes after a noun.",
+                    "Option D: A conjunction connects clauses."
+                ]
+            }
+        ],
+        "o": ["Only A and B", "Only C", "All of the above", "A, B and D"],
+        "a": 3
+    },
+    {
+        "id": "Q3",
+        "parts": ["Identify the correct form of the verb: By next year, she ___ her degree."],
+        "o": ["will complete", "has completed", "completes", "will have completed"],
+        "a": 3
+    },
+    {
+        "id": "Q4",
+        "parts": [
+            "Match the idioms with their meanings:",
+            {
+                "match": {
+                    "list1": [
+                        "Break the ice",
+                        "Spill the beans",
+                        "Hit the sack",
+                        "Under the weather"
+                    ],
+                    "list2": ["Reveal a secret", "Go to sleep", "Feel ill", "Start a conversation"]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(IV) (B)→(I) (C)→(II) (D)→(III)",
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(II) (B)→(III) (C)→(IV) (D)→(I)",
+            "(A)→(III) (B)→(IV) (C)→(II) (D)→(I)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q5",
+        "parts": ["Choose the correctly spelled word."],
+        "o": ["Accommodate", "Accomodate", "Acommodate", "Accommadate"],
+        "a": 0
+    },
+    {
+        "id": "Q6",
+        "parts": [
+            "Select the correct indirect speech: He said, 'I am feeling tired today.'",
+            {
+                "pre_o": [
+                    "Option A: He said that he was feeling tired that day.",
+                    "Option B: He said that he is feeling tired that day.",
+                    "Option C: He said that he was feeling tired today.",
+                    "Option D: He said that he feels tired today."
+                ]
+            }
+        ],
+        "o": ["Only A", "Only B", "Only C", "Only D"],
+        "a": 0
+    },
+    {
+        "id": "Q7",
+        "parts": ["What is the antonym of 'Benevolent'?"],
+        "o": ["Kind", "Generous", "Cruel", "Helpful"],
+        "a": 2
+    },
+    {
+        "id": "Q8",
+        "parts": [
+            "Match the sentence parts correctly:",
+            {
+                "match": {
+                    "list1": [
+                        "If I were rich,",
+                        "When he arrived,",
+                        "Although it was raining,",
+                        "She spoke so clearly,"
+                    ],
+                    "list2": [
+                        "we went out.",
+                        "I would travel the world.",
+                        "he got soaked.",
+                        "that everyone understood."
+                    ]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(II) (B)→(III) (C)→(I) (D)→(IV)",
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(III) (B)→(II) (C)→(IV) (D)→(I)",
+            "(A)→(II) (B)→(IV) (C)→(I) (D)→(III)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q9",
+        "parts": [
+            "Find the error in the sentence: 'Neither the teacher nor the students is responsible for the delay.'"
+        ],
+        "o": ["Neither the teacher", "nor the students", "is responsible", "for the delay"],
+        "a": 2
+    },
+    {
+        "id": "Q10",
+        "parts": ["Choose the correct article: She wants to become ___ engineer."],
+        "o": ["a", "an", "the", "no article"],
+        "a": 1
+    },
+    {
+        "id": "Q11",
+        "parts": ["Choose the correct preposition: The meeting will begin ___ 9 a.m."],
+        "o": ["in", "at", "on", "by"],
+        "a": 1
+    },
+    {
+        "id": "Q12",
+        "parts": [
+            "Which of the following statements is grammatically correct?",
+            {
+                "pre_o": [
+                    "Option A: She don't like apples.",
+                    "Option B: He doesn’t likes apples.",
+                    "Option C: They doesn’t like apples.",
+                    "Option D: I don’t like apples."
+                ]
+            }
+        ],
+        "o": ["Only A", "Only B", "Only C", "Only D"],
+        "a": 3
+    },
+    {
+        "id": "Q13",
+        "parts": ["What does the idiom 'Cry over spilt milk' mean?"],
+        "o": [
+            "To celebrate success",
+            "To complain about past mistakes that cannot be corrected",
+            "To take revenge",
+            "To make excuses"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q14",
+        "parts": [
+            "Match the tenses with their examples:",
+            {
+                "match": {
+                    "list1": ["Present Perfect", "Past Perfect", "Future Perfect", "Simple Future"],
+                    "list2": [
+                        "She has finished her homework.",
+                        "They had left before we arrived.",
+                        "He will have gone by then.",
+                        "We will go to the park tomorrow."
+                    ]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(II) (B)→(I) (C)→(III) (D)→(IV)",
+            "(A)→(III) (B)→(II) (C)→(IV) (D)→(I)",
+            "(A)→(IV) (B)→(III) (C)→(II) (D)→(I)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q15",
+        "parts": ["Identify the part of speech of the underlined word: 'He ran quickly.'"],
+        "o": ["Adverb", "Verb", "Noun", "Adjective"],
+        "a": 0
+    },
+    {
+        "id": "Q16",
+        "parts": [
+            "Select the correct sentence transformation into passive voice:",
+            {
+                "pre_o": [
+                    "Option A: They are building a new bridge.",
+                    "Option B: A new bridge is being built by them.",
+                    "Option C: A new bridge was being built by them.",
+                    "Option D: They were building a new bridge."
+                ]
+            }
+        ],
+        "o": ["Only A", "Only B", "Only C", "Only D"],
+        "a": 1
+    },
+    {
+        "id": "Q17",
+        "parts": ["Fill in the blank: She is interested ___ learning Spanish."],
+        "o": ["on", "in", "at", "for"],
+        "a": 1
+    },
+    {
+        "id": "Q18",
+        "parts": [
+            "Match the literary devices with their definitions:",
+            {
+                "match": {
+                    "list1": ["Simile", "Metaphor", "Alliteration", "Personification"],
+                    "list2": [
+                        "Giving human traits to non-human things",
+                        "Repetition of initial consonant sounds",
+                        "Direct comparison using 'like' or 'as'",
+                        "Indirect comparison stating one thing is another"
+                    ]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(III) (B)→(IV) (C)→(II) (D)→(I)",
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(II) (B)→(III) (C)→(IV) (D)→(I)",
+            "(A)→(IV) (B)→(III) (C)→(II) (D)→(I)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q19",
+        "parts": [
+            "Find the error in the sentence: 'The manager, along with his employees, are going to attend the conference.'"
+        ],
+        "o": ["The manager", "along with his employees", "are going", "to attend the conference"],
+        "a": 2
+    },
+    {
+        "id": "Q20",
+        "parts": ["Choose the correct form of the verb: By the time you arrive, I ___ the work."],
+        "o": ["will finish", "will have finished", "finish", "have finished"],
+        "a": 1
+    },
+    {
+        "id": "Q21",
+        "parts": ["Choose the correct synonym for the word 'Persistent'."],
+        "o": ["Lazy", "Determined", "Forgetful", "Careless"],
+        "a": 1
+    },
+    {
+        "id": "Q22",
+        "parts": [
+            "Which of the following statements is grammatically correct?",
+            {
+                "pre_o": [
+                    "Option A: Each of the boys were given a prize.",
+                    "Option B: Each of the boys was given a prize.",
+                    "Option C: Each of the boys have been given a prize.",
+                    "Option D: Each of the boys are given a prize."
+                ]
+            }
+        ],
+        "o": ["Only A", "Only B", "Only C", "Only D"],
+        "a": 1
+    },
+    {
+        "id": "Q23",
+        "parts": ["What is the one-word substitute for 'One who walks on foot'?"],
+        "o": ["Pedestrian", "Cyclist", "Walker", "Runner"],
+        "a": 0
+    },
+    {
+        "id": "Q24",
+        "parts": [
+            "Match the sentence beginnings with their correct endings:",
+            {
+                "match": {
+                    "list1": [
+                        "If I had known,",
+                        "Unless you study hard,",
+                        "Since he left,",
+                        "She speaks as if she knows everything,"
+                    ],
+                    "list2": [
+                        "she wouldn’t be confused.",
+                        "I would have helped.",
+                        "you won’t pass the exam.",
+                        "there has been no news."
+                    ]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(II) (B)→(III) (C)→(IV) (D)→(I)",
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(III) (B)→(IV) (C)→(I) (D)→(II)",
+            "(A)→(IV) (B)→(I) (C)→(II) (D)→(III)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q25",
+        "parts": ["Identify the part of speech of the underlined word: 'He is a fast runner.'"],
+        "o": ["Adverb", "Noun", "Verb", "Adjective"],
+        "a": 3
+    },
+    {
+        "id": "Q26",
+        "parts": [
+            "Select the correctly punctuated sentence:",
+            {
+                "pre_o": [
+                    "Option A: She said, 'I will come tomorrow'.",
+                    "Option B: She said, 'I will come tomorrow.'",
+                    "Option C: She said 'I will come tomorrow.'",
+                    "Option D: She said 'I will come tomorrow'"
+                ]
+            }
+        ],
+        "o": ["Only A", "Only B", "Only C", "Only D"],
+        "a": 1
+    },
+    {
+        "id": "Q27",
+        "parts": ["Fill in the blank: He is ___ European citizen."],
+        "o": ["a", "an", "the", "no article"],
+        "a": 0
+    },
+    {
+        "id": "Q28",
+        "parts": [
+            "Match the authors with their famous works:",
+            {
+                "match": {
+                    "list1": [
+                        "William Shakespeare",
+                        "Charles Dickens",
+                        "George Orwell",
+                        "J.K. Rowling"
+                    ],
+                    "list2": ["1984", "Great Expectations", "Harry Potter", "Hamlet"]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(IV) (B)→(II) (C)→(I) (D)→(III)",
+            "(A)→(II) (B)→(I) (C)→(III) (D)→(IV)",
+            "(A)→(III) (B)→(IV) (C)→(I) (D)→(II)",
+            "(A)→(I) (B)→(III) (C)→(II) (D)→(IV)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q29",
+        "parts": ["Find the error in the sentence: 'The quality of these apples are not good.'"],
+        "o": ["The quality", "of these apples", "are not good", "no error"],
+        "a": 2
+    },
+    {
+        "id": "Q30",
+        "parts": ["Choose the correct indirect speech: She said, 'I am going to the market.'"],
+        "o": [
+            "She said that she is going to the market.",
+            "She said that she was going to the market.",
+            "She said that she went to the market.",
+            "She said that she had gone to the market."
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q31",
+        "parts": ["Choose the correct antonym for the word 'Optimist'."],
+        "o": ["Pessimist", "Realist", "Dreamer", "Idealist"],
+        "a": 0
+    },
+    {
+        "id": "Q32",
+        "parts": [
+            "Which of the following sentences is grammatically correct?",
+            {
+                "pre_o": [
+                    "Option A: The committee have finalized their decision.",
+                    "Option B: The committee has finalized its decision.",
+                    "Option C: The committee were divided in their opinions.",
+                    "Option D: The committee are arguing over the issue."
+                ]
+            }
+        ],
+        "o": ["Only A", "Only B", "Only C", "Only D"],
+        "a": 1
+    },
+    {
+        "id": "Q33",
+        "parts": ["What does the idiom 'The ball is in your court' mean?"],
+        "o": [
+            "It’s someone else’s responsibility now",
+            "You need to take action or make a decision",
+            "The game is over",
+            "You’re being watched closely"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q34",
+        "parts": [
+            "Match the sentence beginnings with the correct endings:",
+            {
+                "match": {
+                    "list1": [
+                        "If you keep practicing,",
+                        "Unless he apologizes,",
+                        "Although it was raining,",
+                        "She spoke so clearly,"
+                    ],
+                    "list2": [
+                        "she made herself understood.",
+                        "you will improve.",
+                        "we went out.",
+                        "he won’t be forgiven."
+                    ]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(II) (B)→(IV) (C)→(III) (D)→(I)",
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(III) (B)→(II) (C)→(I) (D)→(IV)",
+            "(A)→(IV) (B)→(III) (C)→(II) (D)→(I)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q35",
+        "parts": [
+            "Identify the part of speech of the underlined word: 'Her singing mesmerized everyone.'"
+        ],
+        "o": ["Noun", "Verb", "Adjective", "Pronoun"],
+        "a": 0
+    },
+    {
+        "id": "Q36",
+        "parts": [
+            "Select the correct transformation into indirect speech:",
+            {
+                "pre_o": [
+                    "Option A: He said, 'I am busy now.' → He said that he is busy now.",
+                    "Option B: He said, 'I am busy now.' → He said that he was busy then.",
+                    "Option C: He said, 'I am busy now.' → He said that I am busy now.",
+                    "Option D: He said, 'I am busy now.' → He said that he had been busy then."
+                ]
+            }
+        ],
+        "o": ["Only A", "Only B", "Only C", "Only D"],
+        "a": 1
+    },
+    {
+        "id": "Q37",
+        "parts": ["Fill in the blank: She prefers tea ___ coffee."],
+        "o": ["than", "to", "over", "from"],
+        "a": 1
+    },
+    {
+        "id": "Q38",
+        "parts": [
+            "Match the literary works with their authors:",
+            {
+                "match": {
+                    "list1": [
+                        "Pride and Prejudice",
+                        "To Kill a Mockingbird",
+                        "The Great Gatsby",
+                        "1984"
+                    ],
+                    "list2": ["George Orwell", "F. Scott Fitzgerald", "Harper Lee", "Jane Austen"]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(IV) (B)→(III) (C)→(II) (D)→(I)",
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(II) (B)→(I) (C)→(IV) (D)→(III)",
+            "(A)→(III) (B)→(IV) (C)→(I) (D)→(II)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q39",
+        "parts": [
+            "Find the error in the sentence: 'Either Ravi or his brothers is responsible for this mess.'"
+        ],
+        "o": ["Either Ravi", "or his brothers", "is responsible", "for this mess"],
+        "a": 2
+    },
+    {
+        "id": "Q40",
+        "parts": ["Choose the correct form of the verb: By the time we reached, the movie ___."],
+        "o": ["started", "had started", "has started", "was starting"],
+        "a": 1
+    },
+    {
+        "id": "Q41",
+        "parts": ["Choose the correct synonym for the word 'Ephemeral'."],
+        "o": ["Permanent", "Fleeting", "Important", "Confusing"],
+        "a": 1
+    },
+    {
+        "id": "Q42",
+        "parts": [
+            "Which of the following sentences is grammatically correct?",
+            {
+                "pre_o": [
+                    "Option A: She has a good knowledge on Mathematics.",
+                    "Option B: She has a good knowledge of Mathematics.",
+                    "Option C: She has a good knowledge about Mathematics.",
+                    "Option D: She has a good knowledge to Mathematics."
+                ]
+            }
+        ],
+        "o": ["Only A", "Only B", "Only C", "Only D"],
+        "a": 1
+    },
+    {
+        "id": "Q43",
+        "parts": ["What does the idiom 'Bite the bullet' mean?"],
+        "o": [
+            "To eat something hard",
+            "To face a difficult situation bravely",
+            "To avoid danger",
+            "To delay an action"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q44",
+        "parts": [
+            "Match the sentence beginnings with their logical endings:",
+            {
+                "match": {
+                    "list1": [
+                        "If he had studied harder,",
+                        "Unless you apologize,",
+                        "Since she was tired,",
+                        "He speaks as if he knows everything,"
+                    ],
+                    "list2": [
+                        "she went to bed early.",
+                        "he wouldn’t have failed.",
+                        "you won’t be forgiven.",
+                        "but he often makes mistakes."
+                    ]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(II) (B)→(III) (C)→(I) (D)→(IV)",
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(III) (B)→(IV) (C)→(I) (D)→(II)",
+            "(A)→(IV) (B)→(I) (C)→(II) (D)→(III)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q45",
+        "parts": [
+            "Identify the part of speech of the underlined word: 'She looked surprised at the news.'"
+        ],
+        "o": ["Adjective", "Verb", "Noun", "Adverb"],
+        "a": 0
+    },
+    {
+        "id": "Q46",
+        "parts": [
+            "Select the correct transformation into passive voice:",
+            {
+                "pre_o": [
+                    "Option A: The teacher praised the student. → The student was praised by the teacher.",
+                    "Option B: The teacher praised the student. → The student were praised by the teacher.",
+                    "Option C: The teacher praised the student. → The student is praised by the teacher.",
+                    "Option D: The teacher praised the student. → The student has been praised by the teacher."
+                ]
+            }
+        ],
+        "o": ["Only A", "Only B", "Only C", "Only D"],
+        "a": 0
+    },
+    {
+        "id": "Q47",
+        "parts": ["Fill in the blank: He is not only intelligent ___ hardworking."],
+        "o": ["and", "but also", "as well", "too"],
+        "a": 1
+    },
+    {
+        "id": "Q48",
+        "parts": [
+            "Match the authors with their famous novels:",
+            {
+                "match": {
+                    "list1": ["J.R.R. Tolkien", "George Orwell", "Jane Austen", "Ernest Hemingway"],
+                    "list2": [
+                        "1984",
+                        "The Hobbit",
+                        "Pride and Prejudice",
+                        "The Old Man and the Sea"
+                    ]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(II) (B)→(I) (C)→(III) (D)→(IV)",
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(III) (B)→(II) (C)→(I) (D)→(IV)",
+            "(A)→(IV) (B)→(III) (C)→(II) (D)→(I)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q49",
+        "parts": ["Find the error in the sentence: 'Each one of the boys have passed the exam.'"],
+        "o": ["Each one", "of the boys", "have passed", "the exam"],
+        "a": 2
+    },
+    {
+        "id": "Q50",
+        "parts": ["Choose the correct form of the verb: I ___ her since 2015."],
+        "o": ["know", "knew", "have known", "had known"],
+        "a": 2
+    }
+]

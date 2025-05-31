@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { setCurrentQuestion } from '../store/slices/examSlice'
+import { setCurrentQuestion } from '../../store/slices/examSlice'
 import classNames from 'classnames'
 
 const statusColors = {

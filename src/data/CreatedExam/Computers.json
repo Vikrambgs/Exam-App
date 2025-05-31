@@ -1,0 +1,679 @@
+[
+    {
+        "id": "Q1",
+        "parts": ["What is the main purpose of the 'open()' function in Python?"],
+        "o": [
+            "To create a file",
+            "To open an existing file for reading or writing",
+            "To delete a file",
+            "To rename a file"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q2",
+        "parts": [
+            "Which of the following are valid file access modes in Python?",
+            { "pre_o": ["r", "w", "rb", "a+"] }
+        ],
+        "o": [
+            "Only 'r' and 'w'",
+            "Only 'rb' and 'a+'",
+            "All options are valid",
+            "None of the above"
+        ],
+        "a": 2
+    },
+    {
+        "id": "Q3",
+        "parts": [
+            "Match the file mode with its purpose:",
+            {
+                "match": {
+                    "list1": ["r", "w", "a", "r+"],
+                    "list2": ["Read-only", "Write-only", "Append", "Read and Write"]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(III) (B)→(I) (C)→(IV) (D)→(II)",
+            "(A)→(I) (B)→(IV) (C)→(II) (D)→(III)",
+            "(A)→(I) (B)→(II) (C)→(IV) (D)→(III)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q4",
+        "parts": [
+            "Case-Based Question:",
+            "A program writes employee records into a binary file. The user reports that some records are missing even though the program executed successfully.",
+            "What could be the issue?"
+        ],
+        "o": [
+            "The file was not closed after writing",
+            "The 'flush()' function was not called to clear the buffer",
+            "The file was opened in read mode instead of write mode",
+            "Both A and B"
+        ],
+        "a": 3
+    },
+    {
+        "id": "Q5",
+        "parts": ["Which method is used to write multiple strings to a text file in Python?"],
+        "o": ["write()", "writelines()", "readlines()", "flush()"],
+        "a": 1
+    },
+    {
+        "id": "Q6",
+        "parts": [
+            "Consider the code snippet:",
+            "`f = open('data.txt', 'w')`",
+            "`f.write('Hello')`",
+            "`f.close()`",
+            "What happens if the `close()` statement is omitted?"
+        ],
+        "o": [
+            "The file will not be saved",
+            "Data may not be written completely to the file",
+            "No issue; the data will be saved automatically",
+            "An error will occur"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q7",
+        "parts": [
+            "Match the file methods with their descriptions:",
+            {
+                "match": {
+                    "list1": ["write()", "read()", "writelines()", "readline()"],
+                    "list2": [
+                        "Writes a single string to the file",
+                        "Reads the entire file as a string",
+                        "Writes a sequence of strings",
+                        "Reads a single line from the file"
+                    ]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(IV) (B)→(III) (C)→(I) (D)→(II)",
+            "(A)→(I) (B)→(IV) (C)→(II) (D)→(III)",
+            "(A)→(II) (B)→(I) (C)→(III) (D)→(IV)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q8",
+        "parts": [
+            "Case-Based Question:",
+            "A user attempts to read a binary file using `read()` but encounters garbage data.",
+            "What is the most likely explanation?"
+        ],
+        "o": [
+            "The file is corrupted",
+            "Binary files cannot be read using `read()`",
+            "The file was not opened in binary mode ('rb')",
+            "The file is empty"
+        ],
+        "a": 2
+    },
+    {
+        "id": "Q9",
+        "parts": [
+            "Which of the following statements correctly handles an IOError exception when opening a file?"
+        ],
+        "o": [
+            "`try: open('file.txt', 'r') except IOError: print('File not found')`",
+            "`try: open('file.txt', 'w') IOError: print('File not found')`",
+            "`try: open('file.txt', 'r') except: print('File not found')`",
+            "`try: open('file.txt', 'r') except ValueError: print('File not found')`"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q10",
+        "parts": [
+            "You are using the `pickle` module to store data in a binary file. Which function allows you to retrieve the data back into Python objects?"
+        ],
+        "o": ["dump()", "load()", "readlines()", "seek()"],
+        "a": 1
+    },
+    {
+        "id": "Q11",
+        "parts": [
+            "Consider the following code:",
+            "```python",
+            "with open('file.txt', 'r') as f:",
+            "    content = f.read()",
+            "```",
+            "What happens if an exception occurs during the execution of the block?"
+        ],
+        "o": [
+            "The file remains open",
+            "The file is closed automatically",
+            "An error is raised, and the program stops",
+            "The exception is ignored"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q12",
+        "parts": ["Which of the following is true for the `seek()` method in Python?"],
+        "o": [
+            "It can only be used with binary files",
+            "It moves the file pointer to a specified location",
+            "It always moves the pointer to the beginning of the file",
+            "It is used to flush the file buffer"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q13",
+        "parts": [
+            "Match the exception types with their scenarios:",
+            {
+                "match": {
+                    "list1": ["ZeroDivisionError", "IOError", "KeyError", "TypeError"],
+                    "list2": [
+                        "Accessing a dictionary with a missing key",
+                        "Performing an operation on incompatible types",
+                        "Performing division by zero",
+                        "Trying to open a non-existent file"
+                    ]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(III) (B)→(IV) (C)→(I) (D)→(II)",
+            "(A)→(I) (B)→(III) (C)→(IV) (D)→(II)",
+            "(A)→(II) (B)→(I) (C)→(IV) (D)→(III)",
+            "(A)→(III) (B)→(II) (C)→(IV) (D)→(I)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q14",
+        "parts": [
+            "Case-Based Question:",
+            "A team implements a logging system that writes logs to a file using Python. After some time, the logs are no longer being written, but no errors are reported.",
+            "What might be the issue?"
+        ],
+        "o": [
+            "The file is corrupted",
+            "The buffer size for the file has been exceeded",
+            "The file is not being flushed or closed properly",
+            "The disk space is full"
+        ],
+        "a": 2
+    },
+    {
+        "id": "Q15",
+        "parts": [
+            "You are tasked with writing a program that accepts a list of integers, saves it to a binary file, and retrieves the data later.",
+            "Which file modes should be used?"
+        ],
+        "o": [
+            "Write mode ('w') for saving, read mode ('r') for retrieving",
+            "Binary write mode ('wb') for saving, binary read mode ('rb') for retrieving",
+            "Text write mode ('wt') for saving, binary read mode ('rb') for retrieving",
+            "Append mode ('a') for saving, read mode ('r') for retrieving"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q16",
+        "parts": [
+            "Which method ensures that all unwritten data is flushed to the file buffer in Python?"
+        ],
+        "o": ["close()", "flush()", "sync()", "write()"],
+        "a": 1
+    },
+    {
+        "id": "Q17",
+        "parts": [
+            "Which of the following exceptions will be raised if you try to open a non-existent file in read mode?"
+        ],
+        "o": ["FileNotFoundError", "IOError", "ValueError", "OSError"],
+        "a": 0
+    },
+    {
+        "id": "Q18",
+        "parts": [
+            "Match the following modes with their descriptions:",
+            {
+                "match": {
+                    "list1": ["r+", "w+", "rb", "a"],
+                    "list2": [
+                        "Opens a file for both reading and writing",
+                        "Opens a file for writing; truncates existing file content",
+                        "Opens a file in binary read-only mode",
+                        "Opens a file for appending; creates if it doesn’t exist"
+                    ]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(III) (B)→(II) (C)→(IV) (D)→(I)",
+            "(A)→(II) (B)→(III) (C)→(IV) (D)→(I)",
+            "(A)→(IV) (B)→(I) (C)→(II) (D)→(III)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q19",
+        "parts": [
+            "Case-Based Question:",
+            "A developer accidentally uses the write mode ('w') instead of append mode ('a') to open a log file.",
+            "What will happen to the log file content?"
+        ],
+        "o": [
+            "The new data will be appended",
+            "The existing content will be overwritten",
+            "An error will occur",
+            "The file will remain unchanged"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q20",
+        "parts": [
+            "You attempt to use the `pickle.dump()` function but receive an IOError. What is the most likely reason?"
+        ],
+        "o": [
+            "The file is opened in text mode ('w') instead of binary mode ('wb')",
+            "The object being serialized is not compatible with pickle",
+            "The file is opened in read mode ('r')",
+            "The file is already closed"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q21",
+        "parts": ["What does the 'tell()' method in file handling return?"],
+        "o": [
+            "The total number of characters in the file",
+            "The current position of the file pointer",
+            "The name of the file",
+            "The file access mode"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q22",
+        "parts": ["Which Python function is used to handle exceptions in a program?"],
+        "o": ["try-except", "raise", "assert", "finally"],
+        "a": 0
+    },
+    {
+        "id": "Q23",
+        "parts": [
+            "Match the built-in exceptions with their descriptions:",
+            {
+                "match": {
+                    "list1": ["ValueError", "IOError", "EOFError", "TypeError"],
+                    "list2": [
+                        "Raised when input() reaches the end of file condition",
+                        "Raised when an operation/function receives an inappropriate value",
+                        "Raised for incorrect data type operations",
+                        "Raised when the file cannot be opened"
+                    ]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(II) (B)→(IV) (C)→(I) (D)→(III)",
+            "(A)→(IV) (B)→(II) (C)→(I) (D)→(III)",
+            "(A)→(I) (B)→(II) (C)→(IV) (D)→(III)",
+            "(A)→(III) (B)→(IV) (C)→(II) (D)→(I)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q24",
+        "parts": [
+            "Case-Based Question:",
+            "A user opens a binary file in text mode ('r') and tries to read its content. What is likely to happen?"
+        ],
+        "o": [
+            "The program will crash with a ValueError",
+            "The file will be read successfully",
+            "Garbage values will be read",
+            "The program will automatically switch to binary mode"
+        ],
+        "a": 2
+    },
+    {
+        "id": "Q25",
+        "parts": [
+            "What is the output of the following code?",
+            "```python",
+            "f = open('sample.txt', 'w')",
+            "f.write('Python\\nProgramming')",
+            "f.close()",
+            "f = open('sample.txt', 'r')",
+            "print(f.readlines())",
+            "```"
+        ],
+        "o": [
+            "['Python', 'Programming']",
+            "['Python\\nProgramming']",
+            "['Python\\n', 'Programming']",
+            "['Python\\n', 'Programming\\n']"
+        ],
+        "a": 2
+    },
+    {
+        "id": "Q26",
+        "parts": ["What happens if the 'flush()' method is called on a file object in Python?"],
+        "o": [
+            "The file pointer is moved to the beginning",
+            "The file buffer is cleared, and data is written to the disk",
+            "The file is closed",
+            "An IOError is raised"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q27",
+        "parts": [
+            "Which clause is always executed in Python, regardless of whether an exception occurs or not?"
+        ],
+        "o": ["try", "except", "finally", "else"],
+        "a": 2
+    },
+    {
+        "id": "Q28",
+        "parts": ["Which exception is raised when a division by zero occurs in Python?"],
+        "o": ["ZeroDivisionError", "ArithmeticError", "ValueError", "OverflowError"],
+        "a": 0
+    },
+    {
+        "id": "Q29",
+        "parts": ["What will the 'readlines()' method return when called on an empty file?"],
+        "o": ["None", "An empty string", "An empty list", "An IOError"],
+        "a": 2
+    },
+    {
+        "id": "Q30",
+        "parts": ["Which of the following is NOT a valid exception handling block in Python?"],
+        "o": ["`try-except`", "`try-finally`", "`try-else`", "`try-catch`"],
+        "a": 3
+    },
+    {
+        "id": "Q31",
+        "parts": ["What does the 'w+' mode do when opening a file in Python?"],
+        "o": [
+            "Opens a file for writing only",
+            "Opens a file for reading and writing, truncating existing content",
+            "Opens a file for reading and writing, preserving existing content",
+            "Opens a file for appending only"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q32",
+        "parts": ["Which of the following is true about the 'r+' mode in file handling?"],
+        "o": [
+            "The file must exist before it is opened",
+            "The file pointer is placed at the end of the file",
+            "The file is opened in binary mode",
+            "The file is truncated to zero length"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q33",
+        "parts": [
+            "Match the following file methods with their return values:",
+            {
+                "match": {
+                    "list1": ["read()", "readline()", "tell()", "write()"],
+                    "list2": [
+                        "Returns the entire content of the file as a string",
+                        "Returns the current position of the file pointer",
+                        "Returns the number of characters written",
+                        "Returns a single line from the file"
+                    ]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(I) (B)→(IV) (C)→(II) (D)→(III)",
+            "(A)→(II) (B)→(III) (C)→(IV) (D)→(I)",
+            "(A)→(III) (B)→(I) (C)→(II) (D)→(IV)",
+            "(A)→(IV) (B)→(III) (C)→(I) (D)→(II)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q34",
+        "parts": [
+            "Case-Based Question:",
+            "A program attempts to read a file using 'with open('file.txt', 'r+') as f:'. The file does not exist. What will happen?"
+        ],
+        "o": [
+            "A new file will be created",
+            "An empty string will be returned",
+            "A FileNotFoundError will be raised",
+            "The program will terminate without an error"
+        ],
+        "a": 2
+    },
+    {
+        "id": "Q35",
+        "parts": [
+            "What will the following code output?",
+            "```python",
+            "try:",
+            "    result = 10 / 0",
+            "except ZeroDivisionError:",
+            "    print('Division by zero is not allowed')",
+            "else:",
+            "    print('Operation successful')",
+            "finally:",
+            "    print('Execution completed')",
+            "```"
+        ],
+        "o": [
+            "Division by zero is not allowed",
+            "Division by zero is not allowed\\nExecution completed",
+            "Operation successful\\nExecution completed",
+            "Execution completed"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q36",
+        "parts": ["What is the correct way to open a file named 'data.bin' for binary writing?"],
+        "o": [
+            "`open('data.bin', 'w')`",
+            "`open('data.bin', 'wb')`",
+            "`open('data.bin', 'rw')`",
+            "`open('data.bin', 'rwb')`"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q37",
+        "parts": [
+            "What is the output of the following code?",
+            "```python",
+            "with open('sample.txt', 'w') as f:",
+            "    f.write('Hello\\nWorld')",
+            "with open('sample.txt', 'r') as f:",
+            "    print(f.read())",
+            "```"
+        ],
+        "o": ["HelloWorld", "Hello\\nWorld", "Hello\\nWorld\\n", "Hello\\nWorld\\n\\n"],
+        "a": 1
+    },
+    {
+        "id": "Q38",
+        "parts": ["Which method is used to move the file pointer to a specific byte position?"],
+        "o": ["seek()", "tell()", "flush()", "write()"],
+        "a": 0
+    },
+    {
+        "id": "Q39",
+        "parts": [
+            "Which file mode should be used to append content to an existing file without overwriting it?"
+        ],
+        "o": ["w", "a", "r+", "wb"],
+        "a": 1
+    },
+    {
+        "id": "Q40",
+        "parts": ["What exception is raised when a required module cannot be imported in Python?"],
+        "o": ["ModuleNotFoundError", "ImportError", "NameError", "IOError"],
+        "a": 1
+    },
+    {
+        "id": "Q41",
+        "parts": [
+            "What will happen if the following code is executed?",
+            "```python",
+            "try:",
+            "    with open('file.txt', 'x') as f:",
+            "        f.write('Hello World')",
+            "except FileExistsError:",
+            "    print('File already exists')",
+            "```"
+        ],
+        "o": [
+            "A new file will be created with 'Hello World'",
+            "FileExistsError will be raised if 'file.txt' already exists",
+            "The existing 'file.txt' content will be overwritten",
+            "The program will terminate without error"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q42",
+        "parts": [
+            "Case-Based Question:",
+            "A developer needs to create a backup of a file by copying its content to a new file. Which approach is the most efficient for binary files?"
+        ],
+        "o": [
+            "Read the entire file content and write it to the new file",
+            "Read and write chunks of data using a loop",
+            "Use the `copyfile()` method from the shutil module",
+            "Use the `pickle` module to serialize and deserialize the data"
+        ],
+        "a": 2
+    },
+    {
+        "id": "Q43",
+        "parts": [
+            "Which exception will be raised by the following code?",
+            "```python",
+            "f = open('missing.txt', 'r')",
+            "content = f.read()",
+            "```"
+        ],
+        "o": ["FileNotFoundError", "IOError", "OSError", "ValueError"],
+        "a": 0
+    },
+    {
+        "id": "Q44",
+        "parts": ["What is the result of calling `pickle.dump()` on an unsupported data type?"],
+        "o": [
+            "A TypeError is raised",
+            "The data is serialized but with warnings",
+            "The function silently fails",
+            "A ValueError is raised"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q45",
+        "parts": [
+            "What will happen if you try to use `os.remove()` on a file that does not exist?"
+        ],
+        "o": [
+            "A FileNotFoundError will be raised",
+            "The function will silently ignore the error",
+            "The function will create a new file",
+            "A warning will be displayed, but the program will continue"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q46",
+        "parts": ["Which of the following best describes the `with` statement in Python?"],
+        "o": [
+            "It ensures the file is closed after operations, even if an exception occurs",
+            "It automatically flushes data to the file before closing",
+            "It allows for simultaneous read and write operations",
+            "It raises an exception if the file cannot be opened"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q47",
+        "parts": ["Which of the following is NOT a valid use of the `finally` clause in Python?"],
+        "o": [
+            "Releasing resources like file handles",
+            "Handling exceptions when they occur",
+            "Cleaning up actions after a `try` block",
+            "Ensuring certain actions are always executed"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q48",
+        "parts": [
+            "Which Python module is commonly used for advanced file operations, such as copying files?"
+        ],
+        "o": ["os", "shutil", "sys", "pathlib"],
+        "a": 1
+    },
+    {
+        "id": "Q49",
+        "parts": [
+            "Match the following terms with their meanings:",
+            {
+                "match": {
+                    "list1": ["Text File", "Binary File", "Pickling", "Serialization"],
+                    "list2": [
+                        "Converting objects into a byte stream",
+                        "File containing human-readable characters",
+                        "File containing data as a sequence of bytes",
+                        "Process of saving a Python object structure"
+                    ]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(II) (B)→(III) (C)→(IV) (D)→(I)",
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(II) (B)→(III) (C)→(I) (D)→(IV)",
+            "(A)→(I) (B)→(III) (C)→(IV) (D)→(II)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q50",
+        "parts": [
+            "What will be the result of running the following code?",
+            "```python",
+            "try:",
+            "    raise ValueError('Custom Error')",
+            "except ValueError as e:",
+            "    print(e)",
+            "finally:",
+            "    print('Cleanup complete')",
+            "```"
+        ],
+        "o": [
+            "'Custom Error'\\n'Cleanup complete'",
+            "'Cleanup complete'",
+            "An error message with traceback",
+            "'Custom Error'"
+        ],
+        "a": 0
+    }
+]

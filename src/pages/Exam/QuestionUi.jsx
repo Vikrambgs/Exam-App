@@ -1,6 +1,6 @@
 import classNames from "classnames";
-import MatchUi from "./MatchUi";
-import OptionsMore from "./OptionsMore";
+import MatchUi from "../../components/QuestionRenderingUI/MatchUi";
+import OptionsMore from "../../components/QuestionRenderingUI/OptionsMore";
 import { saveAnswer, markForReview, clearAnswer } from "../../store/slices/examSlice";
 import { useDispatch, useSelector } from "react-redux";
 import QuestionTimeProgress from "../exam/QuestionTimeProgressBar"

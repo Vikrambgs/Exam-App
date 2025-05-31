@@ -2,11 +2,11 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import { Provider } from "react-redux";
 import { useSelector } from "react-redux";
 import { store } from "./store";
-import Login from "./components/Login";
-import Exam from "./components/Exam";
-import Results from "./components/Results";
-import CreateQuestion from "./components/CreateQuestion";
-import ExamSelection from "./components/ExamSelection";
+import Login from "./pages/Login/Login";
+import Exam from "./pages/Exam/Exam";
+import Results from "./pages/Result/Results";
+import CreateQuestion from "./pages/ManageQuestions/ManageQuestions";
+import ExamSelection from "./pages/ManageQuestions/ExamSelection";
 import ErrorBoundary from './components/common/ErrorBoundary';
 import LoadingSpinner from './components/common/LoadingSpinner';
 import { Suspense } from 'react';

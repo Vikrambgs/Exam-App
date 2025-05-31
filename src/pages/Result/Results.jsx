@@ -1,21 +1,9 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
-import classNames from "classnames";
-import MinimalQuizResult from "./Result/ResultDashboard";
+import MinimalQuizResult from "./ResultDashboard";
 import QuestionResult from "./QuestionResult";
 
-function ResultCard({ title, value, description, className }) {
-    return (
-        <div className={classNames("bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 rounded-xl shadow-lg p-6", className)}>
-            <h3 className="text-sm font-medium text-white uppercase">{title}</h3>
-            <div className="mt-2 flex items-baseline">
-                <p className="text-3xl font-semibold text-white">{value}</p>
-                {description && <p className="ml-2 text-sm text-gray-200">{description}</p>}
-            </div>
-        </div>
-    );
-}
 
 function Results() {
     const navigate = useNavigate();

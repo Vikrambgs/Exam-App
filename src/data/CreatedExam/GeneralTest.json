@@ -1,0 +1,620 @@
+[
+    {
+        "id": "Q1",
+        "parts": ["What is 40% of 250?"],
+        "o": ["80", "90", "100", "110"],
+        "a": 2
+    },
+    {
+        "id": "Q2",
+        "parts": [
+            "Look at this series: 53, 53, 40, 40, 27, 27, ... What number should come next?"
+        ],
+        "o": ["12", "14", "27", "53"],
+        "a": 1
+    },
+    {
+        "id": "Q3",
+        "parts": ["Find the missing number in the sequence: 3, 7, 15, 31, ___."],
+        "o": ["63", "62", "61", "60"],
+        "a": 0
+    },
+    {
+        "id": "Q4",
+        "parts": [
+            "Match the number series with their next term:",
+            {
+                "match": {
+                    "list1": [
+                        "2, 4, 6, 8...",
+                        "3, 6, 12, 24...",
+                        "1, 4, 9, 16...",
+                        "5, 10, 15, 20..."
+                    ],
+                    "list2": ["25", "10", "48", "30"]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(II) (B)→(III) (C)→(I) (D)→(IV)",
+            "(A)→(II) (B)→(IV) (C)→(I) (D)→(III)",
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(III) (B)→(II) (C)→(I) (D)→(IV)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q5",
+        "parts": ["If A = 2, B = 4, C = 6, then what is the value of E?"],
+        "o": ["8", "10", "12", "14"],
+        "a": 1
+    },
+    {
+        "id": "Q6",
+        "parts": [
+            "Select the correct mirror image of the word 'TRUST':",
+            {
+                "pre_o": [
+                    "Option A: TSURT",
+                    "Option B: TSURU",
+                    "Option C: TSURT",
+                    "Option D: TSURT"
+                ]
+            }
+        ],
+        "o": ["A", "B", "C", "D"],
+        "a": 2
+    },
+    {
+        "id": "Q7",
+        "parts": [
+            "The average of 5 numbers is 10. If one number is removed, the average becomes 9. What was the removed number?"
+        ],
+        "o": ["14", "13", "12", "11"],
+        "a": 1
+    },
+    {
+        "id": "Q8",
+        "parts": [
+            "Match the direction with the final position after the movements:",
+            {
+                "match": {
+                    "list1": [
+                        "Start North → Turn Left → Turn Left",
+                        "Start East → Turn Right → Turn Left",
+                        "Start South → Turn Back",
+                        "Start West → Turn Left Twice"
+                    ],
+                    "list2": ["West", "East", "North", "South"]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(II) (B)→(I) (C)→(IV) (D)→(III)",
+            "(A)→(III) (B)→(II) (C)→(IV) (D)→(I)",
+            "(A)→(IV) (B)→(I) (C)→(III) (D)→(II)"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q9",
+        "parts": [
+            "What is the time on a clock when the hour and minute hands overlap between 3 and 4?"
+        ],
+        "o": ["3:15", "3:16", "3:16:22", "3:20"],
+        "a": 2
+    },
+    {
+        "id": "Q10",
+        "parts": [
+            "Study the given data and answer the question.",
+            {
+                "pre_o": [
+                    "Sales in Jan: ₹20,000",
+                    "Sales in Feb: ₹25,000",
+                    "Sales in Mar: ₹30,000",
+                    "Sales in Apr: ₹35,000"
+                ]
+            },
+            "What is the percentage increase in sales from January to April?"
+        ],
+        "o": ["75%", "60%", "70%", "65%"],
+        "a": 0
+    },
+    {
+        "id": "Q11",
+        "parts": [
+            "If 'A' means '+', 'B' means '-', 'C' means '×', and 'D' means '÷', then what is the value of 8 A 3 B 5 C 4 D 2?"
+        ],
+        "o": ["10", "11", "12", "13"],
+        "a": 1
+    },
+    {
+        "id": "Q12",
+        "parts": [
+            "Which word cannot be formed using the letters of the word 'CELEBRATION'?",
+            {
+                "pre_o": [
+                    "Option A: LATE",
+                    "Option B: RATE",
+                    "Option C: BORN",
+                    "Option D: CREATE"
+                ]
+            }
+        ],
+        "o": ["A", "B", "C", "D"],
+        "a": 2
+    },
+    {
+        "id": "Q13",
+        "parts": ["Find the odd one out."],
+        "o": ["Pen", "Pencil", "Chalk", "Marker"],
+        "a": 2
+    },
+    {
+        "id": "Q14",
+        "parts": [
+            "Match the following directions with the final result:",
+            {
+                "match": {
+                    "list1": [
+                        "Start facing North → Turn 90° clockwise",
+                        "Start facing South → Turn 180°",
+                        "Start facing East → Turn 90° anticlockwise",
+                        "Start facing West → Turn 270° clockwise"
+                    ],
+                    "list2": ["East", "North", "South", "West"]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(I) (B)→(III) (C)→(II) (D)→(IV)",
+            "(A)→(II) (B)→(I) (C)→(III) (D)→(IV)",
+            "(A)→(III) (B)→(II) (C)→(I) (D)→(IV)",
+            "(A)→(I) (B)→(II) (C)→(IV) (D)→(III)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q15",
+        "parts": [
+            "The sum of two numbers is 25 and their difference is 5. What is their product?"
+        ],
+        "o": ["150", "160", "170", "180"],
+        "a": 1
+    },
+    {
+        "id": "Q16",
+        "parts": [
+            "Study the given data and answer the question.",
+            {
+                "pre_o": [
+                    "Population of City A = 1,00,000",
+                    "Population of City B = 1,50,000",
+                    "Population of City C = 2,00,000",
+                    "Population of City D = 2,50,000"
+                ]
+            },
+            "What percent of the population of City D is the population of City A?"
+        ],
+        "o": ["30%", "40%", "50%", "60%"],
+        "a": 1
+    },
+    {
+        "id": "Q17",
+        "parts": [
+            "A man walks 5 km towards the north, then turns left and walks 10 km. In which direction is he now from the starting point?"
+        ],
+        "o": ["South-West", "North-East", "South-East", "North-West"],
+        "a": 1
+    },
+    {
+        "id": "Q18",
+        "parts": [
+            "Identify the next figure in the sequence:",
+            {
+                "match": {
+                    "list1": ["Circle", "Triangle", "Square", "Pentagon"],
+                    "list2": ["3 sides", "5 sides", "0 sides", "4 sides"]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(III) (B)→(I) (C)→(IV) (D)→(II)",
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(III) (B)→(II) (C)→(IV) (D)→(I)",
+            "(A)→(II) (B)→(III) (C)→(I) (D)→(IV)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q19",
+        "parts": [
+            "If 15 men can reap a field in 28 days, in how many days will 10 men reap the same field?"
+        ],
+        "o": ["32 days", "42 days", "38 days", "40 days"],
+        "a": 1
+    },
+    {
+        "id": "Q20",
+        "parts": [
+            "Select the correct water image of the word 'MIRROR':",
+            {
+                "pre_o": [
+                    "Option A: RORRIM",
+                    "Option B: RORRIM (inverted)",
+                    "Option C: MIRROM",
+                    "Option D: MRORIM"
+                ]
+            }
+        ],
+        "o": ["A", "B", "C", "D"],
+        "a": 1
+    },
+    {
+        "id": "Q21",
+        "parts": [
+            "If in a code language, 'MOTHER' is written as 'OQVJGT', how will 'FATHER' be written?"
+        ],
+        "o": ["HCVJGT", "HEWJGT", "HDWJGT", "HCWJGT"],
+        "a": 3
+    },
+    {
+        "id": "Q22",
+        "parts": [
+            "Find the odd one out:",
+            {
+                "pre_o": ["Option A: 28", "Option B: 49", "Option C: 64", "Option D: 81"]
+            }
+        ],
+        "o": ["A", "B", "C", "D"],
+        "a": 1
+    },
+    {
+        "id": "Q23",
+        "parts": [
+            "A shopkeeper buys an article for ₹120 and sells it for ₹150. What is his percentage profit?"
+        ],
+        "o": ["15%", "20%", "25%", "30%"],
+        "a": 2
+    },
+    {
+        "id": "Q24",
+        "parts": [
+            "Match the figure with its mirror image:",
+            {
+                "match": {
+                    "list1": ["→", "↑", "←", "↓"],
+                    "list2": ["←", "↓", "→", "↑"]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(III) (B)→(IV) (C)→(I) (D)→(II)",
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(II) (B)→(III) (C)→(IV) (D)→(I)",
+            "(A)→(III) (B)→(II) (C)→(I) (D)→(IV)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q25",
+        "parts": [
+            "The sum of the ages of A and B is 30 years. Five years hence, the ratio of their ages will be 3:2. Find the age of A."
+        ],
+        "o": ["15", "17", "19", "21"],
+        "a": 2
+    },
+    {
+        "id": "Q26",
+        "parts": [
+            "Study the given pie chart data and answer the question.",
+            {
+                "pre_o": [
+                    "Books = 30%",
+                    "Food = 25%",
+                    "Rent = 20%",
+                    "Miscellaneous = 25%"
+                ]
+            },
+            "What is the central angle for 'Books' in the pie chart?"
+        ],
+        "o": ["90°", "108°", "120°", "135°"],
+        "a": 1
+    },
+    {
+        "id": "Q27",
+        "parts": [
+            "A car covers a distance of 180 km in 3 hours. What is its average speed in km/h?"
+        ],
+        "o": ["50", "55", "60", "65"],
+        "a": 2
+    },
+    {
+        "id": "Q28",
+        "parts": [
+            "Match the number with its square root:",
+            {
+                "match": {
+                    "list1": ["16", "49", "81", "100"],
+                    "list2": ["7", "9", "10", "4"]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(IV) (B)→(I) (C)→(II) (D)→(III)",
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(III) (B)→(II) (C)→(I) (D)→(IV)",
+            "(A)→(IV) (B)→(III) (C)→(II) (D)→(I)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q29",
+        "parts": [
+            "A man walks 10 meters south, then turns left and walks 10 meters. Again he turns left and walks 10 meters. In which direction is he from the starting point?"
+        ],
+        "o": ["East", "West", "North", "South"],
+        "a": 2
+    },
+    {
+        "id": "Q30",
+        "parts": [
+            "Which of the following cannot be the day of the week for a leap year?",
+            {
+                "pre_o": [
+                    "Option A: 52 weeks + 2 days",
+                    "Option B: 52 weeks + 1 day",
+                    "Option C: 52 weeks only",
+                    "Option D: 52 weeks + 3 days"
+                ]
+            }
+        ],
+        "o": ["A", "B", "C", "D"],
+        "a": 3
+    },
+    {
+        "id": "Q31",
+        "parts": ["What is the angle between the hour and minute hands at 3:15?"],
+        "o": ["7.5°", "15°", "22.5°", "30°"],
+        "a": 0
+    },
+    {
+        "id": "Q32",
+        "parts": [
+            "Which word cannot be formed using the letters of 'ADVERTISEMENT'?",
+            {
+                "pre_o": [
+                    "Option A: VENTURE",
+                    "Option B: DRAIN",
+                    "Option C: ADVENT",
+                    "Option D: GATE"
+                ]
+            }
+        ],
+        "o": ["A", "B", "C", "D"],
+        "a": 0
+    },
+    {
+        "id": "Q33",
+        "parts": [
+            "A man buys a book for ₹80 and sells it for ₹100. What is his profit percent?"
+        ],
+        "o": ["20%", "25%", "30%", "35%"],
+        "a": 1
+    },
+    {
+        "id": "Q34",
+        "parts": [
+            "Match the direction turn with the final result:",
+            {
+                "match": {
+                    "list1": [
+                        "Start facing East → Turn Right → Turn Back",
+                        "Start facing West → Turn Left Twice",
+                        "Start facing North → Turn Left → Turn Right",
+                        "Start facing South → Turn Right Twice"
+                    ],
+                    "list2": ["South", "North", "East", "West"]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(I) (B)→(IV) (C)→(II) (D)→(III)",
+            "(A)→(III) (B)→(IV) (C)→(I) (D)→(II)",
+            "(A)→(II) (B)→(I) (C)→(III) (D)→(IV)",
+            "(A)→(IV) (B)→(III) (C)→(II) (D)→(I)"
+        ],
+        "a": 1
+    },
+    {
+        "id": "Q35",
+        "parts": [
+            "If 16 men can do a piece of work in 10 days, how many men are needed to complete the same work in 8 days?"
+        ],
+        "o": ["18", "20", "22", "24"],
+        "a": 1
+    },
+    {
+        "id": "Q36",
+        "parts": [
+            "Study the following data and answer the question.",
+            {
+                "pre_o": [
+                    "Total students = 200",
+                    "Students who play Cricket = 100",
+                    "Students who play Hockey = 70",
+                    "Students who play both = 30"
+                ]
+            },
+            "How many students play neither game?"
+        ],
+        "o": ["60", "50", "40", "30"],
+        "a": 1
+    },
+    {
+        "id": "Q37",
+        "parts": [
+            "In a certain code language, 'RAT' is written as 'TAV'. How will 'CAT' be written?"
+        ],
+        "o": ["ECX", "EDY", "ECY", "EBY"],
+        "a": 2
+    },
+    {
+        "id": "Q38",
+        "parts": [
+            "Match the figure with its correct water image:",
+            {
+                "match": {
+                    "list1": ["A", ">", "(", "p"],
+                    "list2": ["V", "<", ")", "q"]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(IV) (B)→(I) (C)→(III) (D)→(II)",
+            "(A)→(III) (B)→(II) (C)→(I) (D)→(IV)",
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(IV) (B)→(III) (C)→(II) (D)→(I)"
+        ],
+        "a": 3
+    },
+    {
+        "id": "Q39",
+        "parts": ["What was the day on 1st January 2021?"],
+        "o": ["Thursday", "Friday", "Saturday", "Sunday"],
+        "a": 2
+    },
+    {
+        "id": "Q40",
+        "parts": [
+            "Find the next number in the sequence: 2, 6, 12, 20, ___",
+            {
+                "pre_o": ["Option A: 28", "Option B: 30", "Option C: 32", "Option D: 36"]
+            }
+        ],
+        "o": ["A", "B", "C", "D"],
+        "a": 1
+    },
+    {
+        "id": "Q41",
+        "parts": [
+            "If '+' means '×', '×' means '-', '-' means '+', and '=' means '<', then which of the following expressions is correct?"
+        ],
+        "o": ["5 + 2 = 10", "5 × 2 < 10", "5 - 2 = 3", "5 + 2 × 2 = 8"],
+        "a": 3
+    },
+    {
+        "id": "Q42",
+        "parts": [
+            "Which word cannot be formed using the letters of the word 'CELEBRATION'?",
+            {
+                "pre_o": [
+                    "Option A: RATE",
+                    "Option B: LATE",
+                    "Option C: BRONZE",
+                    "Option D: CREATE"
+                ]
+            }
+        ],
+        "o": ["A", "B", "C", "D"],
+        "a": 2
+    },
+    {
+        "id": "Q43",
+        "parts": [
+            "A man buys a cycle for ₹1,500 and sells it at a loss of 10%. What is the selling price?"
+        ],
+        "o": ["₹1,300", "₹1,350", "₹1,400", "₹1,450"],
+        "a": 1
+    },
+    {
+        "id": "Q44",
+        "parts": [
+            "Match the figure with its water image:",
+            {
+                "match": {
+                    "list1": ["M", "(", "b", ">"],
+                    "list2": ["W", ")", "q", "<"]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(III) (B)→(II) (C)→(IV) (D)→(I)",
+            "(A)→(II) (B)→(I) (C)→(III) (D)→(IV)",
+            "(A)→(IV) (B)→(III) (C)→(II) (D)→(I)"
+        ],
+        "a": 3
+    },
+    {
+        "id": "Q45",
+        "parts": [
+            "In a certain code language, 'BAT' is written as 'YZG'. How will 'CAT' be written?"
+        ],
+        "o": ["XZG", "XAG", "YAG", "XZT"],
+        "a": 0
+    },
+    {
+        "id": "Q46",
+        "parts": [
+            "Study the data and answer the question.",
+            {
+                "pre_o": [
+                    "Total students = 150",
+                    "Students who like Maths = 90",
+                    "Students who like Science = 70",
+                    "Students who like both = 20"
+                ]
+            },
+            "How many students like only one subject?"
+        ],
+        "o": ["120", "110", "100", "90"],
+        "a": 1
+    },
+    {
+        "id": "Q47",
+        "parts": [
+            "A clock gains 5 minutes every hour. What time will it show at 8 PM if it was set right at 8 AM?"
+        ],
+        "o": ["8:40 PM", "9:00 PM", "9:20 PM", "9:40 PM"],
+        "a": 2
+    },
+    {
+        "id": "Q48",
+        "parts": [
+            "Match the direction turn with the final result:",
+            {
+                "match": {
+                    "list1": [
+                        "Start North → Turn Right Twice",
+                        "Start South → Turn Left Twice",
+                        "Start East → Turn Back",
+                        "Start West → Turn Left Once"
+                    ],
+                    "list2": ["South", "North", "West", "South"]
+                }
+            }
+        ],
+        "o": [
+            "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
+            "(A)→(II) (B)→(I) (C)→(III) (D)→(IV)",
+            "(A)→(III) (B)→(II) (C)→(I) (D)→(IV)",
+            "(A)→(IV) (B)→(III) (C)→(II) (D)→(I)"
+        ],
+        "a": 0
+    },
+    {
+        "id": "Q49",
+        "parts": ["Find the missing number: 1, 4, 9, 16, ___, 36."],
+        "o": ["20", "24", "25", "27"],
+        "a": 2
+    },
+    {
+        "id": "Q50",
+        "parts": ["What was the day on 1st January 2020?"],
+        "o": ["Monday", "Tuesday", "Wednesday", "Thursday"],
+        "a": 3
+    }
+]
