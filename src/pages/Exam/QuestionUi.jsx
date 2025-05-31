@@ -3,7 +3,7 @@ import MatchUi from "../../components/QuestionRenderingUI/MatchUi";
 import OptionsMore from "../../components/QuestionRenderingUI/OptionsMore";
 import { saveAnswer, markForReview, clearAnswer } from "../../store/slices/examSlice";
 import { useDispatch, useSelector } from "react-redux";
-import QuestionTimeProgress from "../exam/QuestionTimeProgressBar"
+import QuestionTimeProgress from "./QuestionTimeProgressBar"
 
 const QuestionComponent = () => {
     const currQuestionIndex = useSelector((state) => state.exam.currentQuestionIndex);
