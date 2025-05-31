@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { login } from "../store/slices/authSlice";
 import { Lock, User } from "lucide-react";
 
@@ -37,7 +37,7 @@ function Login() {
 
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-500 via-pink-500 to-red-500">
-        <div className="bg-white/90 backdrop-blur-md p-8 rounded-lg shadow-2xl w-[500px] transition-all duration-300 hover:shadow-3xl">
+        <div className="bg-white/90 backdrop-blur-md p-8 rounded-lg shadow-2xl w-[600px] transition-all duration-300 hover:shadow-3xl">
           <div className="flex flex-col items-center mb-8">
             <div className="w-20 h-20 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center mb-4">
               <User className="w-10 h-10 text-white" />

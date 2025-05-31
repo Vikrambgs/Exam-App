@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import HelpPanel from "./HelpPanel";
 import ExamTimer from "./ExamTimer";
 import { clearExamState } from "../../store/slices/examSlice";
 import ClearExamDialog from "./ResetExamDialog";
@@ -10,8 +9,7 @@ import ExamSetting from "./ExamSetting";
 function NavBar({ showQuestionStatus, setShowQuestionStatus }) {
     const dispatch = useDispatch();
     const examStartTime = useSelector((state) => state.exam.examStartTime);
-    const timeLimitInSec = 3600;
-    const [showHelp, setShowHelp] = useState(false); // control the visibility of the help panel
+    const timeLimitInSec = useSelector((state) => state.exam.totalExamTime);
     const [showResetConfirmation, setShowResetConfirmation] = useState(false);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
@@ -29,7 +27,7 @@ function NavBar({ showQuestionStatus, setShowQuestionStatus }) {
         <div className="bg-gradient-to-r from-slate-800 to-gray-900 py-1.5 px-3 shadow-lg">
             <div className="max-w-full mx-auto flex justify-between items-center">
                 <h1 className="text-lg font-bold text-white uppercase font-roboto">
-                    Mathematics
+                    Exam / Quiz Going....
                 </h1>
                 <div className="flex items-center gap-4">
                     {examStartTime && (
@@ -77,7 +75,6 @@ function NavBar({ showQuestionStatus, setShowQuestionStatus }) {
                 </div>
             </div>
 
-            <HelpPanel isOpen={showHelp} onClose={() => setShowHelp(false)} />
 
             <ClearExamDialog
                 isOpen={showResetConfirmation}

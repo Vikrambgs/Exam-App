@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setQuestions } from "../store/slices/examSlice";
-import MatchUi from "./QuestionManagement/MatchUi"
+import MatchUi from "./QuestionManagement/MatchUi";
 import OptionsMore from "./QuestionManagement/OptionsMore";
 import { GoQuestion } from "react-icons/go";
 import HelpWindow from "./UploadPage/HelpWindow";
@@ -15,20 +15,30 @@ function QuestionPreview({ questionData }) {
             <h2 className="text-2xl font-medium text-center">Quiz Question Preview</h2>
             <div className="mt-4">
                 <p className="text-lg font-semibold">{questionData.examTitle}</p>
-                <p className="text-gray-600">Time Limit: {questionData.timeLimit / 60} minutes</p>
+                <p className="text-gray-600">
+                    Time Limit: {questionData.timeLimit / 60} minutes
+                </p>
             </div>
             <div className="mt-10 flex flex-col gap-5">
                 {questionData.questions.map((question) => (
-                    <div key={question.id} className="border border-gray-400 rounded-md p-4 py-3">
+                    <div
+                        key={question.id}
+                        className="border border-gray-400 rounded-md p-4 py-3"
+                    >
                         <p className="text-lg leading-tight">
-                            <span className="font-semibold pr-2">{question.index + 1}.</span>
+                            <span className="font-semibold pr-2">
+                                {question.index + 1}.
+                            </span>
                             {question.parts[0]}
                         </p>
 
                         {question.parts.slice(1).map((part, partIndex) => {
                             if (typeof part === "string") {
                                 return (
-                                    <p key={`${question.id}-part-${partIndex}`} className="mt-2">
+                                    <p
+                                        key={`${question.id}-part-${partIndex}`}
+                                        className="mt-2"
+                                    >
                                         {part}
                                     </p>
                                 );
@@ -60,7 +70,9 @@ function QuestionPreview({ questionData }) {
                                 key={`${question.id}-option-${optionIndex}`}
                                 className="ml-1 pl-3 py-1 bg-gray-300 rounded my-2"
                                 style={
-                                    optionIndex === question.a ? { backgroundColor: "#81ff6b" } : {}
+                                    optionIndex === question.a
+                                        ? { backgroundColor: "#81ff6b" }
+                                        : {}
                                 }
                             >
                                 <p>{option}</p>
@@ -72,7 +84,6 @@ function QuestionPreview({ questionData }) {
         </div>
     );
 }
-
 
 function CreateQuestion() {
     const navigate = useNavigate();
@@ -96,6 +107,10 @@ function CreateQuestion() {
         };
     };
 
+    const handleClearData = ()=>{
+        setJsonData("");
+    }
+
     const validateQuestionFormat = (data) => {
         if (!Array.isArray(data)) {
             throw new Error("Questions must be provided as an array");
@@ -103,15 +118,23 @@ function CreateQuestion() {
     };
 
     const checkInputData = () => {
-        try {
-            const data = JSON.parse(jsonData);
-            validateQuestionFormat(data);
-            setIsInputDataValid(true);
-            setErrorMessage("");
-            return true;
-        } catch (error) {
+        if (jsonData) {
+            try {
+                const data = JSON.parse(jsonData);
+                validateQuestionFormat(data);
+                setIsInputDataValid(true);
+                setErrorMessage("");
+                return true;
+            } catch (error) {
+                setIsInputDataValid(false);
+                setErrorMessage(error.message);
+                return false;
+            }
+        } else {
             setIsInputDataValid(false);
-            setErrorMessage(error.message);
+            setErrorMessage(
+                "Input data is empty : Please enter some json data or import file"
+            );
             return false;
         }
     };
@@ -138,7 +161,6 @@ function CreateQuestion() {
                 setJsonData(JSON.stringify(data, null, 2));
                 const transformedData = transformQuestions(data);
                 setParsedQuestions(transformedData);
-                setIsShowPreview(true);
                 setIsInputDataValid(true);
                 setErrorMessage("");
             } catch (error) {
@@ -159,7 +181,7 @@ function CreateQuestion() {
     };
 
     return (
-        <div className="min-h-screen w-full bg-gradient-to-br from-purple-500 via-pink-500 to-red-500">
+        <div className="min-h-screen w-full bg-gradient-to-br from-slate-900 to-slate-800">
             <div className="flex justify-center items-center w-full min-h-screen">
                 <div className="bg-white rounded shadow-lg px-8 py-6 w-[calc(100vw-80px)] h-[calc(100vh-80px)] flex flex-col ">
                     <div className="flex items-center mb-2 justify-between">
@@ -174,19 +196,12 @@ function CreateQuestion() {
                             </button>
                         </div>
 
-                        <div>
-                            <button className="px-4 py-1.5 bg-gray-700 text-white rounded hover:bg-gray-600" onClick={() => navigate("/select-exam")}>Select Exam</button>
-                        </div>
-
-                        <div className="flex items-center gap-10 border rounded border-black px-2">
-                            <p className="text-lg text-gray-900 font-medium">Upload JSON Format Questions</p>
-                            <input
-                                type="file"
-                                accept=".json"
-                                onChange={handleFileChange}
-                                className="block text-sm cursor-pointer text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                            />
-                        </div>
+                        <input
+                            type="file"
+                            accept=".json"
+                            onChange={handleFileChange}
+                            className="block text-sm cursor-pointer text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-blue-200 file:text-blue-800 file:cursor-pointer hover:file:bg-blue-300 border"
+                        />
                     </div>
 
                     <textarea
@@ -196,30 +211,38 @@ function CreateQuestion() {
                         onChange={(e) => setJsonData(e.target.value)}
                         placeholder="Paste your JSON here..."
                     />
-                    {!isInputDataValid && (
-                        <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
-                    )}
 
-                    <div className="flex justify-end gap-3">
-                        <button
-                            className="px-4 py-1.5 bg-gray-700 text-white rounded hover:bg-gray-600"
-                            onClick={checkInputData}
-                        >
-                            Validate JSON
-                        </button>
-                        <button
-                            className="px-4 py-1.5 bg-blue-700 text-white rounded hover:bg-blue-600"
-                            onClick={handlePreview}
-                        >
-                            Preview
-                        </button>
-                        <button
-                            className="px-4 py-1.5 bg-green-700 text-white rounded hover:bg-green-600"
-                            onClick={handleStartExam}
-                            disabled={!isInputDataValid}
-                        >
-                            Start Exam
-                        </button>
+                    <div className="flex justify-between gap-3 items-center">
+                        <p className="text-red-500 text-sm">
+                            {!isInputDataValid && errorMessage}
+                        </p>
+
+                        <div className="space-x-3">
+                            <button onClick={handleClearData} className="text-gray-900 bg-white border border-gray-400 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-sm text-sm px-5 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                                Clear Data
+                            </button>
+
+                            <button
+                                className="px-4 py-1.5 bg-blue-700 text-white rounded-sm hover:bg-blue-600"
+                                onClick={handlePreview}
+                            >
+                                Preview
+                            </button>
+                            <button
+                                className="px-4 py-1.5 bg-green-700 text-white rounded-sm hover:bg-green-600"
+                                onClick={handleStartExam}
+                                disabled={!isInputDataValid}
+                            >
+                                Start Exam
+                            </button>
+
+                            <button
+                                className="px-4 py-1.5 bg-gray-700 text-white rounded-sm hover:bg-gray-600"
+                                onClick={() => navigate("/select-exam")}
+                            >
+                                Select Exam
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

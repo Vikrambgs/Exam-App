@@ -30,7 +30,7 @@ function App() {
                 <ErrorBoundary>
                     <Suspense fallback={<LoadingSpinner />}>
                         <Router>
-                            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+                            <div className="bg-gray-800 dark:bg-gray-900 transition-colors duration-200">
                                 <main className="">
                                     <Routes>
                                         <Route path="/" element={<Navigate to="/login" />} />

@@ -10,12 +10,11 @@ import QuestionComponent from "../components/QuestionManagement/QuestionUi";
 import NavBar from "./exam/NavBar";
 import ExamProgressBar from "./exam/ExamProgressBar";
 import NavigateWithSubmit from "./exam/NavigateWithSubmit";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 function Exam() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const timeLimitInSec = 3600;
+    const timeLimitInSec = useSelector((state)=> state.exam.totalExamTime);
     const [showQuestionStatus, setShowQuestionStatus] = useState(true);
 
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -56,7 +55,7 @@ function Exam() {
     
 
     return (
-        <div className="min-h-screen max-h-screen max-w-[100vw] bg-gray-900 flex flex-col">
+        <div className="max-w-[2000px] h-dvh w-dvw lg aspect-[2/1] bg-gray-900 flex flex-col">
             <NavBar 
                 showQuestionStatus={showQuestionStatus} 
                 setShowQuestionStatus={setShowQuestionStatus} 

@@ -45,7 +45,7 @@ function QuestionNavigation() {
                       {String(index + 1).padStart(2, "0")}
                       {(questionStatus[question.id] === "marked-review" ||
                           questionStatus[question.id] === "answered-marked-review") && (
-                          <span className="absolute right-0.5 top-0.5 w-2 h-2 bg-purple-500 rounded-full"></span>
+                          <span className="absolute w-4/5 h-4/5 border-2 border-purple-600 rounded-full"></span>
                       )}
                   </button>
               ))}

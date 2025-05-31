@@ -10,16 +10,19 @@ function ExamTimer({ startTime, timeLimit }) {
         const timer = setInterval(() => {
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
             const remaining = timeLimit - elapsed;
-            setTimeRemaining(remaining);
-
+    
             if (remaining <= 0) {
                 clearInterval(timer);
-                // Handle exam completion
+                setTimeRemaining(0); // Ensure timer shows 00:00
+                // Handle exam completion here
+            } else {
+                setTimeRemaining(remaining);
             }
         }, 1000);
-
+    
         return () => clearInterval(timer);
     }, [startTime, timeLimit]);
+    ;
 
     const minutes = Math.floor(timeRemaining / 60);
     const seconds = timeRemaining % 60;

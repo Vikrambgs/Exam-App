@@ -46,7 +46,7 @@ const QuestionComponent = () => {
 
     return (
         <>
-            <div className="mb-2">
+            <div className="mb-2 bg-slate-900">
                 <div className="flex flex-col gap-2">
                     <div className="flex justify-between items-start h-8">
                         <h2 className="text-lg font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
@@ -108,53 +108,58 @@ const QuestionComponent = () => {
                     }
                 })}
 
-                <div className="space-y-2 mt-3">
-                    {currentQuestion.o.map((option, index) => (
-                        <div
-                            key={index}
-                            onClick={() => handleOptionSelect(index)}
-                            role="radio"
-                            aria-checked={savedAnswer === index}
-                            tabIndex={0}
-                            className={classNames(
-                                "p-2 py-2 border text-white border-gray-600 rounded cursor-pointer transition-all duration-300 ring-1 ring-transparent ring-inset",
-                                "focus:outline-none focus:ring-green-600",
-                                savedAnswer === index
-                                    ? "bg-gray-700 text-green-700"
-                                    : "hover:bg-gray-600 text-gray-900 border-gray-200 font-medium"
-                            )}
-                        >
-                            <div className="flex items-center">
-                                <div
-                                    className={classNames(
-                                        "w-5 h-5 rounded-full border mr-2 flex items-center justify-center relative",
-                                        savedAnswer === index
-                                            ? "border-green-500 bg-indigo-500 border-2"
-                                            : "border-gray-400"
-                                    )}
-                                >
-                                    {savedAnswer === index && (
-                                        <svg
-                                            className="w-4 h-4 text-green-300"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="3"
-                                                d="M5 13l4 4L19 7"
-                                            />
-                                        </svg>
-                                    )}
-                                </div>
-                                <span className="text-sm font-medium">{option}</span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+<div
+    className={classNames(
+        "grid gap-2 mt-3",
+        currentQuestion.o.length <= 4 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1"
+    )}
+>
+    {currentQuestion.o.map((option, index) => (
+        <div
+            key={index}
+            onClick={() => handleOptionSelect(index)}
+            role="radio"
+            aria-checked={savedAnswer === index}
+            tabIndex={0}
+            className={classNames(
+                "p-2 py-2 border text-white border-gray-600 rounded cursor-pointer transition-all duration-300 ring-1 ring-transparent ring-inset",
+                "focus:outline-none focus:ring-green-600",
+                savedAnswer === index
+                    ? "bg-gray-700 text-green-700"
+                    : "hover:bg-gray-600 text-gray-900 border-gray-200 font-medium",
+                "flex items-center" // ensures inner layout is always consistent
+            )}
+        >
+            <div
+                className={classNames(
+                    "w-5 h-5 rounded-full border mr-2 flex items-center justify-center relative",
+                    savedAnswer === index
+                        ? "border-green-500 bg-indigo-500 border-2"
+                        : "border-gray-400"
+                )}
+            >
+                {savedAnswer === index && (
+                    <svg
+                        className="w-4 h-4 text-green-300"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="3"
+                            d="M5 13l4 4L19 7"
+                        />
+                    </svg>
+                )}
+            </div>
+            <span className="text-sm font-medium">{option}</span>
+        </div>
+    ))}
+</div>
+
             </div>
         </>
     );

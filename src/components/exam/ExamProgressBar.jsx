@@ -14,7 +14,7 @@ function ExamProgressBar({ startTime, timeLimitSec }) {
     }, [startTime, timeLimitSec]);
 
     return (
-        <div className="h-[3px] bg-green-400 w-full">
+        <div className="h-[2px] bg-green-400 w-full">
             <div
                 className="h-full bg-red-500"
                 style={{ width: `${progress}%` }}
