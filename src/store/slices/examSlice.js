@@ -8,7 +8,7 @@ const initialState = {
     questionStatus: {}, // Object to track the status of each question (not-attempted, viewed, answered, marked-review)
     examStartTime: null, // Timestamp when the exam starts
     examEndTime: null, // Timestamp when the exam ends
-    questionTimes: {},     // Object to track time spent on each question
+    questionTimes: {}, // Object to track time spent on each question
     isExamComplete: false, // Boolean to indicate if the exam is complete
     bookmarkedQuestions: [], // Array to hold bookmarked question IDs
     averageTimePerQuestion: 0, // Average time per question in seconds
@@ -35,20 +35,45 @@ const examSlice = createSlice({
             state.examEndTime = null;
 
             // Initialize question status and times
-            action.payload.forEach((q) => {
-                state.questionStatus[q.id] = "not-attempted";
-                state.questionTimes[q.id] = 0;
+            action.payload.forEach((q, index) => {
+                if(index == 0){
+                    state.questionStatus[q.id] = "viewed";
+                    state.questionTimes[q.id] = 0;
+                }else{
+                    state.questionStatus[q.id] = "not-attempted";
+                    state.questionTimes[q.id] = 0;
+                }
             });
+        },
+        setQuestionStatus: (state, action) => {
+            const { questionId, status } = action.payload;
+            const current = state.questionStatus[questionId];
+            if (!current || current === "not-attempted") {
+                state.questionStatus[questionId] = status;
+            }
         },
         setCurrentQuestion: (state, action) => {
             const prevQuestion = state.questions[state.currentQuestionIndex];
+            const nextIndex = action.payload;
+            const nextQuestion = state.questions[nextIndex];
+
+            // Mark previous as viewed if it was not attempted
             if (
                 prevQuestion &&
                 state.questionStatus[prevQuestion.id] === "not-attempted"
             ) {
                 state.questionStatus[prevQuestion.id] = "viewed";
             }
-            state.currentQuestionIndex = action.payload;
+
+            // Also mark current (next) as viewed if clicked again and still "not-attempted"
+            if (
+                nextQuestion &&
+                state.questionStatus[nextQuestion.id] === "not-attempted"
+            ) {
+                state.questionStatus[nextQuestion.id] = "viewed";
+            }
+
+            state.currentQuestionIndex = nextIndex;
         },
         saveAnswer: (state, action) => {
             const { questionId, answer } = action.payload;
@@ -59,7 +84,10 @@ const examSlice = createSlice({
             } else {
                 state.answers[questionId] = answer;
                 // Check if the question was marked for review
-                if (state.questionStatus[questionId] === "marked-review" || state.questionStatus[questionId] === "answered-marked-review") {
+                if (
+                    state.questionStatus[questionId] === "marked-review" ||
+                    state.questionStatus[questionId] === "answered-marked-review"
+                ) {
                     state.questionStatus[questionId] = "answered-marked-review";
                 } else {
                     state.questionStatus[questionId] = "answered";
@@ -69,18 +97,19 @@ const examSlice = createSlice({
         markForReview: (state, action) => {
             const questionId = action.payload;
             // If the question is already marked for review, unmark it
-            if (state.questionStatus[questionId] === "marked-review" || state.questionStatus[questionId] === "answered-marked-review") {
-                if(questionId in state.answers) {
+            if (
+                state.questionStatus[questionId] === "marked-review" ||
+                state.questionStatus[questionId] === "answered-marked-review"
+            ) {
+                if (questionId in state.answers) {
                     state.questionStatus[questionId] = "answered";
-                }
-                else{
+                } else {
                     state.questionStatus[questionId] = "viewed";
                 }
             } else {
-                if(questionId in state.answers) {
+                if (questionId in state.answers) {
                     state.questionStatus[questionId] = "answered-marked-review";
-                }
-                else{
+                } else {
                     state.questionStatus[questionId] = "marked-review";
                 }
             }
@@ -130,9 +159,14 @@ const examSlice = createSlice({
             state.examEndTime = null;
 
             // Initialize question status and times
-            questions.forEach((q) => {
-                state.questionStatus[q.id] = "not-attempted";
-                state.questionTimes[q.id] = 0;
+            questions.forEach((q, index) => {
+                if (index == 0) {
+                    state.questionStatus[q.id] = "viewed";
+                    state.questionTimes[q.id] = 0;
+                } else {
+                    state.questionStatus[q.id] = "not-attempted";
+                    state.questionTimes[q.id] = 0;
+                }
             });
         },
         getUnansweredCount: (state) => {
@@ -152,6 +186,7 @@ export const {
     toggleBookmark,
     clearExamState,
     getUnansweredCount,
+    setQuestionStatus
 } = examSlice.actions;
 
 export default examSlice.reducer;
