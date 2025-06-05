@@ -36,7 +36,7 @@ function NavigateWithSubmit() {
                     onClick={() => handleNavigateQuestion(-1)}
                     disabled={currentQuestionIndex === 0}
                     className={classNames(
-                        "px-4 py-1 rounded font-medium transition-all",
+                        "px-3 py-1.5 rounded font-medium transition-all",
                         "focus:outline-none focus:ring-1 focus:ring-indigo-500",
                         currentQuestionIndex === 0
                             ? "bg-gray-200 text-gray-500 cursor-not-allowed"
@@ -48,7 +48,7 @@ function NavigateWithSubmit() {
                 </button>
                 <button
                     onClick={() => setshowSubmitConfirmation(true)}
-                    className="px-6 py-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded font-medium transition-all focus:outline-none focus:ring-1 focus:ring-green-500"
+                    className="px-4 py-1.5 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded font-medium transition-all focus:outline-none focus:ring-1 focus:ring-green-500"
                     aria-label="Submit exam"
                 >
                     Submit Exam
@@ -57,7 +57,7 @@ function NavigateWithSubmit() {
                     onClick={() => handleNavigateQuestion(1)}
                     disabled={currentQuestionIndex === allQuestionCount - 1}
                     className={classNames(
-                        "px-4 py-1 rounded font-medium transition-all",
+                        "px-4 py-1.5 rounded font-medium transition-all",
                         "focus:outline-none focus:ring-1 focus:ring-indigo-500",
                         currentQuestionIndex === allQuestionCount - 1
                             ? "bg-gray-200 text-gray-500 cursor-not-allowed"
