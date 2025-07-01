@@ -1,31 +1,39 @@
-import React, { useRef } from "react";
 import { Target, Sparkles, Gauge, Hourglass } from "lucide-react";
 import { useSelector } from "react-redux";
+import { getAllQuestionsData, getExamStartTime, getExamEndTime } from "../../store/selectors/examSelector";
 
 const MinimalQuizResult = () => {
-    const { questions, answers, questionStatus, examStartTime, examEndTime } = useSelector(
-        (state) => state.exam
-    );
+    const allData = useSelector(getAllQuestionsData);
 
-    // Create refs for scrolling to questions
-    const questionRefs = useRef({});
+    const questionsData = allData.map((data) => {
+        return {
+            questionNo: data.questionNo,
+            questionId: data.questionId,
+            status: data.status,
+            isBookmarked: data.isBookmarked,
+            userSelectedOption: data.userSelectedOption,
+            correctAnswer: data.questionData.a,
+            totalSpentTime: data.totalSpentTime,
+        }
+    });
+
 
     // Function to scroll to a specific question
     const scrollToQuestion = (index) => {
         if (window.questionRefs && window.questionRefs[index]) {
-            window.questionRefs[index].scrollIntoView({ 
+            window.questionRefs[index].scrollIntoView({
                 behavior: 'smooth',
                 block: 'start'
             });
         }
     };
 
-    const totalQuestions = questions.length;
-    const attemptedQuestions = Object.keys(answers).length;
-    const unSeenQuestions = Object.values(questionStatus).flat().filter((status) => status === "not-attempted").length;
-    const unAttempted = Object.values(questionStatus).flat().filter((status) => status === "viewed" || status === "marked-review").length;
-    const correctAnswers = questions.filter((q) => answers[q.id] === q.a).length;
-    const timeTaken = Math.floor((examEndTime - examStartTime) / 1000);
+    const totalQuestions = questionsData.length;
+    const attemptedQuestions = questionsData.filter((q) => q.userSelectedOption !== null).length;
+    const unSeenQuestions = questionsData.filter((q) => q.status === "not-seen").length;
+    const unAttempted = questionsData.filter((q) => q.status === "marked-for-review" || q.status === "seen-only").length;
+    const correctAnswers = questionsData.filter((q) => q.userSelectedOption === q.correctAnswer).length;
+    const timeTaken = Math.floor((useSelector(getExamEndTime) - useSelector(getExamStartTime)) / 1000);
     const maxTime = 3600; // 1 hour in seconds
 
 
@@ -51,14 +59,14 @@ const MinimalQuizResult = () => {
         scorePercentage >= 90
             ? "A"
             : scorePercentage >= 85
-            ? "B"
-            : scorePercentage >= 80
-            ? "C"
-            : scorePercentage >= 75
-            ? "D"
-            : scorePercentage >= 60
-            ? "E"
-            : "F";
+                ? "B"
+                : scorePercentage >= 80
+                    ? "C"
+                    : scorePercentage >= 75
+                        ? "D"
+                        : scorePercentage >= 60
+                            ? "E"
+                            : "F";
 
     const GradeIndicator = ({ grade }) => {
         return (
@@ -167,7 +175,7 @@ const MinimalQuizResult = () => {
                             </span>
                         </div>
                         <div className="h-px bg-white/30" />
-                        <div className="flex justify-between items-center text-blue-400">
+                        <div className="flex justify-between items-center text-gray-300">
                             <span className="font-medium">Unseen Questions</span>
                             <span className="text-2xl font-bold">{unSeenQuestions}</span>
                         </div>
@@ -177,34 +185,40 @@ const MinimalQuizResult = () => {
 
             {/* Question answered/unanswered/leaved Status */}
             <div className="flex flex-wrap gap-2 justify-center mb-6">
-                {questions.map((item, indx) => {
+                {questionsData.map((datas, indx) => {
+
+
                     let statusColor = "bg-yellow-500";
                     let statusText = "Unattempted";
 
-                    if(questions[indx].a === answers[questions[indx].id]){
+                    if (datas.userSelectedOption === datas.correctAnswer) {
                         statusColor = "bg-green-700 text-white";
                         statusText = "Correct";
                     }
-                    else if(answers[questions[indx].id]){
+                    else if (datas.userSelectedOption !== null && datas.userSelectedOption !== datas.correctAnswer) {
                         statusColor = "bg-red-700 text-white";
                         statusText = "Incorrect";
                     }
-                    else if(questionStatus[questions[indx].id] === "not-attempted"){
+                    else if (datas.status === "not-seen") {
                         statusColor = "bg-gray-300 text-gray-800";
                         statusText = "Unseen";
                     }
-                    
+
+
+
                     return (
                         <div
                             key={indx}
                             onClick={() => scrollToQuestion(indx)}
-                            className={`flex w-11 h-11 items-center justify-center aspect-square rounded cursor-pointer border text-sm font-medium ${
-                                statusColor
-                            } hover:opacity-80 transition-opacity relative group`}
+                            className={`flex w-11 h-11 items-center justify-center aspect-square rounded cursor-pointer border text-sm font-medium ${statusColor
+                                } hover:opacity-90 transition-opacity relative group`}
                             title={`Question ${indx + 1}: ${statusText}`}
                         >
                             {String(indx + 1).padStart(2, "0")}
-                            
+                            {/* show circle that will hint that this question was marked for review */}
+                            {(datas.status === "marked-for-review" || datas.status === "answered-and-marked-for-review") && (
+                                <span className="absolute w-4/5 h-4/5 border-2 border-purple-500 rounded-full"></span>
+                            )}
                         </div>
                     );
                 })}

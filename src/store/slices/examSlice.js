@@ -1,192 +1,183 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 
+// prettier-ignore
 const initialState = {
-    questions: [], // Array to hold the questions
-    currentQuestionIndex: 0, // Index of the current question
-    currentSelectedOption: null,
-    answers: {}, // Object to store answers keyed by question ID
-    questionStatus: {}, // Object to track the status of each question (not-attempted, viewed, answered, marked-review)
-    examStartTime: null, // Timestamp when the exam starts
-    examEndTime: null, // Timestamp when the exam ends
-    questionTimes: {}, // Object to track time spent on each question
-    isExamComplete: false, // Boolean to indicate if the exam is complete
-    bookmarkedQuestions: [], // Array to hold bookmarked question IDs
-    averageTimePerQuestion: 0, // Average time per question in seconds
-    totalExamTime: 3600, // Total exam time in seconds (1 hour)
+    examQuestions: [],              // Array to hold the questions
+    questionOrderIds: [],           // Array to hold the order of questions by question id
+    userQuestionActivity : {},      // Objects to track user interactions with each question
+    averageTimePerQuestion: 0,      // Average time per question in seconds
+    examStartTime: null,            // Timestamp when the exam starts
+    examEndTime: null,              // Timestamp when the exam ends
+    currentQuestionIndex: 0,        // Index of the current question
+    currentlySelectedOption: null,  // Selected option for the current question
+    isExamComplete: false,          // Boolean to indicate if the exam is complete
+    totalExamTime: 3600,            // Total exam time in seconds (1 hour)
 };
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+        [array[i], array[j]] = [array[j], array[i]]; // swap
+    }
+    return array;
+}
 
 const examSlice = createSlice({
     name: "exam",
     initialState,
     reducers: {
         setQuestions: (state, action) => {
-            state.questions = action.payload;
-            state.averageTimePerQuestion = Math.floor(
-                state.totalExamTime / action.payload.length
-            );
+            state.examQuestions = action.payload;
+            state.averageTimePerQuestion =
+                state.totalExamTime / action.payload.length;
             state.examStartTime = Date.now();
             state.currentQuestionIndex = 0;
-            state.currentSelectedOption = null;
-            state.answers = {};
-            state.questionStatus = {};
-            state.questionTimes = {};
-            state.bookmarkedQuestions = [];
+            state.currentlySelectedOption = null;
             state.isExamComplete = false;
             state.examEndTime = null;
 
+            // shuffle order of questions in state.questionOrderIds
+            state.questionOrderIds = action.payload.map((question) => question.id);
+            state.questionOrderIds = shuffleArray(state.questionOrderIds);
+
             // Initialize question status and times
-            action.payload.forEach((q, index) => {
-                if(index == 0){
-                    state.questionStatus[q.id] = "viewed";
-                    state.questionTimes[q.id] = 0;
-                }else{
-                    state.questionStatus[q.id] = "not-attempted";
-                    state.questionTimes[q.id] = 0;
-                }
+            state.questionOrderIds.forEach((questionId) => {
+                state.userQuestionActivity[questionId] = {
+                    status: "not-seen",
+                    isBookmarked: false,
+                    answeredOption: null,
+                    timeSpentLog: [],
+                };
             });
-        },
-        setQuestionStatus: (state, action) => {
-            const { questionId, status } = action.payload;
-            const current = state.questionStatus[questionId];
-            if (!current || current === "not-attempted") {
-                state.questionStatus[questionId] = status;
-            }
-        },
-        setCurrentQuestion: (state, action) => {
-            const prevQuestion = state.questions[state.currentQuestionIndex];
-            const nextIndex = action.payload;
-            const nextQuestion = state.questions[nextIndex];
 
-            // Mark previous as viewed if it was not attempted
-            if (
-                prevQuestion &&
-                state.questionStatus[prevQuestion.id] === "not-attempted"
-            ) {
-                state.questionStatus[prevQuestion.id] = "viewed";
-            }
-
-            // Also mark current (next) as viewed if clicked again and still "not-attempted"
-            if (
-                nextQuestion &&
-                state.questionStatus[nextQuestion.id] === "not-attempted"
-            ) {
-                state.questionStatus[nextQuestion.id] = "viewed";
-            }
-
-            state.currentQuestionIndex = nextIndex;
+            // Update first question visited time
+            state.userQuestionActivity[state.questionOrderIds[0]] = {
+                ...state.userQuestionActivity[state.questionOrderIds[0]],
+                status: "seen-only",
+                timeSpentLog: [
+                    {
+                        visitedAt: Date.now(),
+                    },
+                ],
+            };
         },
+
+        setCurrentDisplayedQuestionByIndex: (state, action) => {
+            if (state.currentQuestionIndex === action.payload) return;
+
+            const questionIndex = action.payload;
+
+            // Update previous question movedAt time
+            state.userQuestionActivity[
+                state.questionOrderIds[state.currentQuestionIndex]
+            ].timeSpentLog.at(-1).movedAt = Date.now();
+
+            // Update current question visited time
+            state.userQuestionActivity[
+                state.questionOrderIds[questionIndex]
+            ].timeSpentLog.push({
+                visitedAt: Date.now(),
+            });
+
+            const questionUserActivity =
+                state.userQuestionActivity[state.questionOrderIds[questionIndex]];
+            if (questionUserActivity.status === "not-seen") {
+                questionUserActivity.status = "seen-only";
+            }
+            state.currentQuestionIndex = questionIndex;
+        },
+
         saveAnswer: (state, action) => {
-            const { questionId, answer } = action.payload;
-            if (answer === null) {
-                delete state.answers[questionId];
-                // If answer is cleared, set status back to viewed
-                state.questionStatus[questionId] = "viewed";
-            } else {
-                state.answers[questionId] = answer;
-                // Check if the question was marked for review
-                if (
-                    state.questionStatus[questionId] === "marked-review" ||
-                    state.questionStatus[questionId] === "answered-marked-review"
-                ) {
-                    state.questionStatus[questionId] = "answered-marked-review";
-                } else {
-                    state.questionStatus[questionId] = "answered";
-                }
+            const {questionIndex, answerIndex} = action.payload;
+            const questionUserActivity =
+                state.userQuestionActivity[state.questionOrderIds[questionIndex]];
+            questionUserActivity.answeredOption = answerIndex;
+            if (questionUserActivity.status === "seen-only") {
+                questionUserActivity.status = "answered";
+            } else if (questionUserActivity.status === "marked-for-review") {
+                questionUserActivity.status = "answered-and-marked-for-review";
             }
         },
-        markForReview: (state, action) => {
-            const questionId = action.payload;
-            // If the question is already marked for review, unmark it
-            if (
-                state.questionStatus[questionId] === "marked-review" ||
-                state.questionStatus[questionId] === "answered-marked-review"
+
+        toggleMarkForReview: (state, action) => {
+            const questionIndex = action.payload;
+            const questionUserActivity =
+                state.userQuestionActivity[state.questionOrderIds[questionIndex]];
+            if (questionUserActivity.status === "seen-only") {
+                questionUserActivity.status = "marked-for-review";
+            } else if (questionUserActivity.status === "answered") {
+                questionUserActivity.status = "answered-and-marked-for-review";
+            } else if (
+                questionUserActivity.status === "answered-and-marked-for-review"
             ) {
-                if (questionId in state.answers) {
-                    state.questionStatus[questionId] = "answered";
-                } else {
-                    state.questionStatus[questionId] = "viewed";
-                }
-            } else {
-                if (questionId in state.answers) {
-                    state.questionStatus[questionId] = "answered-marked-review";
-                } else {
-                    state.questionStatus[questionId] = "marked-review";
-                }
+                questionUserActivity.status = "answered";
+            } else if (questionUserActivity.status === "marked-for-review") {
+                questionUserActivity.status = "seen-only";
             }
         },
-        updateQuestionTime: (state, action) => {
-            const { questionId, timeSpent } = action.payload;
-            // Round to 1 decimal place for smoother updates
-            state.questionTimes[questionId] = Math.round(timeSpent * 10) / 10;
+
+        clearAnswer: (state, action) => {
+            const questionIndex = action.payload;
+            const questionUserActivity =
+                state.userQuestionActivity[state.questionOrderIds[questionIndex]];
+            questionUserActivity.answeredOption = null;
+            if (questionUserActivity.status === "answered-and-marked-for-review") {
+                questionUserActivity.status = "marked-for-review";
+            } else if (questionUserActivity.status === "answered") {
+                questionUserActivity.status = "seen-only";
+            }
         },
-        completeExam: (state) => {
+
+        toggleBookmark: (state, action) => {
+            const questionIndex = action.payload;
+            const questionUserActivity =
+                state.userQuestionActivity[state.questionOrderIds[questionIndex]];
+            questionUserActivity.isBookmarked = !questionUserActivity.isBookmarked;
+        },
+        submitExam: (state) => {
             state.isExamComplete = true;
             state.examEndTime = Date.now();
         },
-        clearAnswer: (state, action) => {
-            const questionId = action.payload;
-            delete state.answers[questionId];
-            // If it was marked for review, keep it marked
-            if (state.questionStatus[questionId] === "answered-marked-review") {
-                state.questionStatus[questionId] = "marked-review";
-            } else {
-                state.questionStatus[questionId] = "viewed";
-            }
-        },
-        toggleBookmark: (state, action) => {
-            const questionId = action.payload;
-            const index = state.bookmarkedQuestions.indexOf(questionId);
-            if (index !== -1) {
-                state.bookmarkedQuestions.splice(index, 1);
-            } else {
-                state.bookmarkedQuestions.push(questionId);
-            }
-        },
+
         clearExamState: (state) => {
-            // Keep the questions and reinitialize everything else
-            const questions = state.questions;
-            // Use setQuestions logic to reset the state
-            state.averageTimePerQuestion = Math.floor(
-                state.totalExamTime / questions.length
-            );
             state.examStartTime = Date.now();
             state.currentQuestionIndex = 0;
-            state.answers = {};
-            state.questionStatus = {};
-            state.questionTimes = {};
-            state.bookmarkedQuestions = [];
+            state.currentlySelectedOption = null;
             state.isExamComplete = false;
             state.examEndTime = null;
 
             // Initialize question status and times
-            questions.forEach((q, index) => {
-                if (index == 0) {
-                    state.questionStatus[q.id] = "viewed";
-                    state.questionTimes[q.id] = 0;
-                } else {
-                    state.questionStatus[q.id] = "not-attempted";
-                    state.questionTimes[q.id] = 0;
-                }
+            state.questionOrderIds.forEach((questionId) => {
+                state.userQuestionActivity[questionId] = {
+                    status: "not-seen",
+                    isBookmarked: false,
+                    answeredOption: null,
+                    timeSpentLog: [],
+                };
             });
-        },
-        getUnansweredCount: (state) => {
-            return state.answers;
+
+            // Update first question visited time
+            state.userQuestionActivity[state.questionOrderIds[0]] = {
+                ...state.userQuestionActivity[state.questionOrderIds[0]],
+                status: "seen-only",
+                timeSpentLog: [
+                    {
+                        visitedAt: Date.now(),
+                    },
+                ],
+            };
         },
     },
 });
 
 export const {
     setQuestions,
-    setCurrentQuestion,
+    setCurrentDisplayedQuestionByIndex,
     saveAnswer,
-    markForReview,
-    updateQuestionTime,
-    completeExam,
+    toggleMarkForReview,
     clearAnswer,
     toggleBookmark,
     clearExamState,
-    getUnansweredCount,
-    setQuestionStatus
+    submitExam,
 } = examSlice.actions;
-
 export default examSlice.reducer;

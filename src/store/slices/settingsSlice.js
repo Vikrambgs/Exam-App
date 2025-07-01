@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
     theme: "light", // 'light' or 'dark'
@@ -20,7 +20,6 @@ const settingsSlice = createSlice({
         toggleTimer: (state) => {
             state.showTimer = !state.showTimer;
         },
-
         setFontSize: (state, action) => {
             state.fontSize = action.payload;
         },
@@ -46,7 +45,7 @@ export const {
     toggleSound,
     resetSettings,
     toggleShowHideQuestionStatusByDefault,
-    getAllSettings
+    getAllSettings,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

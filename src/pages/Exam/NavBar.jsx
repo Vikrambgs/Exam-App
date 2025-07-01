@@ -1,15 +1,20 @@
-import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import ExamTimer from "./ExamTimer";
-import { clearExamState } from "../../store/slices/examSlice";
 import ClearExamDialog from "./ResetExamDialog";
 import { Settings, Eye, EyeOff } from "lucide-react";
 import ExamSetting from "./ExamSetting";
 
+
+import { useSelector, useDispatch } from "react-redux";
+import { clearExamState } from "../../store/slices/examSlice";
+import { getExamStartTime, getExamTimeLimit } from "../../store/selectors/examSelector";
+
 function NavBar({ showQuestionStatus, setShowQuestionStatus }) {
     const dispatch = useDispatch();
-    const examStartTime = useSelector((state) => state.exam.examStartTime);
-    const timeLimitInSec = useSelector((state) => state.exam.totalExamTime);
+    const examStartTime = useSelector(getExamStartTime);
+    const timeLimitInSec = useSelector(getExamTimeLimit);
+
+
     const [showResetConfirmation, setShowResetConfirmation] = useState(false);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
@@ -46,11 +51,10 @@ function NavBar({ showQuestionStatus, setShowQuestionStatus }) {
 
                     <button
                         onClick={() => setShowQuestionStatus(!showQuestionStatus)}
-                        className={`flex items-center justify-center w-10 h-10 border transition-all duration-200 rounded-sm ${
-                            showQuestionStatus
-                                ? "bg-violet-700 hover:bg-violet-600 border-violet-600 hover:border-violet-500 text-white"
-                                : "bg-slate-800 hover:bg-slate-700 border-slate-600 hover:border-slate-500 text-slate-300 hover:text-white"
-                        }`}
+                        className={`flex items-center justify-center w-10 h-10 border transition-all duration-200 rounded-sm ${showQuestionStatus
+                            ? "bg-violet-700 hover:bg-violet-600 border-violet-600 hover:border-violet-500 text-white"
+                            : "bg-slate-800 hover:bg-slate-700 border-slate-600 hover:border-slate-500 text-slate-300 hover:text-white"
+                            }`}
                         title={
                             showQuestionStatus
                                 ? "Hide Question Status"
@@ -69,7 +73,7 @@ function NavBar({ showQuestionStatus, setShowQuestionStatus }) {
                         title="Settings"
                         onClick={() => handleSettingsToggle()}
                     >
-                        
+
                         <Settings className="w-5 h-5 group-hover:rotate-90 transition-transform duration-200" />
                     </button>
                 </div>
@@ -84,7 +88,7 @@ function NavBar({ showQuestionStatus, setShowQuestionStatus }) {
 
             {
                 isSettingsOpen && (
-                    <ExamSetting onClose={handleSettingsToggle}/>
+                    <ExamSetting onClose={handleSettingsToggle} />
                 )
             }
         </div>

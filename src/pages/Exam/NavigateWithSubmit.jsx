@@ -1,13 +1,18 @@
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentQuestion, completeExam } from "../../store/slices/examSlice";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import ConfirmationDialog from "./ConfirmSubmit";
+import { setCurrentDisplayedQuestionByIndex, submitExam } from "../../store/slices/examSlice";
+import { getCurrentQuestionIndex, getAllQuestionsCount } from "../../store/selectors/examSelector";
+
+
 
 function NavigateWithSubmit() {
-    const currentQuestionIndex = useSelector((state) => state.exam.currentQuestionIndex ?? 0);
-    const allQuestionCount = useSelector((state) => state.exam.questions?.length ?? 0);
+
+
+    const currentQuestionIndex = useSelector(getCurrentQuestionIndex);
+    const allQuestionCount = useSelector(getAllQuestionsCount);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -18,16 +23,16 @@ function NavigateWithSubmit() {
         (direction) => {
             const newIndex = currentQuestionIndex + direction;
             if (newIndex >= 0 && newIndex < allQuestionCount) {
-                dispatch(setCurrentQuestion(newIndex));
+                dispatch(setCurrentDisplayedQuestionByIndex(newIndex));
             }
         },
         [currentQuestionIndex, allQuestionCount, dispatch]
     );
 
     const handleSubmitExam = useCallback(() => {
-        dispatch(completeExam());
+        dispatch(submitExam());
         navigate("/results");
-    }, [dispatch, navigate]);
+    }, [navigate, dispatch]);
 
     return (
         <div className="mt-4 pt-2 border-t">

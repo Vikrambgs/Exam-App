@@ -2,22 +2,24 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import MinimalQuizResult from "./ResultDashboard";
+import { getAllQuestionsData } from "../../store/selectors/examSelector";
 import QuestionResult from "./QuestionResult";
 
 
 function Results() {
     const navigate = useNavigate();
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-    const { questions, answers, questionStatus, examStartTime, examEndTime } = useSelector(
-        (state) => state.exam
-    );
-    const questionTimes = useSelector((state) => state.exam.questionTimes);
+
+
+    const allData = useSelector(getAllQuestionsData);
+
+
     const [filterStatus, setFilterStatus] = useState('all'); // 'all', 'correct', 'incorrect', 'unattempted'
     const [searchQuery, setSearchQuery] = useState('');
-    
+
     // Create refs for each question to be used for scrolling
     const questionRefs = useRef({});
-    
+
     // Pass refs to MinimalQuizResult component
     useEffect(() => {
         // Make refs available to the MinimalQuizResult component through window
@@ -30,29 +32,27 @@ function Results() {
         }
     }, [isAuthenticated, navigate]);
 
-    if (!questions.length || !examEndTime) {
+    if (!allData.length) {
         navigate("/exam");
         return null;
     }
 
-    const totalExamTime = 3600; // 1 hour in seconds
-    const averageTimePerQuestion = Math.floor(totalExamTime / questions.length);
 
-    const filteredQuestions = questions.filter(question => {
-        const matchesSearch = question.parts.some(part => 
+    const filteredQuestions = allData.filter(question => {
+        const matchesSearch = question.questionData.parts.some(part =>
             typeof part === 'string' && part.toLowerCase().includes(searchQuery.toLowerCase())
         );
-        
-        const isUnattempted = !answers.hasOwnProperty(question.id);
-        const isCorrect = answers[question.id] === question.a;
+
+        const isUnattempted = question.userSelectedOption === null;
+        const isCorrect = question.userSelectedOption == question.questionData.a;
         const isIncorrect = !isUnattempted && !isCorrect;
 
-        const matchesFilter = 
-            filterStatus === 'all' || 
+        const matchesFilter =
+            filterStatus === 'all' ||
             (filterStatus === 'correct' && isCorrect) ||
             (filterStatus === 'incorrect' && isIncorrect) ||
             (filterStatus === 'unattempted' && isUnattempted);
-        
+
         return matchesSearch && matchesFilter;
     });
 
@@ -61,7 +61,7 @@ function Results() {
             <div className="max-w-7xl mx-auto px-4">
 
                 <MinimalQuizResult />
-                
+
 
                 {/* Filter Controls */}
                 <div className="bg-white rounded-xl shadow-xl p-6 my-8">
@@ -94,20 +94,18 @@ function Results() {
 
                 {/* Filtered Results */}
                 <div className="space-y-4">
-                    {filteredQuestions.map((question, index) => (
-                        <div 
-                            key={question.id}
+                    {filteredQuestions.map((question) => (
+                        <div
+                            key={question.questionId}
                             ref={el => {
                                 // Store the element reference with the question index
-                                questionRefs.current[questions.findIndex(q => q.id === question.id)] = el;
+                                questionRefs.current[allData.findIndex(q => q.questionId === question.questionId)] = el;
                             }}
                         >
                             <QuestionResult
-                                question={question}
-                                userAnswer={answers[question.id]}
-                                index={questions.findIndex(q => q.id === question.id)}
-                                timeSpent={questionTimes[question.id]}
-                                averageTime={averageTimePerQuestion}
+                                question={question.questionData}
+                                userAnswer={question.userSelectedOption}
+                                index={allData.findIndex(q => q.questionId === question.questionId)}
                             />
                         </div>
                     ))}

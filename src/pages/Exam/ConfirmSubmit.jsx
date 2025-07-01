@@ -1,10 +1,14 @@
-import {useSelector} from 'react-redux';
+import { getQuestionInteractionStatus } from "../../store/selectors/examSelector";
+import { useSelector } from "react-redux";
+
 
 function ConfirmationDialog({ isOpen, onConfirm, onCancel }) {
+    const questionStatus = useSelector(getQuestionInteractionStatus)
+
     if (!isOpen) return null;
 
-    const questionStatus = useSelector((state)=> state.exam.questionStatus)
-    const unAnsCount = Object.values(questionStatus).filter((val)=> val !== "answered").length
+    // const unAnsCount = Object.values(questionStatus).filter((val)=> val !== "answered").length
+    const unAnsCount = questionStatus["marked-for-review"] + questionStatus["not-seen"] + questionStatus["seen-only"];
 
 
     return (

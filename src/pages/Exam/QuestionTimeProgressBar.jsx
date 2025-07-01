@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import classNames from "classnames";
 import { useSelector, useDispatch } from "react-redux";
-import { updateQuestionTime } from "../../store/slices/examSlice";
 import { useNavigate } from "react-router-dom";
 
 function QuestionTimeProgress({ averageTime }) {
@@ -36,13 +35,13 @@ function QuestionTimeProgress({ averageTime }) {
             if (intervalRef.current) clearInterval(intervalRef.current);
 
             // Persist final time to Redux
-            const finalElapsed = (Date.now() - start) / 1000;
-            dispatch(
-                updateQuestionTime({
-                    questionId: currQuestionIndex,
-                    timeSpent: prevTimeSpent + finalElapsed,
-                })
-            );
+            // const finalElapsed = (Date.now() - start) / 1000;
+            // dispatch(
+            //     updateQuestionTime({
+            //         questionId: currQuestionIndex,
+            //         timeSpent: prevTimeSpent + finalElapsed,
+            //     })
+            // );
         };
     }, [currQuestionIndex, dispatch, prevTimeSpent, navigate]);
 
@@ -55,8 +54,8 @@ function QuestionTimeProgress({ averageTime }) {
                     localTimeSpent === 0
                         ? "bg-gray-300"
                         : isOverTime
-                        ? "bg-red-500"
-                        : "bg-green-500"
+                            ? "bg-red-500"
+                            : "bg-green-500"
                 )}
                 style={{
                     width: localTimeSpent === 0 ? "0%" : `${Math.min(percentage, 100)}%`,

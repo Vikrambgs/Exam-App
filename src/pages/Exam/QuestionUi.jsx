@@ -1,48 +1,50 @@
 import classNames from "classnames";
 import MatchUi from "../../components/QuestionRenderingUI/MatchUi";
 import OptionsMore from "../../components/QuestionRenderingUI/OptionsMore";
-import { saveAnswer, markForReview, clearAnswer } from "../../store/slices/examSlice";
+import { saveAnswer, clearAnswer, toggleMarkForReview } from "../../store/slices/examSlice";
+import { getCurrentQuestionAllData, getAllQuestionsCount } from "../../store/selectors/examSelector";
 import { useDispatch, useSelector } from "react-redux";
-import QuestionTimeProgress from "./QuestionTimeProgressBar";
+
+// import QuestionTimeProgress from "./QuestionTimeProgressBar";
 
 const QuestionComponent = () => {
-    const currQuestionIndex = useSelector((state) => state.exam.currentQuestionIndex);
-    const currentQuestion = useSelector(
-        (state) => state.exam.questions[currQuestionIndex]
-    );
-    const savedAnswer = useSelector((state) => state.exam.answers[currentQuestion?.id]);
-    const questionStatus = useSelector((state) => state.exam.questionStatus);
-    const questions = useSelector((state) => state.exam.questions);
-    const averageTimePerQuestion = useSelector(
-        (state) => state.exam.averageTimePerQuestion
-    );
+    const currQuestionData = useSelector(getCurrentQuestionAllData)
+    const totalQuestionCount = useSelector(getAllQuestionsCount);
+    const {
+        index: currQuestionIndex,
+        status: questionStatus,
+        isBookmarked,
+        answeredOption: savedAnswer,
+        ...currentQuestion
+    } = currQuestionData || {};
 
     const dispatch = useDispatch();
 
+
     const handleMarkForReview = () => {
-        if (currentQuestion) {
-            dispatch(markForReview(currentQuestion.id));
+        if (currQuestionData) {
+            dispatch(toggleMarkForReview(currQuestionIndex));
         }
     };
 
     const handleClearAnswer = () => {
-        if (currentQuestion) {
-            dispatch(clearAnswer(currentQuestion.id));
+        if (currQuestionData) {
+            dispatch(clearAnswer(currQuestionIndex));
         }
     };
 
     const handleOptionSelect = (index) => {
-        if (!currentQuestion || !Number.isInteger(index)) return;
+        if (!currQuestionData || !Number.isInteger(index)) return;
 
-        if (savedAnswer == index) {
+        if (currQuestionData.answeredOption == index) {
             // If the answer is already selected, clear it
-            dispatch(clearAnswer(currentQuestion.id));
+            dispatch(clearAnswer(currQuestionIndex));
         } else {
             // If a different answer is selected, save it
             dispatch(
                 saveAnswer({
-                    questionId: currentQuestion.id,
-                    answer: index,
+                    questionIndex: currQuestionIndex,
+                    answerIndex: index,
                 })
             );
         }
@@ -54,7 +56,7 @@ const QuestionComponent = () => {
                 <div className="flex flex-col gap-2">
                     <div className="flex justify-between items-start h-8">
                         <h2 className="text-lg font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
-                            Question {currQuestionIndex + 1} of {questions.length}
+                            Question {currQuestionIndex + 1} of {totalQuestionCount}
                         </h2>
                         <div className="flex items-center gap-2">
                             <div className="flex gap-2">
@@ -70,18 +72,18 @@ const QuestionComponent = () => {
                                     onClick={handleMarkForReview}
                                     className={classNames(
                                         "px-3 py-1 text-sm font-medium rounded-full transition-all",
-                                        questionStatus[currentQuestion?.id] ===
-                                            "marked-review" ||
-                                            questionStatus[currentQuestion?.id] ===
-                                                "answered-marked-review"
+                                        questionStatus ===
+                                            "marked-for-review" ||
+                                            questionStatus ===
+                                            "answered-and-marked-for-review"
                                             ? "bg-yellow-100 text-yellow-700 border border-yellow-400 hover:bg-yellow-200"
                                             : "text-indigo-600 hover:text-white hover:bg-indigo-600 border border-indigo-600"
                                     )}
                                 >
-                                    {questionStatus[currentQuestion?.id] ===
-                                        "marked-review" ||
-                                    questionStatus[currentQuestion?.id] ===
-                                        "answered-marked-review"
+                                    {questionStatus ===
+                                        "marked-for-review" ||
+                                        questionStatus ===
+                                        "answered-and-marked-for-review"
                                         ? "Marked for Review"
                                         : "Mark for Review"}
                                 </button>
@@ -89,7 +91,7 @@ const QuestionComponent = () => {
                         </div>
                     </div>
                     <div className="w-full">
-                        <QuestionTimeProgress averageTime={averageTimePerQuestion} />
+                        {/* <QuestionTimeProgress averageTime={averageTimePerQuestion} /> */}
                     </div>
                 </div>
             </div>

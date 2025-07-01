@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import {
     setQuestions,
 } from "../../store/slices/examSlice";
 import { fetchQuestions } from "../../services/api";
+
+
 import NavBar from "./NavBar";
 import QuestionComponent from "./QuestionUi";
 import ExamProgressBar from "./ExamProgressBar";
@@ -14,12 +16,13 @@ import NavigateWithSubmit from "./NavigateWithSubmit";
 function Exam() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const timeLimitInSec = useSelector((state)=> state.exam.totalExamTime);
+
     const [showQuestionStatus, setShowQuestionStatus] = useState(true);
 
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-    const questions = useSelector((state) => state.exam.questions);
+    const questions = useSelector((state) => state.exam.examQuestions);
     const examStartTime = useSelector((state) => state.exam.examStartTime);
+    const timeLimitInSec = useSelector((state) => state.exam.totalExamTime);
 
 
     useEffect(() => {
@@ -42,7 +45,7 @@ function Exam() {
         loadQuestions();
     }, [isAuthenticated, navigate]);
 
-    
+
 
     if (!questions.length) {
         return (
@@ -52,13 +55,13 @@ function Exam() {
         );
     }
 
-    
+
 
     return (
         <div className="max-w-[2000px] h-dvh w-dvw lg aspect-[2/1] bg-gray-900 flex flex-col">
-            <NavBar 
-                showQuestionStatus={showQuestionStatus} 
-                setShowQuestionStatus={setShowQuestionStatus} 
+            <NavBar
+                showQuestionStatus={showQuestionStatus}
+                setShowQuestionStatus={setShowQuestionStatus}
             />
             <ExamProgressBar startTime={examStartTime} timeLimitSec={timeLimitInSec} />
 
@@ -70,11 +73,10 @@ function Exam() {
                     </div>
                 </div>
 
-                <div 
-                    className={`w-[30%] min-w-[30%] flex rounded shadow-2xl transition-all duration-300 ease-in-out ${
-                        showQuestionStatus ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
-                    }`}
-                    style={{ 
+                <div
+                    className={`w-[30%] min-w-[30%] flex rounded shadow-2xl transition-all duration-300 ease-in-out ${showQuestionStatus ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
+                        }`}
+                    style={{
                         position: showQuestionStatus ? 'relative' : 'absolute',
                         right: 0,
                         visibility: showQuestionStatus ? 'visible' : 'hidden'

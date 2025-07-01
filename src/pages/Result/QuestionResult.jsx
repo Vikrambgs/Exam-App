@@ -1,55 +1,27 @@
-import React from "react";
 import classNames from "classnames";
 import OptionsMore from "../../components/QuestionRenderingUI/OptionsMore";
 import MatchUi from "../../components/QuestionRenderingUI/MatchUi";
 
-function QuestionResult({ question, userAnswer, index, timeSpent, averageTime }) {
+function QuestionResult({ question, userAnswer, index }) {
+
+
     const isCorrect = userAnswer === question.a;
     const isNotAttempted = userAnswer === undefined || userAnswer === null;
 
-    const formatTime = (seconds) => {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = seconds % 60;
-        return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
-    };
-
     return (
         <div
-            className={`bg-gray-white rounded shadow-lg p-5 mb-4 transition-all duration-300 ${
-                isCorrect
-                    ? "border-l-4 border-green-500 bg-gradient-to-r from-green-50 to-white"
-                    : isNotAttempted
+            className={`bg-gray-white rounded shadow-lg p-5 mb-4 transition-all duration-300 ${isCorrect
+                ? "border-l-4 border-green-500 bg-gradient-to-r from-green-50 to-white"
+                : isNotAttempted
                     ? "bg-gradient-to-r from-gray-50 to-white border-l-4 border-blue-400"
                     : "border-l-4 border-red-500 bg-gradient-to-r from-red-50 to-white"
-            } hover:shadow-xl`}
+                } hover:shadow-xl`}
         >
             <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-4">
                     <span className="font-semibold text-lg text-gray-800 bg-gray-100 px-3 py-1 rounded-full">
                         Question {index + 1}
                     </span>
-                    <div>
-                        <div className="flex items-center gap-2">
-                            <span className="text-sm text-gray-600 font-medium">
-                                Time: {formatTime(timeSpent)}
-                            </span>
-                            <div className="h-2 w-28 bg-gray-200 rounded-full overflow-hidden">
-                                <div
-                                    className={classNames(
-                                        "h-full",
-                                        timeSpent > averageTime * 1.5 ? "bg-red-500" : 
-                                        timeSpent > averageTime ? "bg-yellow-500" : "bg-green-500"
-                                    )}
-                                    style={{
-                                        width: `${Math.min((timeSpent / averageTime) * 100, 100)}%`,
-                                    }}
-                                />
-                            </div>
-                            <span className="text-xs text-gray-500">
-                                (Avg: {formatTime(averageTime)})
-                            </span>
-                        </div>
-                    </div>
                 </div>
                 <div className="flex items-center gap-2">
                     {isNotAttempted && (
@@ -73,8 +45,8 @@ function QuestionResult({ question, userAnswer, index, timeSpent, averageTime })
                             isNotAttempted
                                 ? "bg-blue-100 text-blue-800"
                                 : isCorrect
-                                ? "bg-green-100 text-green-800"
-                                : "bg-red-100 text-red-800"
+                                    ? "bg-green-100 text-green-800"
+                                    : "bg-red-100 text-red-800"
                         )}
                     >
                         {isNotAttempted ? "Not Attempted" : isCorrect ? "Correct" : "Incorrect"}
@@ -114,12 +86,12 @@ function QuestionResult({ question, userAnswer, index, timeSpent, averageTime })
                             "p-3 border rounded-md transition-colors",
                             optionIndex === question.a && "bg-green-50 border-green-500",
                             !isNotAttempted &&
-                                optionIndex === userAnswer &&
-                                optionIndex !== question.a &&
-                                "bg-red-50 border-red-500",
+                            optionIndex === userAnswer &&
                             optionIndex !== question.a &&
-                                optionIndex !== userAnswer &&
-                                "border-gray-300 hover:border-gray-400",
+                            "bg-red-50 border-red-500",
+                            optionIndex !== question.a &&
+                            optionIndex !== userAnswer &&
+                            "border-gray-300 hover:border-gray-400",
                             isNotAttempted && optionIndex === question.a && "border-green-500 shadow-md"
                         )}
                     >
@@ -130,16 +102,16 @@ function QuestionResult({ question, userAnswer, index, timeSpent, averageTime })
                                     optionIndex === question.a
                                         ? "text-green-700 font-medium"
                                         : !isNotAttempted && optionIndex === userAnswer
-                                        ? "text-red-700"
-                                        : "text-gray-800"
+                                            ? "text-red-700"
+                                            : "text-gray-800"
                                 )}
                             >
                                 {choice}
-                                
+
                             </div>
                             <div className="mr-2 flex items-center gap-2">
-                            {isNotAttempted && optionIndex === question.a && (
-                                <span className="ml-2 text-green-600 text-xs font-medium">Correct Answer</span>
+                                {isNotAttempted && optionIndex === question.a && (
+                                    <span className="ml-2 text-green-600 text-xs font-medium">Correct Answer</span>
                                 )}
                                 {optionIndex === question.a && (
                                     <svg
