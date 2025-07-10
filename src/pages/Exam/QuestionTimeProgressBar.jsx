@@ -1,68 +1,51 @@
-import { useEffect, useState, useRef } from "react";
-import classNames from "classnames";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import {
+    getCurrentQuestionTimeSpent,
+    getAverageTimePerQuestion,
+    getCurrentQuestionIndex
+} from "../../store/selectors/examSelector";
 
-function QuestionTimeProgress({ averageTime }) {
-    const currQuestionIndex = useSelector((state) => state.exam.currentQuestionIndex);
-    const questionTimes = useSelector((state) => state.exam.questionTimes);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+export default function Progress() {
+    const prevTime = useSelector(getCurrentQuestionTimeSpent);
+    const averageTime = useSelector(getAverageTimePerQuestion);
+    const questionId = useSelector(getCurrentQuestionIndex);
 
-    const [localTimeSpent, setLocalTimeSpent] = useState(0); // Local time state
-    const intervalRef = useRef(null); // Ref for interval management
-
-    // Retrieve the time spent from Redux
-    const prevTimeSpent = questionTimes[currQuestionIndex] || 0;
-
-    // Calculate percentage and overtime flag
-    const percentage = (localTimeSpent / averageTime) * 100;
-    const isOverTime = localTimeSpent > averageTime;
+    const [progress, setProgress] = useState(0);
+    const intervalTime = 100; // ms
 
     useEffect(() => {
-        // Initialize local time with Redux time
-        setLocalTimeSpent(prevTimeSpent);
+        // Calculate initial progress
+        const initialProgress = (prevTime / averageTime) * 100;
+        setProgress(initialProgress);
 
-        // Start timer
-        const start = Date.now();
-        intervalRef.current = setInterval(() => {
-            const elapsed = (Date.now() - start) / 1000; // Time in seconds
-            setLocalTimeSpent(prevTimeSpent + elapsed);
-        }, 50); // Update every 50ms
+        // Only start the timer if prevTime hasn't exceeded averageTime yet
+        if (prevTime < averageTime) {
+            const timer = setInterval(() => {
+                const increment = (100 * intervalTime) / averageTime;
+                setProgress((prev) => {
+                    const newProgress = prev + increment;
+                    if (newProgress >= 100) {
+                        clearInterval(timer);
+                        return 100;
+                    }
+                    return newProgress;
+                });
+            }, intervalTime);
 
-        return () => {
-            // Cleanup interval on unmount or question change
-            if (intervalRef.current) clearInterval(intervalRef.current);
+            return () => clearInterval(timer);
+        }
+    }, [prevTime, averageTime, questionId]);
 
-            // Persist final time to Redux
-            // const finalElapsed = (Date.now() - start) / 1000;
-            // dispatch(
-            //     updateQuestionTime({
-            //         questionId: currQuestionIndex,
-            //         timeSpent: prevTimeSpent + finalElapsed,
-            //     })
-            // );
-        };
-    }, [currQuestionIndex, dispatch, prevTimeSpent, navigate]);
-
+    // Determine bar color based on progress
+    const barColor = progress >= 100 ? 'bg-red-500' : 'bg-green-500';
 
     return (
-        <div className="h-0.5 bg-gray-200 rounded-full overflow-hidden">
+        <div className="w-full bg-gray-200 h-0.5 rounded overflow-hidden">
             <div
-                className={classNames(
-                    "h-full transition-all duration-100",
-                    localTimeSpent === 0
-                        ? "bg-gray-300"
-                        : isOverTime
-                            ? "bg-red-500"
-                            : "bg-green-500"
-                )}
-                style={{
-                    width: localTimeSpent === 0 ? "0%" : `${Math.min(percentage, 100)}%`,
-                }}
+                className={`${barColor} h-full transition-colors duration-300`}
+                style={{ width: `${progress}%` }}
             />
         </div>
     );
 }
-
-export default QuestionTimeProgress;

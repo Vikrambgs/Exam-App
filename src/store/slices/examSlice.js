@@ -11,7 +11,7 @@ const initialState = {
     currentQuestionIndex: 0,        // Index of the current question
     currentlySelectedOption: null,  // Selected option for the current question
     isExamComplete: false,          // Boolean to indicate if the exam is complete
-    totalExamTime: 3600,            // Total exam time in seconds (1 hour)
+    totalExamTime: 1*60*60*1000,    // Total exam time in milliseconds (1 hour)
 };
 
 function shuffleArray(array) {

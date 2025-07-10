@@ -12,6 +12,7 @@ import QuestionComponent from "./QuestionUi";
 import ExamProgressBar from "./ExamProgressBar";
 import QuestionNavigation from "./QuestionNavigation";
 import NavigateWithSubmit from "./NavigateWithSubmit";
+import { getExamTimeLimit, getExamStartTime } from "../../store/selectors/examSelector";
 
 function Exam() {
     const dispatch = useDispatch();
@@ -21,8 +22,8 @@ function Exam() {
 
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const questions = useSelector((state) => state.exam.examQuestions);
-    const examStartTime = useSelector((state) => state.exam.examStartTime);
-    const timeLimitInSec = useSelector((state) => state.exam.totalExamTime);
+    const examStartTime = useSelector(getExamStartTime);
+    const timeLimitInSec = useSelector(getExamTimeLimit) / 1000;
 
 
     useEffect(() => {

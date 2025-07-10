@@ -4,8 +4,8 @@ import OptionsMore from "../../components/QuestionRenderingUI/OptionsMore";
 import { saveAnswer, clearAnswer, toggleMarkForReview } from "../../store/slices/examSlice";
 import { getCurrentQuestionAllData, getAllQuestionsCount } from "../../store/selectors/examSelector";
 import { useDispatch, useSelector } from "react-redux";
-
-// import QuestionTimeProgress from "./QuestionTimeProgressBar";
+import QuestionTimeProgress from "./QuestionTimeProgressBar";
+import { ArrowLeft, ArrowRight, Bookmark, Crosshair, OctagonX } from "lucide-react";
 
 const QuestionComponent = () => {
     const currQuestionData = useSelector(getCurrentQuestionAllData)
@@ -13,7 +13,7 @@ const QuestionComponent = () => {
     const {
         index: currQuestionIndex,
         status: questionStatus,
-        isBookmarked,
+        // isBookmarked,
         answeredOption: savedAnswer,
         ...currentQuestion
     } = currQuestionData || {};
@@ -32,6 +32,13 @@ const QuestionComponent = () => {
             dispatch(clearAnswer(currQuestionIndex));
         }
     };
+
+
+
+
+
+
+
 
     const handleOptionSelect = (index) => {
         if (!currQuestionData || !Number.isInteger(index)) return;
@@ -58,40 +65,52 @@ const QuestionComponent = () => {
                         <h2 className="text-lg font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
                             Question {currQuestionIndex + 1} of {totalQuestionCount}
                         </h2>
+
                         <div className="flex items-center gap-2">
-                            <div className="flex gap-2">
-                                {savedAnswer !== null && savedAnswer !== undefined && (
-                                    <button
-                                        onClick={handleClearAnswer}
-                                        className="px-3 py-1 text-sm text-red-600 font-medium hover:text-white hover:bg-red-600 border border-red-600 rounded-full transition-all"
-                                    >
-                                        Clear Answer
-                                    </button>
-                                )}
+
+                            {savedAnswer !== null && savedAnswer !== undefined && (
                                 <button
-                                    onClick={handleMarkForReview}
-                                    className={classNames(
-                                        "px-3 py-1 text-sm font-medium rounded-full transition-all",
-                                        questionStatus ===
-                                            "marked-for-review" ||
-                                            questionStatus ===
-                                            "answered-and-marked-for-review"
-                                            ? "bg-yellow-100 text-yellow-700 border border-yellow-400 hover:bg-yellow-200"
-                                            : "text-indigo-600 hover:text-white hover:bg-indigo-600 border border-indigo-600"
-                                    )}
+                                    onClick={handleClearAnswer}
+                                    className="p-1.5 bg-red-800 border rounded border-red-700 text-white"
                                 >
-                                    {questionStatus ===
+                                    <OctagonX strokeWidth={1} size={20} />
+                                </button>
+                            )}
+                            <button
+                                className="p-1.5 bg-gray-800 border rounded border-gray-700 text-white"
+                            >
+                                <Bookmark strokeWidth={1} size={20} />
+                            </button>
+
+                            <button
+                                onClick={handleMarkForReview}
+                                title="Mark for Review"
+                                className={classNames(
+                                    "p-1.5 bg-gray-800 border rounded border-gray-700 text-gray-100",
+                                    questionStatus ===
                                         "marked-for-review" ||
                                         questionStatus ===
                                         "answered-and-marked-for-review"
-                                        ? "Marked for Review"
-                                        : "Mark for Review"}
+                                        ? " bg-purple-900 text-blue-400"
+                                        : ""
+                                )}
+                            >
+
+                                <Crosshair strokeWidth={1} size={20} />
+                            </button>
+                            <div className="flex gap-2 ml-5">
+                                <button className="p-1.5 bg-gray-800 border rounded border-gray-700 text-white">
+                                    <ArrowLeft strokeWidth={1} size={20} />
+                                </button>
+                                <button className="p-1.5 bg-gray-800 border rounded border-gray-700 text-white">
+                                    <ArrowRight strokeWidth={1} size={20} />
                                 </button>
                             </div>
                         </div>
+
                     </div>
                     <div className="w-full">
-                        {/* <QuestionTimeProgress averageTime={averageTimePerQuestion} /> */}
+                        <QuestionTimeProgress />
                     </div>
                 </div>
             </div>

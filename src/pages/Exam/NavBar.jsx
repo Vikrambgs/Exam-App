@@ -12,7 +12,7 @@ import { getExamStartTime, getExamTimeLimit } from "../../store/selectors/examSe
 function NavBar({ showQuestionStatus, setShowQuestionStatus }) {
     const dispatch = useDispatch();
     const examStartTime = useSelector(getExamStartTime);
-    const timeLimitInSec = useSelector(getExamTimeLimit);
+    const timeLimitInSec = useSelector(getExamTimeLimit) / 1000;
 
 
     const [showResetConfirmation, setShowResetConfirmation] = useState(false);

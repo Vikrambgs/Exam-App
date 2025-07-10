@@ -1,96 +1,39 @@
-# Prompt for generating json questions
+**A complete web-based Quiz/Exam App that will help user to practice thier specific subject or topics how he is performing**
 
-**Task**: Generate a JSON array of multiple-choice questions (MCQs) adhering to the specified format and guidelines. Each question is represented as an object within an array.
+### 🧩 Technologies (Frontend Focused):
 
----
+-   **React + Redux** for UI state and test flow
+-   **TailwindCSS** for design
+-   **TypeScript** for whole app
+-   **Supabase** for backend and authentication
 
-### **General Guidelines**:
+### App Layout
 
-1. **Structure**:
-   - Each question must have a unique `id` (e.g., `"Q1"`, `"Q2"`, etc.).
-   - The `parts` field contains the question text or a mix of text and special structures (e.g., matching lists, pre-options). 
-     - For `parts`, multiple text segments may be included, but only one special structure (e.g., `pre_o` or `match`) is allowed per question.
-   - The `o` field contains the answer options in an array.
-   - The `a` field holds the zero-based index of the correct answer within `o`.
+there will be multiple routes like :
 
-2. **Shuffling**:
-   - Randomize the order of answer options (`o`) for each question.
-   - For **matching questions**, shuffle `list1` and `list2` independently. Avoid repetitive patterns like `(A)→(1), (B)→(2), (C)→(3), (D)→(4)` unless it happens by chance.
+| Route    | Description                                                                                                               |
+| -------- | ------------------------------------------------------------------------------------------------------------------------- |
+| /login   | Show login page                                                                                                           |
+| /signup  | Show signup page                                                                                                          |
+| /home    | show a simple dashboard of exams given by user; if not, show options for other exams they can start                       |
+| /exam    | For actual exam page, which will show one question at a time and options with a question navigation on right side section |
+| /result  | For the result page of the user                                                                                           |
+| /profile | Show profile page for user                                                                                                |
+| /exam    | Show all available exams, allowing the user to search and explore exams                                                   |
+| /profile | show profile page for user\*\*\*\*                                                                                        |
 
-3. **Question Types**:
-   - **Type 1 (Simple Questions)**: Standard text-based questions with options (50–60% of the total).
-   - **Type 2 (Pre-Options)**: Questions with a `pre_o` structure, where a set of preliminary options is provided before the main question.
-   - **Type 3 (Matching)**: Questions featuring two lists (`list1` and `list2`) for matching items. Lists should have 4–6 items, with a preference for 4–5 items.
+i will mainly explain /exam routes here
+so on exam routes there will be a nav bar at top which will show info like exam name, exma types , timers, restart exam, submit exam, and a toggle button to toggle right sidebar for question navigation and a setting icon for exam settings and on nav bar bottom border will be a progress bar which will show how much time is left in complete exam
 
-4. **Content Guidelines**:
-   - Maintain conceptual depth while ensuring simplicity.
-   - Cover a wide range of relevant topics unless the user specifies a focus area.
-   - Incorporate diverse question types to maintain variety.
-   - Include **case-based questions** related to real-life scenarios (4–5 questions out of every 50).
+after nav bar there will be main exam section in which there contain two section with width percentage 75% and 25% width second section
 
-5. **Formatting**:
-   - Adhere strictly to the JSON format for all outputs.
-   - Follow the specific structures for each question type as shown in the examples below.
+-   first is question rendering section with option and next and previous button with mark for review button , save question button on question rendering there will be a top status bar which will show current question number, question time spent with progress bar, a button for save question, a button for mark for review, a button for clear selected option if any option is selected  
+    and there will be option as button for each option
 
----
-
-### **Question Types and Examples**:
-
-#### **Type 1: Simple Question**
-```json
-{
-  "id": "Q1",
-  "parts": ["What is the capital of France?"],
-  "o": ["Berlin", "Paris", "Madrid", "Rome"],
-  "a": 1
-}
-```
-
-#### **Type 2: Pre-Options**
-```json
-{
-  "id": "Q2",
-  "parts": [
-    "Which of the following statements are correct?",
-    { "pre_o": ["Option A: The sky is blue.", "Option B: The grass is green.", "Option C: Water is dry.", "Option D: Fire is cold."] }
-  ],
-  "o": ["Only A and B", "Only C", "All of the above", "Only A"],
-  "a": 0
-}
-```
-
-#### **Type 3: Matching**
-```json
-{
-  "id": "Q3",
-  "parts": [
-    "Match the following:",
-    {
-      "match": {
-        "list1": ["Paris", "Berlin", "Madrid", "Rome"],
-        "list2": ["France", "Germany", "Spain", "Italy"]
-      }
-    }
-  ],
-  "o": [
-    "(A)→(I) (B)→(II) (C)→(III) (D)→(IV)",
-    "(A)→(IV) (B)→(III) (C)→(I) (D)→(II)",
-    "(A)→(II) (B)→(I) (C)→(IV) (D)→(III)",
-    "(A)→(III) (B)→(IV) (C)→(II) (D)→(I)"
-  ],
-  "a": 0
-}
-```
+-   second section on right size will be a side panel for question navigation with each question number of button to jump to that question with different colored for different status of question like attempted, not attempted and not visited , answered, mark for review and at bottom there will be statics count like answered, not answered, not visited and mark for review
 
 ---
 
-### **Output Specifications**:
-1. Generate a JSON array of **50 questions** distributed across all types.
-   - **Type 1 (Simple Questions)**: 25–30 questions.
-   - **Type 2 (Pre-Options)**: 10–15 questions.
-   - **Type 3 (Matching Questions)**: 10 questions.
-   - Include **4–5 case-based questions** spread across the three types.
+On result page there will be a detailed dashboard statustics with total questions, total attempted and total not attempted with score and percentage of score and a button to restart the exam add more details
 
-2. Ensure high-quality, exam-oriented questions. If unable to generate all 50 in one response, continue from the next request.
-
-3. Maintain variety in topics, question structure, and answer patterns.
+build it with modern design and good user experience with simple, sleak and clean desifn do not make any rounded border and apply some shadow like effect and some vibrant colors for better user experience do not add too much padding and margin keep in mind main all padding and margin with ui rules with hierarchy of focus of user and ui concept

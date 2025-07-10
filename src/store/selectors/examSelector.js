@@ -57,22 +57,34 @@ export const getQuestionInteractionStatus = createSelector(
     }
 );
 
+export const getCurrentQuestionTimeSpent = createSelector(
+    [
+        (state) => state.exam.userQuestionActivity,
+        (state) => state.exam.questionOrderIds,
+        (state) => state.exam.currentQuestionIndex,
+    ],
+    (userQuestionActivity, questionOrderIds, questionIndex) => {
+        const questionId = questionOrderIds[questionIndex];
+        const activity = userQuestionActivity[questionId];
+        return activity.timeSpentLog.reduce(
+            (total, log) => total + (log.movedAt ? log.movedAt - log.visitedAt : 0),
+            0
+        );
+    }
+);
+
 export const getExamStartTime = (state) => state.exam.examStartTime;
 
 export const getExamEndTime = (state) => state.exam.examEndTime;
 
+export const getAverageTimePerQuestion = (state) => {
+    const totalQuestion = state.exam.examQuestions.length;
+    return state.exam.totalExamTime / totalQuestion;
+};
+
 export const getExamTimeLimit = (state) => state.exam.totalExamTime;
 
 export const getCurrentQuestionIndex = (state) => state.exam.currentQuestionIndex;
-
-export const getCurrentQuestionTimeSpent = (state) => {
-    const questionId = state.exam.questionOrderIds[state.exam.currentQuestionIndex];
-    const activity = state.exam.userQuestionActivity[questionId];
-    return activity.timeSpentLog.reduce(
-        (total, log) => total + (log.movedAt - log.visitedAt),
-        0
-    );
-};
 
 export const getAllQuestionsCount = (state) => state.exam.examQuestions.length;
 
