@@ -1,43 +1,19 @@
 import classNames from "classnames";
 import MatchUi from "../../components/QuestionRenderingUI/MatchUi";
 import OptionsMore from "../../components/QuestionRenderingUI/OptionsMore";
-import { saveAnswer, clearAnswer, toggleMarkForReview } from "../../store/slices/examSlice";
-import { getCurrentQuestionAllData, getAllQuestionsCount } from "../../store/selectors/examSelector";
+import { saveAnswer, clearAnswer } from "../../store/slices/examSlice";
+import { getCurrentQuestionAllData } from "../../store/selectors/examSelector";
 import { useDispatch, useSelector } from "react-redux";
-import QuestionTimeProgress from "./QuestionTimeProgressBar";
-import { ArrowLeft, ArrowRight, Bookmark, Crosshair, OctagonX } from "lucide-react";
 
 const QuestionComponent = () => {
     const currQuestionData = useSelector(getCurrentQuestionAllData)
-    const totalQuestionCount = useSelector(getAllQuestionsCount);
     const {
         index: currQuestionIndex,
-        status: questionStatus,
-        // isBookmarked,
         answeredOption: savedAnswer,
         ...currentQuestion
     } = currQuestionData || {};
 
     const dispatch = useDispatch();
-
-
-    const handleMarkForReview = () => {
-        if (currQuestionData) {
-            dispatch(toggleMarkForReview(currQuestionIndex));
-        }
-    };
-
-    const handleClearAnswer = () => {
-        if (currQuestionData) {
-            dispatch(clearAnswer(currQuestionIndex));
-        }
-    };
-
-
-
-
-
-
 
 
     const handleOptionSelect = (index) => {
@@ -59,63 +35,7 @@ const QuestionComponent = () => {
 
     return (
         <>
-            <div className="mb-2 bg-slate-900">
-                <div className="flex flex-col gap-2">
-                    <div className="flex justify-between items-start h-8">
-                        <h2 className="text-lg font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
-                            Question {currQuestionIndex + 1} of {totalQuestionCount}
-                        </h2>
-
-                        <div className="flex items-center gap-2">
-
-                            {savedAnswer !== null && savedAnswer !== undefined && (
-                                <button
-                                    onClick={handleClearAnswer}
-                                    className="p-1.5 bg-red-800 border rounded border-red-700 text-white"
-                                >
-                                    <OctagonX strokeWidth={1} size={20} />
-                                </button>
-                            )}
-                            <button
-                                className="p-1.5 bg-gray-800 border rounded border-gray-700 text-white"
-                            >
-                                <Bookmark strokeWidth={1} size={20} />
-                            </button>
-
-                            <button
-                                onClick={handleMarkForReview}
-                                title="Mark for Review"
-                                className={classNames(
-                                    "p-1.5 bg-gray-800 border rounded border-gray-700 text-gray-100",
-                                    questionStatus ===
-                                        "marked-for-review" ||
-                                        questionStatus ===
-                                        "answered-and-marked-for-review"
-                                        ? " bg-purple-900 text-blue-400"
-                                        : ""
-                                )}
-                            >
-
-                                <Crosshair strokeWidth={1} size={20} />
-                            </button>
-                            <div className="flex gap-2 ml-5">
-                                <button className="p-1.5 bg-gray-800 border rounded border-gray-700 text-white">
-                                    <ArrowLeft strokeWidth={1} size={20} />
-                                </button>
-                                <button className="p-1.5 bg-gray-800 border rounded border-gray-700 text-white">
-                                    <ArrowRight strokeWidth={1} size={20} />
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div className="w-full">
-                        <QuestionTimeProgress />
-                    </div>
-                </div>
-            </div>
-
-            <div className="flex-1 overflow-y-auto pb-5 bg-slate-900">
+            <div className="flex-1 overflow-y-auto pb-5 pr-4 bg-slate-900 custom-scrollbar">
                 {currentQuestion.parts.map((part, index) => {
                     if (typeof part == "object") {
                         if (part.pre_o) {

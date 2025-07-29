@@ -5,7 +5,7 @@ import classNames from "classnames";
 
 const statusColors = {
     "not-seen": "bg-gray-700 hover:bg-gray-600 text-gray-200",
-    "seen-only": "bg-yellow-400 hover:bg-yellow-300 text-yellow-900",
+    "seen-only": "bg-yellow-500 hover:bg-yellow-300 text-yellow-900",
     answered: "bg-green-400 hover:bg-green-300 text-green-900",
     "answered-and-marked-for-review": "bg-green-400 hover:bg-green-300 text-green-900",
     "marked-for-review": "bg-yellow-400 hover:bg-yellow-300 text-yellow-900",
@@ -18,7 +18,7 @@ function QuestionNavigation() {
     const allStatus = useSelector(getAllQuestionStatus)
 
     return (
-        <div className="bg-slate-900 rounded-lg p-4 w-full flex flex-col h-full border border-gray-600">
+        <div className="bg-slate-900 rounded-lg p-4 w-full flex flex-col h-full border border-gray-800">
             <h3 className="font-semibold text-gray-300 text-lg text-center uppercase tracking-wide pb-2.5 mb-2">
                 Questions Status
             </h3>
@@ -32,7 +32,7 @@ function QuestionNavigation() {
                             statusColors[status],
 
                             currentIndex === index
-                                ? "ring-1 ring-indigo-300 transform scale-105"
+                                ? "ring-2 ring-indigo-100 transform scale-105"
                                 : ""
                         )}
                     >

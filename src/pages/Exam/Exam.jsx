@@ -5,14 +5,13 @@ import {
     setQuestions,
 } from "../../store/slices/examSlice";
 import { fetchQuestions } from "../../services/api";
-
-
 import NavBar from "./NavBar";
 import QuestionComponent from "./QuestionUi";
 import ExamProgressBar from "./ExamProgressBar";
 import QuestionNavigation from "./QuestionNavigation";
-import NavigateWithSubmit from "./NavigateWithSubmit";
+// import NavigateWithSubmit from "./NavigateWithSubmit";
 import { getExamTimeLimit, getExamStartTime } from "../../store/selectors/examSelector";
+import QuestionTopNav from "./QuestionTopNav";
 
 function Exam() {
     const dispatch = useDispatch();
@@ -44,7 +43,7 @@ function Exam() {
         };
 
         loadQuestions();
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, navigate, questions, dispatch]);
 
 
 
@@ -68,9 +67,10 @@ function Exam() {
 
             <div className="flex-1 flex gap-2 p-2 max-w-full overflow-hidden relative">
                 <div className={`transition-all duration-300 ease-in-out ${showQuestionStatus ? 'max-w-[70%]' : 'max-w-full'} flex-1 flex rounded`}>
-                    <div className="bg-slate-900 rounded-lg shadow-lg p-4 w-full flex flex-col border border-gray-600">
+                    <div className="bg-slate-900 rounded-lg shadow-lg p-4 w-full flex flex-col border border-gray-700">
+                        <QuestionTopNav />
                         <QuestionComponent />
-                        <NavigateWithSubmit />
+                        {/* <NavigateWithSubmit /> */}
                     </div>
                 </div>
 

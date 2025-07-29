@@ -3,13 +3,18 @@ import ExamTimer from "./ExamTimer";
 import ClearExamDialog from "./ResetExamDialog";
 import { Settings, Eye, EyeOff } from "lucide-react";
 import ExamSetting from "./ExamSetting";
-
-
 import { useSelector, useDispatch } from "react-redux";
-import { clearExamState } from "../../store/slices/examSlice";
+import { clearExamState, submitExam } from "../../store/slices/examSlice";
 import { getExamStartTime, getExamTimeLimit } from "../../store/selectors/examSelector";
+import ConfirmationDialog from "./ConfirmSubmit";
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 function NavBar({ showQuestionStatus, setShowQuestionStatus }) {
+    const [showSubmitConfirmation, setshowSubmitConfirmation] = useState(false);
+    const navigate = useNavigate();
+
     const dispatch = useDispatch();
     const examStartTime = useSelector(getExamStartTime);
     const timeLimitInSec = useSelector(getExamTimeLimit) / 1000;
@@ -28,6 +33,11 @@ function NavBar({ showQuestionStatus, setShowQuestionStatus }) {
         setShowResetConfirmation(false);
     };
 
+    const handleSubmitExam = useCallback(() => {
+        dispatch(submitExam());
+        navigate("/results");
+    }, [navigate, dispatch]);
+
     return (
         <div className="bg-gradient-to-r from-slate-800 to-gray-900 py-1.5 px-3 shadow-lg">
             <div className="max-w-full mx-auto flex justify-between items-center">
@@ -39,11 +49,22 @@ function NavBar({ showQuestionStatus, setShowQuestionStatus }) {
                         <ExamTimer startTime={examStartTime} timeLimit={timeLimitInSec} />
                     )}
 
+
+                    <div className="flex items-center space-x-3">
+                        {/* Restart Button */}
+                        <button
+                            onClick={() => setshowSubmitConfirmation(true)}
+                            className="px-4 py-2.5 bg-slate-800 hover:bg-green-700 border border-slate-600 hover:border-slate-500 text-slate-300 hover:text-white text-sm font-medium transition-all duration-200 rounded-sm"
+                        >
+                            Submit Exam
+                        </button>
+                    </div>
+
                     <div className="flex items-center space-x-3">
                         {/* Restart Button */}
                         <button
                             onClick={() => setShowResetConfirmation(true)}
-                            className="px-4 py-2.5 bg-slate-800 hover:bg-red-700 border border-slate-600 hover:border-slate-500 text-slate-300 hover:text-white text-sm font-medium transition-all duration-200 rounded"
+                            className="px-4 py-2.5 bg-slate-800 hover:bg-red-700 border border-slate-600 hover:border-slate-500 text-slate-300 hover:text-white text-sm font-medium transition-all duration-200 rounded-sm"
                         >
                             Restart Exam
                         </button>
@@ -91,8 +112,22 @@ function NavBar({ showQuestionStatus, setShowQuestionStatus }) {
                     <ExamSetting onClose={handleSettingsToggle} />
                 )
             }
+
+            {showSubmitConfirmation && (
+                <ConfirmationDialog
+                    isOpen={showSubmitConfirmation}
+                    onConfirm={handleSubmitExam}
+                    onCancel={() => setshowSubmitConfirmation(false)}
+                />
+            )}
         </div>
     );
 }
+
+
+NavBar.propTypes = {
+    showQuestionStatus: PropTypes.bool.isRequired,
+    setShowQuestionStatus: PropTypes.func.isRequired,
+};
 
 export default NavBar;
