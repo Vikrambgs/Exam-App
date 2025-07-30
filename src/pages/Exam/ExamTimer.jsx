@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import classNames from "classnames";
-import { PiTimer } from "react-icons/pi";
 
 
 function ExamTimer({ startTime, timeLimit }) {
@@ -10,7 +9,7 @@ function ExamTimer({ startTime, timeLimit }) {
         const timer = setInterval(() => {
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
             const remaining = timeLimit - elapsed;
-    
+
             if (remaining <= 0) {
                 clearInterval(timer);
                 setTimeRemaining(0); // Ensure timer shows 00:00
@@ -19,7 +18,7 @@ function ExamTimer({ startTime, timeLimit }) {
                 setTimeRemaining(remaining);
             }
         }, 1000);
-    
+
         return () => clearInterval(timer);
     }, [startTime, timeLimit]);
     ;
@@ -31,12 +30,12 @@ function ExamTimer({ startTime, timeLimit }) {
     return (
         <div
             className={classNames(
-                "flex items-center rounded gap-2 px-4 transition-colors py-2.5 border border-slate-600",
+                "flex items-center gap-2 px-4 transition-colors h-10 border border-slate-600 rounded-full bg-gradient-to-r from-slate-800 to-slate-900",
                 isLowTime ? " text-red-700" : " text-white"
             )}
         >
-            <PiTimer className="w-6 h-6" />
-            <span className="font-semibold font-mono">
+            <p>Time left - </p>
+            <span className="font-mono text-yellow-600">
                 {minutes.toString().padStart(2, "0")}:
                 {seconds.toString().padStart(2, "0")}
             </span>
