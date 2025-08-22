@@ -26,7 +26,6 @@ function ProtectedRoute({ children }) {
 function App() {
     return (
         <Provider store={store}>
-            
                 <ErrorBoundary>
                     <Suspense fallback={<LoadingSpinner />}>
                         <Router>

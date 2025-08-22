@@ -210,15 +210,21 @@ const MinimalQuizResult = () => {
                         <div
                             key={indx}
                             onClick={() => scrollToQuestion(indx)}
-                            className={`flex w-11 h-11 items-center justify-center aspect-square rounded cursor-pointer border text-sm font-medium ${statusColor
+                            className={`flex w-11 h-11 items-center justify-center aspect-square rounded cursor-pointer border text-sm font-medium shadow-sm ${statusColor
                                 } hover:opacity-90 transition-opacity relative group`}
-                            title={`Question ${indx + 1}: ${statusText}`}
                         >
                             {String(indx + 1).padStart(2, "0")}
                             {/* show circle that will hint that this question was marked for review */}
                             {(datas.status === "marked-for-review" || datas.status === "answered-and-marked-for-review") && (
                                 <span className="absolute w-4/5 h-4/5 border-2 border-purple-500 rounded-full"></span>
                             )}
+
+                            {/* Tooltip */}
+                            <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-3 py-2 rounded-lg text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10 shadow-lg">
+                                <div className="text-gray-300">{statusText}</div>
+                                {/* Tooltip arrow */}
+                                <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                            </div>
                         </div>
                     );
                 })}
