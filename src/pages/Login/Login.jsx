@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Lock, User } from "lucide-react";
+import logo from "../../../public/logo.jpg";
 
 
 import { login } from "../../store/slices/authSlice";
@@ -38,16 +39,16 @@ function Login() {
     };
 
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-500 via-pink-500 to-red-500">
-        <div className="bg-white/90 backdrop-blur-md p-8 rounded-lg shadow-2xl w-[600px] transition-all duration-300 hover:shadow-3xl">
-          <div className="flex flex-col items-center mb-8">
-            <div className="w-20 h-20 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center mb-4">
-              <User className="w-10 h-10 text-white" />
-            </div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Welcome Back
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#111]  to-[#1a1a1a]">
+        <div className="bg-[#111] backdrop-blur-md p-8 rounded-xl shadow-2xl w-[500px] transition-all duration-300 border border-[#2a2a2a] px-10">
+          <div className="flex flex-col items-center mb-4">
+            
+            <img src={logo} alt="Logo" className="w-16 h-16 mb-4 rounded-lg"  />
+            
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-300 to-slate-500 bg-clip-text text-transparent">
+              Mock Test App
             </h1>
-            <p className="text-gray-500 mt-2">Login to your Quiz App account</p>
+            <p className="text-gray-300 mt-2">Login to your Quiz App account</p>
           </div>
 
           {error && (
@@ -61,13 +62,13 @@ function Login() {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="relative">
-              <label className="block text-gray-700 font-semibold mb-2">Username</label>
+              <label className="block text-gray-300 font-semibold mb-2">Username</label>
               <div className="relative">
                 <input
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                  className="w-full bg-[#222] pl-10 pr-4 py-3 border border-[#444] rounded focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 text-white"
                   required
                   placeholder="Enter your username"
                 />
@@ -76,13 +77,13 @@ function Login() {
             </div>
 
             <div className="relative">
-              <label className="block text-gray-700 font-semibold mb-2">Password</label>
+              <label className="block text-gray-300 font-semibold mb-2">Password</label>
               <div className="relative">
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                  className="w-full bg-[#222] pl-10 pr-4 py-3 border border-[#444] rounded focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 text-white"
                   required
                   placeholder="Enter your password"
                 />
@@ -92,9 +93,9 @@ function Login() {
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded font-semibold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all duration-300 transform hover:scale-[1.02]"
+              className="w-full bg-gray-800 text-white py-3 rounded font-semibold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all duration-300 transform hover:scale-[1.02]"
               disabled={loading}
-            >
+            > 
               {loading ? (
                 <div className="flex items-center justify-center">
                   <div className="w-5 h-5 border-t-2 border-white rounded-full animate-spin mr-2"></div>
