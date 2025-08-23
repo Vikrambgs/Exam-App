@@ -1,4 +1,4 @@
-import { Target, Sparkles, Gauge, Hourglass } from "lucide-react";
+import { Target, Sparkles, Gauge, Hourglass, Info } from "lucide-react";
 import { useSelector } from "react-redux";
 import { getAllQuestionsData, getExamStartTime, getExamEndTime } from "../../store/selectors/examSelector";
 
@@ -114,13 +114,51 @@ const MinimalQuizResult = () => {
                     </div>
 
                     <div className="flex gap-4">
-                        <div className=" flex rounded-lg p-5 w-full items-center gap-4 bg-gradient-to-br from-green-800 to-emerald-700 border border-gray-500">
+                        <div className=" flex rounded-lg p-5 w-full items-center gap-4 bg-gradient-to-br from-green-800 to-emerald-700 border border-gray-500 relative">
                             <Gauge className="w-10 h-10 text-indigo-400" />
                             <div className="">
                                 <p className=" text-gray-300">Final Score</p>
                                 <span className="text-xl font-semibold text-gray-100">
                                     {score}/{totalQuestions * 5}
                                 </span>
+                            </div>
+                            <div className="absolute top-2 right-2 group">
+                                <Info strokeWidth={2} className="w-5 h-5 text-gray-400 hover:text-gray-100 transition-all cursor-pointer" />
+
+                                {/* Tooltip */}
+                                <div className="absolute -top-24 -right-0.5 bg-gray-800 border border-gray-600 rounded-lg p-3 text-sm text-white shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10 whitespace-nowrap">
+                                    <div className="space-y-1 font-mono text-sm">
+                                        {/* Row 1 - Correct Answers */}
+                                        <div className="grid grid-cols-[70px,1fr,40px] gap-2 items-center">
+                                            <span className="text-green-400">Correct</span>
+                                            <span>= {correctAnswers} × 5</span>
+                                            <span className="text-right text-green-400">{`= ${String(correctAnswers * 5).padStart(3, '0')}`}</span>
+                                        </div>
+
+                                        {/* Row 2 - Incorrect Answers */}
+                                        <div className="grid grid-cols-[70px,1fr,40px] gap-2 items-center">
+                                            <span className="text-red-400">Incorrect</span>
+                                            <span>= {attemptedQuestions - correctAnswers} × -1</span>
+                                            <span className="text-right text-red-400">
+                                                = {String(-1 * (attemptedQuestions - correctAnswers)).padStart(2, '-0')}
+                                            </span>
+                                        </div>
+
+                                        {/* Divider */}
+                                        <div className="border-t border-gray-300 pt-1">
+                                            <div className="grid grid-cols-[70px,1fr,40px] gap-2 items-center font-bold">
+                                                <span>Final</span>
+                                                <span></span>
+                                                <span className="text-right">{`= ${score}`}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    {/* Tooltip arrow */}
+                                    <div className="absolute top-full right-2 transform border-4 border-transparent border-t-gray-800"></div>
+                                </div>
                             </div>
                         </div>
                         <div className=" flex rounded-lg p-5 w-full items-center gap-4 bg-gradient-to-br from-gray-600 to-gray-700 border border-gray-500">
@@ -149,7 +187,7 @@ const MinimalQuizResult = () => {
 
                 {/* Summary Stats */}
                 <div className="flex-1 bg-gradient-to-br from-slate-800 to-slate-700 p-6 rounded">
-                    <h3 className="text-xl font-semibold mb-5 text-white">Question Wise Stats</h3>
+                    <h3 className="text-xl font-semibold mb-5 text-white text-center">Status Summary</h3>
                     <div className="space-y-2 text-white">
                         <div className="flex justify-between items-center">
                             <span className="font-medium ">Total Questions</span>
