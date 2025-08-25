@@ -41,7 +41,7 @@ export default function QuestionTopNav() {
 
 
     return (
-        <div className="mb-2 bg-slate-900">
+        <div className="mb-2">
             <div className="flex flex-col gap-2">
                 <div className="flex justify-between items-start h-8">
                     <h2 className="text-lg font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">

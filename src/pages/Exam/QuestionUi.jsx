@@ -35,7 +35,7 @@ const QuestionComponent = () => {
 
     return (
         <>
-            <div className="flex-1 overflow-y-auto pb-5 pr-4 bg-slate-900 custom-scrollbar font-roboto">
+            <div className="flex-1 overflow-y-auto pb-5 pr-4 custom-scrollbar font-roboto">
                 {currentQuestion.parts.map((part, index) => {
                     if (typeof part == "object") {
                         if (part.pre_o) {

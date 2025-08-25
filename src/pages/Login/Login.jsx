@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Lock, User } from "lucide-react";
-import logo from "../../../public/logo.jpg";
+
 
 
 import { login } from "../../store/slices/authSlice";
@@ -43,7 +43,7 @@ function Login() {
         <div className="bg-[#111] backdrop-blur-md p-8 rounded-xl shadow-2xl w-[500px] transition-all duration-300 border border-[#2a2a2a] px-10">
           <div className="flex flex-col items-center mb-4">
             
-            <img src={logo} alt="Logo" className="w-16 h-16 mb-4 rounded-lg"  />
+            <img src="/logo.jpg" alt="Logo" className="w-16 h-16 mb-4 rounded-lg"  />
             
             <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-300 to-slate-500 bg-clip-text text-transparent">
               Mock Test App

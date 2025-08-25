@@ -58,7 +58,7 @@ function Exam() {
 
 
     return (
-        <div className="max-w-[2000px] h-dvh w-dvw lg aspect-[2/1] bg-gray-900 flex flex-col">
+        <div className="max-w-[2000px] h-dvh w-dvw lg aspect-[2/1] bg-[#00111c] flex flex-col">
             <NavBar
                 showQuestionStatus={showQuestionStatus}
                 setShowQuestionStatus={setShowQuestionStatus}
@@ -67,10 +67,9 @@ function Exam() {
 
             <div className="flex-1 flex gap-2 p-2 max-w-full overflow-hidden relative">
                 <div className={`transition-all duration-300 ease-in-out ${showQuestionStatus ? 'max-w-[70%]' : 'max-w-full'} flex-1 flex rounded`}>
-                    <div className="bg-slate-900 rounded-lg shadow-lg p-4 w-full flex flex-col border border-gray-700">
+                    <div className="rounded-lg p-4 w-full flex flex-col border border-gray-800">
                         <QuestionTopNav />
                         <QuestionComponent />
-                        {/* <NavigateWithSubmit /> */}
                     </div>
                 </div>
 
