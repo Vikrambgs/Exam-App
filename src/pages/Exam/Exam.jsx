@@ -18,6 +18,7 @@ function Exam() {
     const navigate = useNavigate();
 
     const [showQuestionStatus, setShowQuestionStatus] = useState(true);
+    const [isMaximized, setIsMaximized] = useState(false);
 
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const questions = useSelector((state) => state.exam.examQuestions);
@@ -59,27 +60,34 @@ function Exam() {
 
     return (
         <div className="max-w-[2000px] h-dvh w-dvw lg aspect-[2/1] bg-[#00111c] flex flex-col">
-            <NavBar
-                showQuestionStatus={showQuestionStatus}
-                setShowQuestionStatus={setShowQuestionStatus}
-            />
+            {!isMaximized && (
+                <NavBar
+                    showQuestionStatus={showQuestionStatus}
+                    setShowQuestionStatus={setShowQuestionStatus}
+                />
+            )}
             <ExamProgressBar startTime={examStartTime} timeLimitSec={timeLimitInSec} />
 
             <div className="flex-1 flex gap-2 p-2 max-w-full overflow-hidden relative">
-                <div className={`transition-all duration-300 ease-in-out ${showQuestionStatus ? 'max-w-[70%]' : 'max-w-full'} flex-1 flex rounded`}>
+                <div className={`transition-all duration-300 ease-in-out ${showQuestionStatus && !isMaximized ? 'max-w-[70%]' : 'max-w-full'} flex-1 flex rounded`}>
                     <div className="rounded-lg p-4 w-full flex flex-col border border-gray-800">
-                        <QuestionTopNav />
+                        <QuestionTopNav 
+                            isMaximized={isMaximized}
+                            setIsMaximized={setIsMaximized}
+                            showQuestionStatus={showQuestionStatus}
+                            setShowQuestionStatus={setShowQuestionStatus}
+                        />
                         <QuestionComponent />
                     </div>
                 </div>
 
                 <div
-                    className={`w-[30%] min-w-[30%] flex rounded shadow-2xl transition-all duration-300 ease-in-out ${showQuestionStatus ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
+                    className={`w-[30%] min-w-[30%] flex rounded shadow-2xl transition-all duration-300 ease-in-out ${(showQuestionStatus && !isMaximized) ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
                         }`}
                     style={{
-                        position: showQuestionStatus ? 'relative' : 'absolute',
+                        position: (showQuestionStatus && !isMaximized) ? 'relative' : 'absolute',
                         right: 0,
-                        visibility: showQuestionStatus ? 'visible' : 'hidden'
+                        visibility: (showQuestionStatus && !isMaximized) ? 'visible' : 'hidden'
                     }}
                 >
                     <QuestionNavigation />

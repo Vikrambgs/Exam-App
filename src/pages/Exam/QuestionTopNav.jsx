@@ -1,11 +1,12 @@
-import { ArrowLeft, ArrowRight, Bookmark, Crosshair, OctagonX } from "lucide-react";
+import { ArrowLeft, ArrowRight, Bookmark, Crosshair, OctagonX, Maximize, Minimize } from "lucide-react";
 import QuestionTimeProgress from "./QuestionTimeProgressBar";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentDisplayedQuestionByIndex, clearAnswer, toggleMarkForReview } from "../../store/slices/examSlice";
 import { getAllQuestionsCount, getCurrentQuestionAllData } from "../../store/selectors/examSelector";
 import classNames from "classnames";
+import PropTypes from "prop-types";
 
-export default function QuestionTopNav() {
+export default function QuestionTopNav({ isMaximized, setIsMaximized, showQuestionStatus, setShowQuestionStatus }) {
     const dispatch = useDispatch();
     const allQuestionCount = useSelector(getAllQuestionsCount);
     const currQuestionData = useSelector(getCurrentQuestionAllData);
@@ -37,6 +38,13 @@ export default function QuestionTopNav() {
         }
     };
 
+    const handleToggleMaximize = () => {
+        // When maximizing, also hide the question status
+        if (!isMaximized) {
+            setShowQuestionStatus(false);
+        }
+        setIsMaximized(!isMaximized);
+    };
 
 
 
@@ -82,6 +90,20 @@ export default function QuestionTopNav() {
 
                             <Crosshair strokeWidth={1} size={20} />
                         </button>
+                        
+                        {/* Maximize/Minimize Button */}
+                        <button
+                            onClick={handleToggleMaximize}
+                            className="p-1.5 bg-gray-800 border rounded border-gray-700 text-white"
+                            title={isMaximized ? "Minimize View" : "Maximize View"}
+                        >
+                            {isMaximized ? (
+                                <Minimize strokeWidth={1} size={20} />
+                            ) : (
+                                <Maximize strokeWidth={1} size={20} />
+                            )}
+                        </button>
+
                         <div className="flex gap-2 ml-5">
                             <button className="p-1.5 bg-gray-800 border rounded border-gray-700 active:bg-green-800 text-white flex items-center"
                                 title="Previous Question"
@@ -106,3 +128,10 @@ export default function QuestionTopNav() {
         </div>
     )
 }
+
+QuestionTopNav.propTypes = {
+    isMaximized: PropTypes.bool.isRequired,
+    setIsMaximized: PropTypes.func.isRequired,
+    showQuestionStatus: PropTypes.bool.isRequired,
+    setShowQuestionStatus: PropTypes.func.isRequired,
+};
